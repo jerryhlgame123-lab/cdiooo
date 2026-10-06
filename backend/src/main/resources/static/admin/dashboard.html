@@ -1,0 +1,2731 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Doanh Thu | LHD – Learning Admin Portal</title>
+  <!-- Google Fonts & Font Awesome đồng bộ toàn hệ thống -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --primary-color: #0b63e5;
+      --purple-color: #8b5cf6;
+      --pink-color: #ec4899;
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-subtle: rgba(226, 232, 240, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body,
+    button,
+    input,
+    select,
+    textarea {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .fa,
+    .fa-solid,
+    .fa-regular,
+    .fa-brands,
+    .fas,
+    .far,
+    .fab {
+      font-family: "Font Awesome 6 Free" !important;
+    }
+
+    .fa-brands,
+    .fab {
+      font-family: "Font Awesome 6 Brands" !important;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glows đồng bộ profile.html */
+    /* Sticky Navbar phong cách index.html */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.05), rgba(236, 72, 153, 0.08));
+    }
+
+    .nav-links a:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes navPillPop {
+      0% {
+        transform: scale(0.92);
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+      }
+
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 22px rgba(236, 72, 153, 0.55);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
+      }
+    }
+
+    /* Active pill state - Gradient Xanh - Hồng Tím chuẩn 100% index.html */
+    .nav-links a.nav-item-active,
+    .nav-links a.active {
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 8px 20px;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: navPillPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-links a.nav-item-active:hover,
+    .nav-links a.active:hover {
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.nav-item-active:active,
+    .nav-links a.active:active {
+      transform: scale(0.95);
+    }
+
+    /* Header Right Actions - 100% Đồng bộ index.html */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-user-left-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 4px;
+    }
+
+    .nav-user-right-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid #dce4ec;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #273746;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      flex-shrink: 0;
+      font-size: 1.05rem;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-circle-btn.btn-bell {
+      font-size: 17px;
+      color: #273746;
+    }
+
+    .nav-circle-btn.btn-menu {
+      font-size: 16px;
+      color: #0b63e5;
+    }
+
+    .nav-circle-btn.btn-menu:hover {
+      background: rgba(11, 99, 229, 0.06);
+    }
+
+    .bell-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #ea4335;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(234, 67, 53, 0.4);
+    }
+
+    /* User Capsule - Match Image 2 & index.html */
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid #dce4ec;
+      border-radius: 9999px;
+      padding: 4px 18px 4px 5px;
+      background: #ffffff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      position: relative;
+      user-select: none;
+    }
+
+    .user-capsule:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .user-capsule-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #0b63e5;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .user-capsule-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #24292f;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    /* Nút Thoát Đăng Xuất Chuẩn Header Right (Đồng bộ toàn bộ Admin Portal) */
+    .btn-header-logout {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.08);
+      color: #ef4444;
+      border: 1.5px solid rgba(239, 68, 68, 0.25);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-header-logout:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-header-logout:active {
+      transform: scale(0.96);
+    }
+
+    /* Dropdown Menus for User, Menu, Bell */
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 1500;
+      animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-dropdown.show {
+      display: flex;
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-header {
+      padding: 0.5rem 0.85rem 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .dropdown-header-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .dropdown-header-sub {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .dropdown-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.65rem 0.85rem;
+      border-radius: 12px;
+      color: #334155;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .dropdown-link:hover {
+      background: #f1f5f9;
+      color: #0b63e5;
+    }
+
+    .dropdown-link i {
+      width: 18px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .dropdown-link:hover i {
+      color: #0b63e5;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f1f5f9;
+      margin: 4px 0;
+    }
+
+    .dropdown-link.logout-link {
+      color: #dc2626;
+      cursor: pointer;
+    }
+
+    .dropdown-link.logout-link:hover {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .dropdown-link.logout-link i {
+      color: #dc2626;
+    }
+
+    /* Student / Admin Mega Dropdown Styles - Đồng bộ index.html */
+    .student-mega-dropdown {
+      min-width: 290px;
+      max-width: 320px;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding: 0.85rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+      border: 1.5px solid rgba(226, 232, 240, 0.95);
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
+      border-radius: 18px;
+      padding: 1.1rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-user-banner-glow {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      filter: blur(25px);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .menu-banner-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      background: #ffffff;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .menu-banner-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .menu-banner-name {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      margin: 2px 0 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .menu-banner-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      color: #4ade80;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .menu-group-heading {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.5rem 0.6rem 0.2rem;
+    }
+
+    .student-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.65rem 0.85rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.18s ease;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9;
+      transform: translateX(4px);
+    }
+
+    .menu-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(11, 99, 229, 0.08);
+      color: #0b63e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .student-menu-item:hover .menu-item-icon {
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      color: #ffffff;
+    }
+
+    .student-menu-item .menu-item-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e293b;
+      transition: color 0.18s ease;
+    }
+
+    .student-menu-item:hover .menu-item-title {
+      color: #0b63e5;
+    }
+
+    .btn-menu-logout {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1.5px solid rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 0.35rem;
+    }
+
+    .btn-menu-logout:hover {
+      background: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Container with 2-Column Layout matching image & profile.html */
+    .container {
+      width: 100%;
+      max-width: 1380px;
+      margin: 2.2rem auto 4rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+    }
+
+    .admin-layout-grid {
+      display: flex;
+      gap: 1.8rem;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .admin-sidebar {
+      flex: 0 0 280px;
+      width: 280px;
+      max-width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 90px;
+      z-index: 10;
+    }
+
+    .admin-main-content {
+      flex: 1 1 0%;
+      min-width: 0;
+      max-width: 100%;
+      width: auto;
+      box-sizing: border-box;
+    }
+
+    /* Sidebar Cards - Chuẩn phong cách 100% theo ảnh đính kèm */
+    .sidebar-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.35rem 1.15rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      margin-bottom: 1.25rem;
+    }
+
+    .sidebar-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+      padding: 0 12px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #334155;
+      transition: all 0.2s ease;
+      margin-bottom: 5px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover {
+      background: #f8fafc;
+      color: var(--primary-color);
+      transform: translateX(3px);
+    }
+
+    .sidebar-item i {
+      font-size: 1.05rem;
+      width: 22px;
+      text-align: center;
+      color: #64748b;
+      transition: color 0.2s ease;
+    }
+
+    .sidebar-item:hover i {
+      color: var(--primary-color);
+    }
+
+    /* Active Item - Như ảnh: gradient hồng tím, chữ trắng, shadow nổi bật */
+    .sidebar-item.active {
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      color: #ffffff !important;
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.35);
+    }
+
+    .sidebar-item.active i {
+      color: #ffffff !important;
+    }
+
+    .sidebar-item .item-text {
+      flex: 1;
+    }
+
+    /* Badges trong Sidebar như ảnh */
+    .badge-count-active {
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+    }
+
+    .badge-count-gray {
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      margin-left: auto;
+    }
+
+    .badge-count-amber {
+      background: #fef3c7;
+      color: #d97706;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 9999px;
+      margin-left: auto;
+    }
+
+
+
+    /* Hero Banner Card phong cách profile.html */
+    .profile-hero {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 50%, #31104b 100%);
+      border-radius: 28px;
+      padding: 2.4rem 2.8rem;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-glow-blob {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(75px);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .hero-glow-1 {
+      top: -100px;
+      right: -80px;
+      background: #8b5cf6;
+    }
+
+    .hero-glow-2 {
+      bottom: -100px;
+      left: 25%;
+      background: #ec4899;
+    }
+
+    .profile-hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.8rem;
+    }
+
+    .hero-title-area h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .hero-title-area p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      max-width: 620px;
+      line-height: 1.5;
+    }
+
+    .time-filter-wrap {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 5px;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .time-btn {
+      padding: 7px 18px;
+      border-radius: 9999px;
+      border: none;
+      background: transparent;
+      color: #ffffff;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .time-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .time-btn.active {
+      background: #ffffff;
+      color: var(--primary-color);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Sticky Quick Navigation Sub-Menu Bar */
+    .quick-nav-bar {
+      position: sticky;
+      top: 80px;
+      z-index: 900;
+      margin: 0 0 1.8rem;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 9999px;
+      box-shadow: 0 6px 20px rgba(11, 99, 229, 0.06);
+      padding: 6px 14px;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow-x: auto;
+    }
+
+    .quick-nav-container {
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      width: 100%;
+      min-width: max-content;
+    }
+
+    .quick-nav-item {
+      flex: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 7px 8px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .quick-nav-item:hover {
+      background: rgba(11, 99, 229, 0.08);
+      color: var(--primary-color);
+    }
+
+    .quick-nav-item.active {
+      background: var(--primary-grad);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+    }
+
+    /* Stats Grid phong cách profile.html */
+    .stats-grid {
+      display: grid;
+      /* Cột 1 (Doanh thu) 1.25fr, Cột 2 (Tài khoản) 1fr, Cột 3 & 4 0.88fr */
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 0.88fr) minmax(0, 0.88fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .stat-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1rem 1.15rem;
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      transition: all 0.25s ease;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.12);
+      border-color: #8b5cf6;
+    }
+
+    .stat-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .stat-info .stat-lbl {
+      font-size: 0.71rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.3;
+      min-height: 2.2em;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .stat-info .stat-val {
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 4px 0 3px;
+      letter-spacing: -0.2px;
+      white-space: normal;
+      line-height: 1.25;
+    }
+
+    .stat-trend {
+      font-size: 0.70rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+      white-space: normal;
+      line-height: 1.3;
+      max-width: 100%;
+    }
+
+    .trend-up {
+      color: #16a34a;
+      background: rgba(22, 163, 74, 0.08);
+      padding: 2px 7px;
+      border-radius: 9999px;
+    }
+
+    .trend-down {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+      padding: 2px 7px;
+      border-radius: 9999px;
+    }
+
+    .trend-alert {
+      color: #db2777;
+      background: rgba(219, 39, 119, 0.08);
+      padding: 2px 7px;
+      border-radius: 9999px;
+    }
+
+    .stat-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .icon-purple {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(11, 99, 229, 0.12));
+      color: var(--purple-color);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .icon-blue {
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.12), rgba(56, 189, 248, 0.12));
+      color: var(--primary-color);
+      border: 1px solid rgba(11, 99, 229, 0.2);
+    }
+
+    .icon-green {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .icon-pink {
+      background: rgba(236, 72, 153, 0.12);
+      color: var(--pink-color);
+      border: 1px solid rgba(236, 72, 153, 0.2);
+    }
+
+    /* Charts Row */
+    .charts-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+      align-items: stretch;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .chart-box {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 2rem;
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .chart-box:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .chart-h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chart-h2 i {
+      color: var(--purple-color);
+    }
+
+    .chart-canvas-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      height: 250px;
+    }
+
+    .chart-canvas-wrap canvas {
+      max-width: 100% !important;
+    }
+
+    .donut-legend-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-wrap: wrap;
+    }
+
+    .donut-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f8fafc;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.82rem;
+    }
+
+    .legend-color-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Bottom Grid: Recent Orders & Top Sellers - Stacked Full-Width Rows */
+    .bottom-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      min-width: 0;
+    }
+
+    #sec-orders,
+    #sec-bestsellers {
+      justify-content: flex-start;
+      gap: 0.85rem;
+    }
+
+    #sec-orders .chart-header,
+    #sec-bestsellers .chart-header {
+      margin-bottom: 0.6rem;
+    }
+
+    .table-responsive {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .admin-table th {
+      padding: 0.85rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #f1f5f9;
+      white-space: nowrap;
+    }
+
+    .admin-table td {
+      padding: 0.95rem 1rem;
+      font-size: 0.88rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .admin-table tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    .admin-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .status-success {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #15803d;
+    }
+
+    .status-pending {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #b45309;
+    }
+
+    /* Bestseller Table Compact Style (Xem toàn bộ thông tin không cần cuộn ngang) */
+    .bestseller-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: auto;
+    }
+
+    .bestseller-table th {
+      padding: 0.6rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid #f1f5f9;
+      white-space: nowrap;
+    }
+
+    .bestseller-table td {
+      padding: 0.62rem 0.65rem;
+      font-size: 0.82rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .top-course-rank-sm {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      font-weight: 800;
+      font-size: 0.74rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      flex-shrink: 0;
+    }
+
+    /* Best Sellers Tabs & View All Button */
+    .bestseller-period-tabs {
+      display: inline-flex;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .bestseller-tab {
+      background: transparent;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .bestseller-tab:hover {
+      color: var(--primary-color);
+    }
+
+    .bestseller-tab.active {
+      background: #ffffff;
+      color: var(--primary-color);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-view-all-bestsellers {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      background: rgba(11, 99, 229, 0.08);
+      border: 1px solid rgba(11, 99, 229, 0.25);
+      color: var(--primary-color);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-view-all-bestsellers:hover {
+      background: var(--primary-grad);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Top Course Item phong cách profile.html */
+    .top-course-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.85rem 0.5rem;
+      border-bottom: 1px solid #f1f5f9;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .top-course-item:hover {
+      background: #f8fafc;
+    }
+
+    .top-course-item:last-child {
+      border-bottom: none;
+    }
+
+    .top-course-rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      font-weight: 800;
+      font-size: 0.84rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      flex-shrink: 0;
+    }
+
+    .rank-1 {
+      background: #fef08a;
+      color: #854d0e;
+      box-shadow: 0 2px 6px rgba(234, 179, 8, 0.25);
+    }
+
+    .rank-2 {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .rank-3 {
+      background: #fed7aa;
+      color: #9a3412;
+    }
+
+    .rank-4,
+    .rank-5 {
+      background: #f8fafc;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+
+    .top-course-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .top-course-name {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      line-height: 1.35;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .top-course-meta {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+
+    .top-course-revenue {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--purple-color);
+      flex-shrink: 0;
+    }
+
+    /* Modal System phong cách profile.html */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+      animation: modalFadeIn 0.25s ease forwards;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-window {
+      background: #ffffff;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 880px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+      position: relative;
+    }
+
+    .modal-header-profile {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
+      color: #ffffff;
+      padding: 1.3rem 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+    }
+
+    .modal-header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-header-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--primary-grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    }
+
+    .modal-header-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .modal-header-sub {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 1.8rem;
+    }
+
+    .modal-filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 9999px;
+      padding: 6px 14px;
+      width: 270px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-search-wrap:focus-within {
+      border-color: #8b5cf6;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .modal-search-wrap input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.86rem;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    @media (max-width: 1200px) {
+      .header-left {
+        gap: 1.8rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .admin-layout-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .admin-sidebar {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        top: 0;
+      }
+
+      .admin-main-content {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .profile-hero {
+        padding: 2rem 1.6rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header {
+        padding: 0.75rem 1rem;
+      }
+
+      .brand-title {
+        font-size: 1.15rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-hero {
+        padding: 1.6rem 1.2rem;
+        border-radius: 20px;
+      }
+
+      .hero-title-area h1 {
+        font-size: 1.45rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header đồng bộ hoàn toàn style index.html -->
+  <header>
+    <div class="header-left">
+      <a href="../index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-item-active">Tổng quan</a></li>
+        <li><a href="courses-approval.html">Duyệt khóa học</a></li>
+        <li><a href="users.html">Người dùng</a></li>
+        <li><a href="marketing.html">Marketing</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-actions-user" id="navActionsUser">
+        <!-- Nhóm 1: Thông báo & Về trang chủ -->
+        <div class="nav-user-left-group">
+          <!-- Bell Button -->
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="adminBellBtn" title="Thông báo hệ thống"
+              onclick="toggleAdminNotif(event)">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="adminBellBadge">3</span>
+            </button>
+
+            <!-- Bell Dropdown -->
+            <div class="nav-dropdown" id="adminNotifDropdown" style="min-width: 320px; left: 0; right: auto;">
+              <div class="dropdown-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="dropdown-header-title">Thông báo hệ thống</div>
+                <button type="button" onclick="document.getElementById('adminBellBadge').style.display='none'"
+                  style="background: none; border: none; color: #0b63e5; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Đã
+                  xem hết</button>
+              </div>
+              <div style="padding: 0.65rem 0.85rem; border-radius: 12px; background: #f8fafc; margin-bottom: 6px;">
+                <div
+                  style="font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-clipboard-check" style="color: #f59e0b;"></i>
+                  <span>3 khóa học mới chờ duyệt</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">Cần phê duyệt từ các giảng viên đối
+                  tác trước 18:00 hôm nay.</div>
+                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">15 phút trước</div>
+              </div>
+              <div style="padding: 0.65rem 0.85rem; border-radius: 12px; background: #f8fafc;">
+                <div
+                  style="font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-user-plus" style="color: #10b981;"></i>
+                  <span>+24 học viên đăng ký mới</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">Số lượng người dùng kích hoạt tài
+                  khoản tăng trưởng 18.4%.</div>
+                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">2 giờ trước</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Home Button -->
+          <a href="../index.html" class="nav-circle-btn" title="Về trang chủ sàn học tập">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </div>
+
+        <!-- Vạch phân cách -->
+        <div class="nav-user-divider"></div>
+
+        <!-- Nhóm 2: Quản trị viên Capsule & Menu ☰ -->
+        <div class="nav-user-right-group">
+          <!-- User Capsule -->
+          <a href="../student/profile.html" class="user-capsule" title="Xem thông tin quản trị viên">
+            <img
+              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64' shape-rendering='crispEdges'><rect width='64' height='64' fill='%23a4c68d'/><rect x='0' y='0' width='64' height='28' fill='%237ba36a'/><rect x='6' y='8' width='12' height='14' fill='%23507c43'/><rect x='46' y='10' width='14' height='12' fill='%23507c43'/><rect x='22' y='4' width='20' height='8' fill='%23669152'/><rect x='0' y='32' width='64' height='32' fill='%23c4936d'/><rect x='0' y='42' width='64' height='22' fill='%23b17c54'/><rect x='20' y='12' width='24' height='16' fill='%231e1e24'/><rect x='22' y='16' width='20' height='20' fill='%23fddbc3'/><rect x='24' y='34' width='16' height='4' fill='%23fbc5a3'/><rect x='18' y='10' width='28' height='8' fill='%2322242a'/><rect x='18' y='18' width='6' height='8' fill='%2322242a'/><rect x='40' y='18' width='6' height='8' fill='%2322242a'/><rect x='24' y='14' width='8' height='6' fill='%2330323a'/><rect x='34' y='14' width='8' height='5' fill='%2322242a'/><rect x='18' y='24' width='4' height='6' fill='%23fbc5a3'/><rect x='42' y='24' width='4' height='6' fill='%23fbc5a3'/><rect x='25' y='25' width='4' height='4' fill='%231e1e24'/><rect x='35' y='25' width='4' height='4' fill='%231e1e24'/><rect x='23' y='28' width='4' height='2' fill='%23f7a799'/><rect x='37' y='28' width='4' height='2' fill='%23f7a799'/><rect x='29' y='31' width='6' height='2' fill='%23d97d64'/><rect x='22' y='21' width='10' height='9' fill='none' stroke='%23111' stroke-width='2'/><rect x='32' y='21' width='10' height='9' fill='none' stroke='%23111' stroke-width='2'/><rect x='31' y='24' width='2' height='2' fill='%23111'/><rect x='24' y='22' width='2' height='2' fill='%23ffffff'/><rect x='34' y='22' width='2' height='2' fill='%23ffffff'/><rect x='16' y='38' width='32' height='26' fill='%232b2d35'/><rect x='28' y='38' width='8' height='8' fill='%23b91c1c'/><rect x='22' y='38' width='6' height='26' fill='%233a3d47'/><rect x='36' y='38' width='6' height='26' fill='%233a3d47'/><rect x='29' y='44' width='6' height='20' fill='%23dc2626'/><rect x='31' y='42' width='2' height='22' fill='%23991b1b'/></svg>"
+              class="user-capsule-avatar" alt="Avatar">
+            <span class="user-capsule-name">Admin LHD</span>
+          </a>
+
+          <!-- Nút Thoát Đăng Xuất -->
+          <button type="button" class="btn-header-logout" onclick="logoutAdmin()" title="Đăng xuất khỏi hệ thống">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Thoát</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Hero Banner Card phong cách profile.html -->
+    <div class="profile-hero">
+      <div class="hero-glow-blob hero-glow-1"></div>
+      <div class="hero-glow-blob hero-glow-2"></div>
+      <div class="profile-hero-content">
+        <div class="hero-title-area">
+          <h1>Báo Cáo Doanh Thu & Chỉ Số Vận Hành</h1>
+          <p>Thống kê dòng tiền, số lượng đơn hàng qua VNPay và tốc độ tăng trưởng người dùng toàn sàn</p>
+        </div>
+        <div class="time-filter-wrap">
+          <button class="time-btn" onclick="updateTimeFilter('today', this)">Hôm nay</button>
+          <button class="time-btn" onclick="updateTimeFilter('week', this)">Tuần này</button>
+          <button class="time-btn active" onclick="updateTimeFilter('month', this)">Tháng này</button>
+          <button class="time-btn" onclick="updateTimeFilter('year', this)">Năm này</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-Column Grid: Left Sidebar (như ảnh người dùng) + Right Main Content -->
+    <div class="admin-layout-grid">
+      <!-- Left Sidebar: Đồng bộ chuẩn Quản trị viên hệ thống -->
+      <aside class="admin-sidebar">
+        <!-- Card 1: QUẢN TRỊ HỆ THỐNG -->
+        <div class="sidebar-card">
+          <div class="sidebar-group-title">QUẢN TRỊ HỆ THỐNG</div>
+          <a href="dashboard.html" class="sidebar-item active">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span class="item-text">Tổng quan & Doanh thu</span>
+          </a>
+          <a href="courses-approval.html" class="sidebar-item">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span class="item-text">Phê duyệt khóa học</span>
+            <span class="badge-count-amber">3</span>
+          </a>
+          <a href="users.html" class="sidebar-item">
+            <i class="fa-solid fa-users-gear"></i>
+            <span class="item-text">Quản lý người dùng</span>
+            <span class="badge-count-gray">15.4k</span>
+          </a>
+          <a href="marketing.html" class="sidebar-item">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="item-text">Marketing & Banner</span>
+          </a>
+        </div>
+
+        <!-- Card 2: ĐIỀU HÀNH SÀN -->
+        <div class="sidebar-card">
+          <div class="sidebar-group-title">ĐIỀU HÀNH SÀN</div>
+          <a href="../index.html" class="sidebar-item" target="_blank">
+            <i class="fa-solid fa-globe"></i>
+            <span class="item-text">Xem sàn học tập</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"
+              style="font-size: 0.72rem; margin-left: auto; color: #94a3b8;"></i>
+          </a>
+          <a href="../courses.html" class="sidebar-item" target="_blank">
+            <i class="fa-solid fa-compass"></i>
+            <span class="item-text">Khám phá khóa học</span>
+            <i class="fa-solid fa-arrow-up-right-from-square"
+              style="font-size: 0.72rem; margin-left: auto; color: #94a3b8;"></i>
+          </a>
+          <a href="javascript:void(0)" class="sidebar-item" onclick="openCertificateModal()">
+            <i class="fa-solid fa-award"></i>
+            <span class="item-text">Mẫu phôi chứng chỉ</span>
+          </a>
+        </div>
+
+        <!-- Card 3: TÀI KHOẢN QUẢN TRỊ -->
+        <div class="sidebar-card">
+          <div class="sidebar-group-title">TÀI KHOẢN QUẢN TRỊ</div>
+          <a href="../student/profile.html" class="sidebar-item">
+            <i class="fa-regular fa-user"></i>
+            <span class="item-text">Hồ sơ cá nhân</span>
+          </a>
+          <a href="javascript:void(0)" class="sidebar-item" onclick="logoutAdmin()" style="color: #ef4444;">
+            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #ef4444;"></i>
+            <span class="item-text" style="color: #ef4444; font-weight: 700;">Đăng xuất</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Right Main Content Area -->
+      <main class="admin-main-content">
+        <!-- Thanh Menu Điều Hướng Nhanh (Click tự cuộn màn hình xuống từng phần) -->
+        <nav class="quick-nav-bar" id="quickNavBar">
+          <div class="quick-nav-container">
+            <button class="quick-nav-item active" onclick="scrollToSection('sec-overview', this)">
+              <i class="fa-solid fa-chart-simple"></i> Tổng quan chỉ số
+            </button>
+            <button class="quick-nav-item" onclick="scrollToSection('sec-charts', this)">
+              <i class="fa-solid fa-chart-line"></i> Tăng trưởng & Cơ cấu
+            </button>
+            <button class="quick-nav-item" onclick="scrollToSection('sec-orders', this)">
+              <i class="fa-solid fa-receipt"></i> Đơn hàng gần nhất
+            </button>
+            <button class="quick-nav-item" onclick="scrollToSection('sec-bestsellers', this)">
+              <i class="fa-solid fa-fire"></i> Khóa học bán chạy
+            </button>
+          </div>
+        </nav>
+
+        <!-- Quick Stats Cards (4) -->
+        <div class="stats-grid" id="sec-overview">
+          <div class="stat-card">
+            <div class="stat-info">
+              <div class="stat-lbl">Tổng Doanh Thu Sàn</div>
+              <div class="stat-val" id="statRevenue">128,500,000đ</div>
+              <div class="stat-trend trend-up" id="statRevenueTrend"><i class="fa-solid fa-arrow-trend-up"></i> +18.4%
+                so với tháng trước</div>
+            </div>
+            <div class="stat-icon-wrap icon-purple"><i class="fa-solid fa-wallet"></i></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <div class="stat-lbl">Tổng Tài Khoản</div>
+              <div class="stat-val" id="statUsers">15,420</div>
+              <div class="stat-trend trend-up" id="statUsersTrend"><i class="fa-solid fa-user-plus"></i> +850 thành viên
+                mới tháng này</div>
+            </div>
+            <div class="stat-icon-wrap icon-blue"><i class="fa-solid fa-users"></i></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <div class="stat-lbl">Khóa Học Đã Xuất Bản</div>
+              <div class="stat-val">84</div>
+              <div class="stat-trend trend-up"><i class="fa-solid fa-circle-check"></i> Tỷ lệ hoàn thành 82%</div>
+            </div>
+            <div class="stat-icon-wrap icon-green"><i class="fa-solid fa-graduation-cap"></i></div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <div class="stat-lbl">Yêu Cầu Chờ Duyệt</div>
+              <div class="stat-val" style="color: var(--pink-color);">3 khóa</div>
+              <div class="stat-trend trend-alert"><i class="fa-solid fa-triangle-exclamation"></i> Cần phê duyệt sớm
+              </div>
+            </div>
+            <div class="stat-icon-wrap icon-pink"><i class="fa-solid fa-clipboard-check"></i></div>
+          </div>
+        </div>
+
+        <!-- Charts Row: Tinh chỉnh tỷ lệ và kích thước cân xứng -->
+        <div class="charts-row" id="sec-charts">
+          <!-- Area/Bar Revenue Chart -->
+          <div class="chart-box">
+            <div class="chart-header">
+              <div>
+                <h2 class="chart-h2" id="revenueChartTitle"><i class="fa-solid fa-chart-line"></i> Tăng Trưởng Doanh Thu
+                  Tháng (VNĐ)</h2>
+                <span style="font-size: 0.82rem; color: #64748b; font-weight: 600;">Dữ liệu tự động đồng bộ theo thời
+                  gian thực</span>
+              </div>
+              <span class="badge-status status-success"><i class="fa-solid fa-circle-check"></i> Tự động đồng bộ</span>
+            </div>
+            <div class="chart-canvas-wrap">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Donut Chart: Revenue by Language -->
+          <div class="chart-box">
+            <div class="chart-header">
+              <h2 class="chart-h2"><i class="fa-solid fa-chart-pie" style="color: var(--pink-color);"></i> Cơ Cấu Doanh
+                Thu</h2>
+              <span style="font-size: 0.88rem; color: #64748b; font-weight: 800;" id="donutTotalVal">128.5 tr</span>
+            </div>
+            <div class="chart-canvas-wrap" style="height: 195px;">
+              <canvas id="langDonutChart"></canvas>
+            </div>
+            <div class="donut-legend-wrap">
+              <div class="donut-legend-item">
+                <span class="legend-color-dot" style="background: #0b63e5;"></span>
+                <span class="legend-text">🇯🇵 Tiếng Nhật</span>
+                <span class="legend-percent" id="jpPercentBadge" style="color: #0b63e5; font-weight: 800;">62% (79.6
+                  tr)</span>
+              </div>
+              <div class="donut-legend-item">
+                <span class="legend-color-dot" style="background: #ec4899;"></span>
+                <span class="legend-text">🇬🇧 Tiếng Anh</span>
+                <span class="legend-percent" id="enPercentBadge" style="color: #ec4899; font-weight: 800;">38% (48.9
+                  tr)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Grid: Recent Orders & Top Sellers (Stacked Full-Width Rows) -->
+        <div class="bottom-grid">
+          <!-- Recent Orders Table (100% Full Width, Table close to Header) -->
+          <div class="chart-box" id="sec-orders">
+            <div class="chart-header">
+              <div>
+                <h2 class="chart-h2"><i class="fa-solid fa-receipt"></i> Giao Dịch Đơn Hàng Gần Nhất</h2>
+                <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Lịch sử thanh toán mua khóa học trực
+                  tuyến mới nhất trên sàn LHD</span>
+              </div>
+              <span class="badge-status status-success"><i class="fa-solid fa-bolt"></i> 4 đơn mới</span>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Mã Đơn</th>
+                    <th>Học Viên</th>
+                    <th>Khóa Học</th>
+                    <th>Số Tiền</th>
+                    <th>Thanh Toán</th>
+                    <th>Thời Gian</th>
+                    <th>Trạng Thái</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 800; color: var(--primary-color);">#ORD-9821</td>
+                    <td><strong>Nguyen Van A</strong></td>
+                    <td>Luyện Thi JLPT N3 Toàn Diện</td>
+                    <td style="font-weight: 700; color: #0f172a;">1,690,000đ</td>
+                    <td><span style="font-weight: 600; color: #475569;"><i class="fa-solid fa-qrcode"
+                          style="color: #0b63e5;"></i> VNPay QR</span></td>
+                    <td style="font-size: 0.8rem; color: #64748b;">Hôm nay, 14:30</td>
+                    <td><span class="badge-status status-success"><i class="fa-solid fa-check"></i> Thành công</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; color: var(--primary-color);">#ORD-9820</td>
+                    <td><strong>Tran Thi Mai</strong></td>
+                    <td>Business English Giao Tiếp</td>
+                    <td style="font-weight: 700; color: #0f172a;">1,450,000đ</td>
+                    <td><span style="font-weight: 600; color: #475569;"><i class="fa-regular fa-credit-card"
+                          style="color: #10b981;"></i> Thẻ ATM</span></td>
+                    <td style="font-size: 0.8rem; color: #64748b;">Hôm nay, 12:15</td>
+                    <td><span class="badge-status status-success"><i class="fa-solid fa-check"></i> Thành công</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; color: var(--primary-color);">#ORD-9819</td>
+                    <td><strong>Le Hoang Nam</strong></td>
+                    <td>Kanji & Từ Vựng N4</td>
+                    <td style="font-weight: 700; color: #0f172a;">890,000đ</td>
+                    <td><span style="font-weight: 600; color: #475569;"><i class="fa-solid fa-qrcode"
+                          style="color: #0b63e5;"></i> VNPay QR</span></td>
+                    <td style="font-size: 0.8rem; color: #64748b;">Hôm nay, 10:05</td>
+                    <td><span class="badge-status status-success"><i class="fa-solid fa-check"></i> Thành công</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 800; color: var(--primary-color);">#ORD-9818</td>
+                    <td><strong>Pham Quoc Bao</strong></td>
+                    <td>Tiếng Nhật Giao Tiếp Đời Sống</td>
+                    <td style="font-weight: 700; color: #0f172a;">1,200,000đ</td>
+                    <td><span style="font-weight: 600; color: #475569;"><i class="fa-solid fa-wallet"
+                          style="color: #ec4899;"></i> Ví MoMo</span></td>
+                    <td style="font-size: 0.8rem; color: #64748b;">Hôm nay, 09:20</td>
+                    <td><span class="badge-status status-pending"><i class="fa-regular fa-clock"></i> Chờ xử lý</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Khóa Học Bán Chạy (Đẩy xuống hàng riêng, mở rộng 100% hiển thị đầy đủ thông tin) -->
+          <div class="chart-box" id="sec-bestsellers">
+            <div class="chart-header" style="flex-wrap: wrap; gap: 12px; align-items: center;">
+              <div>
+                <h2 class="chart-h2"><i class="fa-solid fa-fire" style="color: #ea580c;"></i> Khóa Học Bán Chạy Nhất
+                </h2>
+                <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Top 5 khóa học dẫn đầu về doanh thu
+                  và học viên đăng ký trên toàn sàn</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <div class="bestseller-period-tabs">
+                  <button class="bestseller-tab" onclick="updateBestsellerPeriod('today', this)">Hôm nay</button>
+                  <button class="bestseller-tab" onclick="updateBestsellerPeriod('week', this)">Tuần này</button>
+                  <button class="bestseller-tab active" onclick="updateBestsellerPeriod('month', this)">Tháng
+                    này</button>
+                  <button class="bestseller-tab" onclick="updateBestsellerPeriod('year', this)">Năm này</button>
+                </div>
+                <button class="btn-view-all-bestsellers" onclick="openAllCoursesModal()"
+                  title="Xem toàn bộ các khóa học đã bán trên hệ thống">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem tất cả
+                </button>
+              </div>
+            </div>
+
+            <!-- Rendered via JS: Full Width Table với đầy đủ mọi thông số -->
+            <div id="bestsellerListContainer"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL XEM TẤT CẢ KHÓA HỌC ĐÃ BÁN (Style profile.html) -->
+  <div class="modal-backdrop" id="allCoursesModal">
+    <div class="modal-window">
+      <div class="modal-header-profile">
+        <div class="modal-header-info">
+          <div class="modal-header-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Tất Cả Khóa Học Đã Bán Trên Sàn</div>
+            <div class="modal-header-sub">Danh sách toàn bộ các khóa học phát sinh doanh thu trên nền tảng</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeAllCoursesModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-filter-bar">
+          <div class="bestseller-period-tabs">
+            <button class="bestseller-tab" onclick="filterModalCourses('today', this)">Hôm nay</button>
+            <button class="bestseller-tab" onclick="filterModalCourses('week', this)">Tuần này</button>
+            <button class="bestseller-tab active" onclick="filterModalCourses('month', this)">Tháng này</button>
+            <button class="bestseller-tab" onclick="filterModalCourses('year', this)">Năm này</button>
+          </div>
+          <div class="modal-search-wrap">
+            <i class="fa-solid fa-magnifying-glass" style="color: #94a3b8; font-size: 0.85rem;"></i>
+            <input type="text" id="courseSearchInput" placeholder="Tìm theo tên khóa học, giảng viên..."
+              onkeyup="searchModalCourses()">
+          </div>
+        </div>
+
+        <div class="table-responsive" style="max-height: 440px;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Hạng</th>
+                <th>Khóa Học & Giảng Viên</th>
+                <th>Ngôn Ngữ</th>
+                <th>Đơn Giá</th>
+                <th>Đã Bán</th>
+                <th>Tổng Doanh Thu</th>
+                <th>Hoàn Thành</th>
+              </tr>
+            </thead>
+            <tbody id="allCoursesTableBody">
+              <!-- Rendered dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CHẤM BÀI TẬP (Khớp chức năng 'Chấm bài tập' như ảnh) -->
+  <div class="modal-backdrop" id="assignmentModal">
+    <div class="modal-window" style="max-width: 720px;">
+      <div class="modal-header-profile">
+        <div class="modal-header-info">
+          <div class="modal-header-icon" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Hàng Đợi Chấm Bài Tập Học Viên</div>
+            <div class="modal-header-sub">5 bài tập tự luận đang chờ giảng viên và ban đào tạo đánh giá</div>
+          </div>
+        </div>
+        <button class="btn-close-circle" onclick="closeModal('assignmentModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body-profile">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài luận B2: The Impact of AI
+                on Modern Education</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b
+                  style="color: #0b63e5;">Nguyễn Hoàng Nam</b> • Nộp lúc 14:15 hôm nay</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;"
+              onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Nguyễn Hoàng Nam...', 'success')">Chấm
+              điểm</button>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bản dịch JLPT N3: Đoạn văn về
+                Văn hóa Trà Đạo Nhật Bản</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b
+                  style="color: #0b63e5;">Lê Thị Mai</b> • Nộp lúc 10:30 hôm nay</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;"
+              onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Lê Thị Mai...', 'success')">Chấm
+              điểm</button>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Audio phát âm: Bài tập
+                Shadowing Hội thoại Du lịch</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b
+                  style="color: #0b63e5;">Trần Tuấn Anh</b> • Nộp hôm qua</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;"
+              onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Trần Tuấn Anh...', 'success')">Chấm
+              điểm</button>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài tập Ngữ pháp HSK 4: Cấu
+                trúc câu chữ Bả (把)</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b
+                  style="color: #0b63e5;">Phạm Diệu Linh</b> • Nộp hôm qua</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;"
+              onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Phạm Diệu Linh...', 'success')">Chấm
+              điểm</button>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài viết Business Email: Báo
+                giá & Chiết khấu dịch vụ</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b
+                  style="color: #0b63e5;">Vũ Quốc Bảo</b> • Nộp 2 ngày trước</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;"
+              onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Vũ Quốc Bảo...', 'success')">Chấm
+              điểm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL QUẢN LÝ CHỨNG CHỈ (Khớp chức năng 'Quản lý chứng chỉ' như ảnh) -->
+  <div class="modal-backdrop" id="certificateModal">
+    <div class="modal-window" style="max-width: 680px;">
+      <div class="modal-header-profile">
+        <div class="modal-header-info">
+          <div class="modal-header-icon" style="background: rgba(139, 92, 246, 0.2); color: #8b5cf6;">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Quản Lý Chứng Chỉ Hoàn Thành Khóa Học</div>
+            <div class="modal-header-sub">Danh sách mẫu phôi chứng chỉ điện tử cấp tự động cho học viên</div>
+          </div>
+        </div>
+        <button class="btn-close-circle" onclick="closeModal('certificateModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body-profile">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🇯🇵</span>
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ JLPT N3 Chuyên Sâu</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>428</b> học viên • Tiêu chuẩn: Hoàn
+                  thành 100% bài học</div>
+              </div>
+            </div>
+            <span class="tab-count count-approved" style="font-size: 0.78rem;">Đang cấp phát</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🇬🇧</span>
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ Business English & IELTS 6.5+</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>315</b> học viên • Tiêu chuẩn: Điểm
+                  test cuối khóa >= 80%</div>
+              </div>
+            </div>
+            <span class="tab-count count-approved" style="font-size: 0.78rem;">Đang cấp phát</span>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🇰🇷</span>
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ Tiếng Hàn Giao Tiếp Sơ Cấp TOPIK I
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>182</b> học viên • Tiêu chuẩn: Hoàn
+                  thành giáo trình</div>
+              </div>
+            </div>
+            <span class="tab-count count-approved" style="font-size: 0.78rem;">Đang cấp phát</span>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn-cancel-pill" onclick="closeModal('certificateModal')">Đóng</button>
+          <button class="btn-primary-grad"
+            onclick="showToast('Thêm mẫu', 'Tính năng tải lên template phôi chứng chỉ SVG/PDF mới', 'info')"><i
+              class="fa-solid fa-plus"></i> Thêm Mẫu Mới</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openAssignmentModal() {
+      document.getElementById('assignmentModal').classList.add('show');
+    }
+
+    function openCertificateModal() {
+      document.getElementById('certificateModal').classList.add('show');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    function toggleAdminNotif(e) {
+      if (e) e.stopPropagation();
+      const menuDd = document.getElementById('adminMenuDropdown');
+      if (menuDd) menuDd.classList.remove('show');
+      const dropdown = document.getElementById('adminNotifDropdown');
+      if (dropdown) dropdown.classList.toggle('show');
+    }
+
+    function toggleAdminMenu(e) {
+      if (e) e.stopPropagation();
+      const notifDd = document.getElementById('adminNotifDropdown');
+      if (notifDd) notifDd.classList.remove('show');
+      const dropdown = document.getElementById('adminMenuDropdown');
+      if (dropdown) dropdown.classList.toggle('show');
+    }
+
+    // Đóng dropdown khi click ngoài
+    document.addEventListener('click', (e) => {
+      const notifDd = document.getElementById('adminNotifDropdown');
+      if (notifDd && !e.target.closest('#adminBellBtn') && !e.target.closest('#adminNotifDropdown')) {
+        notifDd.classList.remove('show');
+      }
+      const menuDd = document.getElementById('adminMenuDropdown');
+      if (menuDd && !e.target.closest('#adminMenuBtn') && !e.target.closest('#adminMenuDropdown')) {
+        menuDd.classList.remove('show');
+      }
+    });
+
+    // Dữ liệu Top 5 khóa học bán chạy theo từng kỳ
+    const bestsellerData = {
+      today: [
+        { rank: 1, name: "🇯🇵 Luyện Thi JLPT N3 Toàn Diện", teacher: "Thầy Kenji Tanaka", sales: "18 lượt mua", revenue: "2.1 tr", price: "1,690,000đ", lang: "Tiếng Nhật", comp: "94%" },
+        { rank: 2, name: "🇬🇧 Business English Giao Tiếp", teacher: "Cô Emily Watson", sales: "14 lượt mua", revenue: "1.6 tr", price: "1,450,000đ", lang: "Tiếng Anh", comp: "88%" },
+        { rank: 3, name: "🇯🇵 Tiếng Nhật N5 Cho Người Mới", teacher: "Sensei Aoi", sales: "12 lượt mua", revenue: "1.2 tr", price: "790,000đ", lang: "Tiếng Nhật", comp: "91%" },
+        { rank: 4, name: "🇬🇧 Phát Âm Chuẩn IPA Quốc Tế", teacher: "Thầy David Miller", sales: "8 lượt mua", revenue: "850k", price: "690,000đ", lang: "Tiếng Anh", comp: "96%" },
+        { rank: 5, name: "🇯🇵 Luyện Nghe Dokkai N2", teacher: "Thầy Kenji Tanaka", sales: "5 lượt mua", revenue: "620k", price: "1,890,000đ", lang: "Tiếng Nhật", comp: "85%" }
+      ],
+      week: [
+        { rank: 1, name: "🇯🇵 Luyện Thi JLPT N3 Toàn Diện", teacher: "Thầy Kenji Tanaka", sales: "92 lượt mua", revenue: "12.4 tr", price: "1,690,000đ", lang: "Tiếng Nhật", comp: "94%" },
+        { rank: 2, name: "🇬🇧 Business English Giao Tiếp", teacher: "Cô Emily Watson", sales: "74 lượt mua", revenue: "9.2 tr", price: "1,450,000đ", lang: "Tiếng Anh", comp: "88%" },
+        { rank: 3, name: "🇯🇵 Kanji & Từ Vựng N4", teacher: "Sensei Yamada", sales: "58 lượt mua", revenue: "6.8 tr", price: "890,000đ", lang: "Tiếng Nhật", comp: "92%" },
+        { rank: 4, name: "🇬🇧 IELTS Speaking 7.5+", teacher: "Thầy David Miller", sales: "45 lượt mua", revenue: "5.5 tr", price: "1,550,000đ", lang: "Tiếng Anh", comp: "89%" },
+        { rank: 5, name: "🇯🇵 Tiếng Nhật N5 Cơ Bản", teacher: "Sensei Aoi", sales: "40 lượt mua", revenue: "4.8 tr", price: "790,000đ", lang: "Tiếng Nhật", comp: "91%" }
+      ],
+      month: [
+        { rank: 1, name: "🇯🇵 Luyện Thi JLPT N3 Toàn Diện", teacher: "Thầy Kenji Tanaka", sales: "340 lượt mua", revenue: "45.2 tr", price: "1,690,000đ", lang: "Tiếng Nhật", comp: "94%" },
+        { rank: 2, name: "🇬🇧 Business English Giao Tiếp", teacher: "Cô Emily Watson", sales: "285 lượt mua", revenue: "38.6 tr", price: "1,450,000đ", lang: "Tiếng Anh", comp: "88%" },
+        { rank: 3, name: "🇯🇵 Kanji & Từ Vựng N4", teacher: "Sensei Yamada", sales: "210 lượt mua", revenue: "24.5 tr", price: "890,000đ", lang: "Tiếng Nhật", comp: "92%" },
+        { rank: 4, name: "🇬🇧 IELTS Speaking 7.5+", teacher: "Thầy David Miller", sales: "175 lượt mua", revenue: "21.0 tr", price: "1,550,000đ", lang: "Tiếng Anh", comp: "89%" },
+        { rank: 5, name: "🇯🇵 Tiếng Nhật Giao Tiếp Đời Sống", teacher: "Sensei Aoi", sales: "140 lượt mua", revenue: "16.8 tr", price: "1,200,000đ", lang: "Tiếng Nhật", comp: "91%" }
+      ],
+      year: [
+        { rank: 1, name: "🇯🇵 Luyện Thi JLPT N3 Toàn Diện", teacher: "Thầy Kenji Tanaka", sales: "3,820 lượt", revenue: "520 tr", price: "1,690,000đ", lang: "Tiếng Nhật", comp: "94%" },
+        { rank: 2, name: "🇬🇧 Business English Giao Tiếp", teacher: "Cô Emily Watson", sales: "3,150 lượt", revenue: "420 tr", price: "1,450,000đ", lang: "Tiếng Anh", comp: "88%" },
+        { rank: 3, name: "🇯🇵 Kanji & Từ Vựng N4", teacher: "Sensei Yamada", sales: "2,400 lượt", revenue: "285 tr", price: "890,000đ", lang: "Tiếng Nhật", comp: "92%" },
+        { rank: 4, name: "🇬🇧 IELTS Speaking 7.5+", teacher: "Thầy David Miller", sales: "1,980 lượt", revenue: "240 tr", price: "1,550,000đ", lang: "Tiếng Anh", comp: "89%" },
+        { rank: 5, name: "🇯🇵 Tiếng Nhật N5 Toàn Tập", teacher: "Sensei Aoi", sales: "1,650 lượt", revenue: "195 tr", price: "790,000đ", lang: "Tiếng Nhật", comp: "91%" }
+      ]
+    };
+
+    // Toàn bộ các khóa học đã bán (phục vụ Xem tất cả)
+    const allSoldCoursesData = {
+      today: [
+        ...bestsellerData.today,
+        { rank: 6, name: "🇬🇧 Tiếng Anh Cho Người Mất Gốc", teacher: "Cô Sarah Nguyen", sales: "4 lượt mua", revenue: "500k", price: "550,000đ", lang: "Tiếng Anh", comp: "83%" },
+        { rank: 7, name: "🇯🇵 Hội Thoại Kaiwa Thương Mại", teacher: "Sensei Takahashi", sales: "3 lượt mua", revenue: "420k", price: "1,350,000đ", lang: "Tiếng Nhật", comp: "90%" }
+      ],
+      week: [
+        ...bestsellerData.week,
+        { rank: 6, name: "🇬🇧 Tiếng Anh Cho Người Mất Gốc", teacher: "Cô Sarah Nguyen", sales: "35 lượt mua", revenue: "4.2 tr", price: "550,000đ", lang: "Tiếng Anh", comp: "83%" },
+        { rank: 7, name: "🇯🇵 Hội Thoại Kaiwa Thương Mại", teacher: "Sensei Takahashi", sales: "28 lượt mua", revenue: "3.8 tr", price: "1,350,000đ", lang: "Tiếng Nhật", comp: "90%" },
+        { rank: 8, name: "🇬🇧 Luyện Đọc TOEIC 800+", teacher: "Thầy Paul John", sales: "22 lượt mua", revenue: "2.9 tr", price: "980,000đ", lang: "Tiếng Anh", comp: "87%" }
+      ],
+      month: [
+        ...bestsellerData.month,
+        { rank: 6, name: "🇬🇧 Tiếng Anh Cho Người Mất Gốc", teacher: "Cô Sarah Nguyen", sales: "120 lượt mua", revenue: "14.2 tr", price: "550,000đ", lang: "Tiếng Anh", comp: "83%" },
+        { rank: 7, name: "🇯🇵 Hội Thoại Kaiwa Thương Mại", teacher: "Sensei Takahashi", sales: "98 lượt mua", revenue: "12.8 tr", price: "1,350,000đ", lang: "Tiếng Nhật", comp: "90%" },
+        { rank: 8, name: "🇬🇧 Luyện Đọc TOEIC 800+", teacher: "Thầy Paul John", sales: "85 lượt mua", revenue: "10.5 tr", price: "980,000đ", lang: "Tiếng Anh", comp: "87%" },
+        { rank: 9, name: "🇯🇵 Kanji Siêu Tốc N3", teacher: "Thầy Kenji Tanaka", sales: "76 lượt mua", revenue: "8.9 tr", price: "890,000đ", lang: "Tiếng Nhật", comp: "93%" },
+        { rank: 10, name: "🇬🇧 Viết Luận Email Chuyên Nghiệp", teacher: "Cô Emily Watson", sales: "64 lượt mua", revenue: "7.2 tr", price: "750,000đ", lang: "Tiếng Anh", comp: "95%" }
+      ],
+      year: [
+        ...bestsellerData.year,
+        { rank: 6, name: "🇬🇧 Tiếng Anh Cho Người Mất Gốc", teacher: "Cô Sarah Nguyen", sales: "1,420 lượt", revenue: "165 tr", price: "550,000đ", lang: "Tiếng Anh", comp: "83%" },
+        { rank: 7, name: "🇯🇵 Hội Thoại Kaiwa Thương Mại", teacher: "Sensei Takahashi", sales: "1,150 lượt", revenue: "145 tr", price: "1,350,000đ", lang: "Tiếng Nhật", comp: "90%" },
+        { rank: 8, name: "🇬🇧 Luyện Đọc TOEIC 800+", teacher: "Thầy Paul John", sales: "980 lượt", revenue: "120 tr", price: "980,000đ", lang: "Tiếng Anh", comp: "87%" }
+      ]
+    };
+
+    let currentBestsellerPeriod = 'month';
+    let currentModalPeriod = 'month';
+
+    // Chart.js: Tăng trưởng doanh thu (Line & Area)
+    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+    const chartConfigs = {
+      today: {
+        labels: ['0h - 4h', '4h - 8h', '8h - 12h', '12h - 16h', '16h - 20h', '20h - 24h'],
+        data: [150000, 320000, 1420000, 1180000, 890000, 560000],
+        title: 'Tăng Trưởng Doanh Thu Hôm Nay (VNĐ)'
+      },
+      week: {
+        labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ Nhật'],
+        data: [3800000, 4200000, 3900000, 4800000, 5200000, 4100000, 3800000],
+        title: 'Tăng Trưởng Doanh Thu Tuần Này (VNĐ)'
+      },
+      month: {
+        labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4'],
+        data: [26000000, 31500000, 34200000, 36800000],
+        title: 'Tăng Trưởng Doanh Thu Tháng (VNĐ)'
+      },
+      year: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        data: [310000000, 365000000, 355000000, 390000000],
+        title: 'Tăng Trưởng Doanh Thu Năm Này (VNĐ)'
+      }
+    };
+
+    const revenueGradient = ctxRevenue.createLinearGradient(0, 0, 0, 240);
+    revenueGradient.addColorStop(0, 'rgba(11, 99, 229, 0.35)');
+    revenueGradient.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
+
+    const revenueChart = new Chart(ctxRevenue, {
+      type: 'line',
+      data: {
+        labels: chartConfigs['month'].labels,
+        datasets: [{
+          label: 'Doanh thu (VNĐ)',
+          data: chartConfigs['month'].data,
+          borderColor: '#0b63e5',
+          borderWidth: 3,
+          backgroundColor: revenueGradient,
+          fill: true,
+          tension: 0.35,
+          pointBackgroundColor: '#ffffff',
+          pointBorderColor: '#8b5cf6',
+          pointBorderWidth: 2,
+          pointRadius: 4,
+          pointHoverRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#0f172a',
+            padding: 10,
+            callbacks: {
+              label: function (context) {
+                return ' ' + context.parsed.y.toLocaleString('vi-VN') + ' đ';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false }
+          },
+          y: {
+            grid: { color: 'rgba(226, 232, 240, 0.7)' },
+            ticks: {
+              callback: function (value) {
+                if (value >= 1000000000) return (value / 1000000000).toFixed(1) + ' tỷ';
+                if (value >= 1000000) return (value / 1000000) + ' tr';
+                if (value >= 1000) return (value / 1000) + ' k';
+                return value;
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Chart.js: Donut Cơ cấu ngôn ngữ
+    const ctxDonut = document.getElementById('langDonutChart').getContext('2d');
+    const donutChart = new Chart(ctxDonut, {
+      type: 'doughnut',
+      data: {
+        labels: ['Tiếng Nhật', 'Tiếng Anh'],
+        datasets: [{
+          data: [62, 38],
+          backgroundColor: ['#0b63e5', '#ec4899'],
+          borderWidth: 0,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '72%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return ' ' + context.label + ': ' + context.parsed + '%';
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Thay đổi bộ lọc thời gian: Cập nhật Doanh thu (% tăng/giảm), Tài khoản (+cộng bao nhiêu), Biểu đồ
+    function updateTimeFilter(period, btn) {
+      document.querySelectorAll('.time-filter-wrap .time-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const revEl = document.getElementById('statRevenue');
+      const revTrendEl = document.getElementById('statRevenueTrend');
+      const usersEl = document.getElementById('statUsers');
+      const usersTrendEl = document.getElementById('statUsersTrend');
+      const chartTitleEl = document.getElementById('revenueChartTitle');
+      const donutTotalEl = document.getElementById('donutTotalVal');
+      const jpBadge = document.getElementById('jpPercentBadge');
+      const enBadge = document.getElementById('enPercentBadge');
+
+      if (period === 'today') {
+        revEl.textContent = '4,520,000đ';
+        revTrendEl.className = 'stat-trend trend-up';
+        revTrendEl.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i> +5.8% so với hôm qua';
+
+        usersEl.textContent = '15,420';
+        usersTrendEl.className = 'stat-trend trend-up';
+        usersTrendEl.innerHTML = '<i class="fa-solid fa-user-plus"></i> +24 thành viên mới hôm nay';
+
+        donutTotalEl.textContent = '4.52 tr';
+        donutChart.data.datasets[0].data = [65, 35];
+        jpBadge.textContent = '65% (2.9 tr)';
+        enBadge.textContent = '35% (1.6 tr)';
+      } else if (period === 'week') {
+        revEl.textContent = '29,800,000đ';
+        revTrendEl.className = 'stat-trend trend-down';
+        revTrendEl.innerHTML = '<i class="fa-solid fa-arrow-trend-down"></i> -2.4% so với tuần trước';
+
+        usersEl.textContent = '15,420';
+        usersTrendEl.className = 'stat-trend trend-up';
+        usersTrendEl.innerHTML = '<i class="fa-solid fa-user-plus"></i> +185 thành viên mới tuần này';
+
+        donutTotalEl.textContent = '29.8 tr';
+        donutChart.data.datasets[0].data = [60, 40];
+        jpBadge.textContent = '60% (17.8 tr)';
+        enBadge.textContent = '40% (12.0 tr)';
+      } else if (period === 'month') {
+        revEl.textContent = '128,500,000đ';
+        revTrendEl.className = 'stat-trend trend-up';
+        revTrendEl.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i> +18.4% so với tháng trước';
+
+        usersEl.textContent = '15,420';
+        usersTrendEl.className = 'stat-trend trend-up';
+        usersTrendEl.innerHTML = '<i class="fa-solid fa-user-plus"></i> +850 thành viên mới tháng này';
+
+        donutTotalEl.textContent = '128.5 tr';
+        donutChart.data.datasets[0].data = [62, 38];
+        jpBadge.textContent = '62% (79.6 tr)';
+        enBadge.textContent = '38% (48.9 tr)';
+      } else if (period === 'year') {
+        revEl.textContent = '1,420,000,000đ';
+        revTrendEl.className = 'stat-trend trend-up';
+        revTrendEl.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i> +34.2% so với năm trước';
+
+        usersEl.textContent = '15,420';
+        usersTrendEl.className = 'stat-trend trend-up';
+        usersTrendEl.innerHTML = '<i class="fa-solid fa-user-plus"></i> +3,420 thành viên mới năm nay';
+
+        donutTotalEl.textContent = '1.42 tỷ';
+        donutChart.data.datasets[0].data = [58, 42];
+        jpBadge.textContent = '58% (823.6 tr)';
+        enBadge.textContent = '42% (596.4 tr)';
+      }
+
+      // Cập nhật biểu đồ doanh thu tương ứng
+      if (chartConfigs[period]) {
+        chartTitleEl.innerHTML = `<i class="fa-solid fa-chart-line"></i> ${chartConfigs[period].title}`;
+        revenueChart.data.labels = chartConfigs[period].labels;
+        revenueChart.data.datasets[0].data = chartConfigs[period].data;
+        revenueChart.update();
+        donutChart.update();
+      }
+
+      // Đồng bộ sang tab khóa học bán chạy
+      const tabMatch = document.querySelector(`.bestseller-period-tabs button[onclick*="'${period}'"]`);
+      if (tabMatch) {
+        updateBestsellerPeriod(period, tabMatch);
+      }
+    }
+
+    // Cuộn màn hình mượt xuống từng phần khi ấn menu
+    function scrollToSection(sectionId, btn) {
+      const target = document.getElementById(sectionId);
+      if (target) {
+        const offset = 145;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elemRect = target.getBoundingClientRect().top;
+        const elemPos = elemRect - bodyRect;
+        const offsetPos = elemPos - offset;
+
+        window.scrollTo({
+          top: offsetPos,
+          behavior: 'smooth'
+        });
+
+        document.querySelectorAll('.quick-nav-item').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+      }
+    }
+
+    // Tự động làm sáng nút menu khi cuộn chuột qua từng phần
+    window.addEventListener('scroll', () => {
+      const sections = ['sec-overview', 'sec-charts', 'sec-orders', 'sec-bestsellers'];
+      const scrollPos = window.scrollY + 170;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const sec = document.getElementById(sections[i]);
+        if (sec && sec.offsetTop <= scrollPos) {
+          document.querySelectorAll('.quick-nav-item').forEach(btn => {
+            if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(sections[i])) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+          break;
+        }
+      }
+    });
+
+    // Render 5 khóa học bán chạy nhất vào danh sách (Bảng Compact Full-Width hiển thị trọn vẹn không cần cuộn ngang)
+    function renderBestsellerList(period) {
+      const container = document.getElementById('bestsellerListContainer');
+      const items = bestsellerData[period] || bestsellerData['month'];
+
+      container.innerHTML = `
+        <div class="table-responsive">
+          <table class="admin-table bestseller-table">
+            <thead>
+              <tr>
+                <th style="width: 44px; text-align: center;">#</th>
+                <th>Khóa Học & Giảng Viên</th>
+                <th style="width: 95px;">Ngôn Ngữ</th>
+                <th style="width: 95px;">Đơn Giá</th>
+                <th style="width: 80px;">Lượt Bán</th>
+                <th style="width: 95px;">Doanh Thu</th>
+                <th style="width: 105px;">Hoàn Thành</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${items.map(c => `
+                <tr>
+                  <td style="text-align: center;">
+                    <span class="top-course-rank-sm rank-${c.rank}" style="margin: 0 auto;">${c.rank}</span>
+                  </td>
+                  <td>
+                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.85rem; line-height: 1.35;">${c.name}</div>
+                    <div style="font-size: 0.74rem; color: var(--text-sub); margin-top: 2px; display: flex; align-items: center; gap: 5px;">
+                      <i class="fa-solid fa-chalkboard-user" style="color: var(--primary-color); font-size: 0.72rem;"></i>
+                      <span>${c.teacher}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge-role" style="background: ${c.lang.includes('Nhật') ? 'rgba(11, 99, 229, 0.08)' : 'rgba(236, 72, 153, 0.08)'}; color: ${c.lang.includes('Nhật') ? '#0b63e5' : '#ec4899'}; font-weight: 700; padding: 2px 8px; border-radius: 9999px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+                      ${c.lang}
+                    </span>
+                  </td>
+                  <td><strong style="color: #475569; font-size: 0.82rem;">${c.price}</strong></td>
+                  <td>
+                    <span style="font-weight: 800; color: #0b63e5; font-size: 0.82rem;">${c.sales}</span>
+                  </td>
+                  <td>
+                    <span style="font-weight: 800; color: #16a34a; font-size: 0.84rem;">${c.revenue}</span>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                      <span style="font-weight: 800; font-size: 0.78rem; color: #0f172a;">${c.comp}</span>
+                      <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 9999px; overflow: hidden; flex-shrink: 0;">
+                        <div style="width: ${c.comp}; height: 100%; background: linear-gradient(90deg, #10b981, #0b63e5); border-radius: 9999px;"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    // Chuyển tab thời gian của mục Khóa học bán chạy
+    function updateBestsellerPeriod(period, btn) {
+      currentBestsellerPeriod = period;
+      document.querySelectorAll('#sec-bestsellers .bestseller-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderBestsellerList(period);
+    }
+
+    // Modal Xem tất cả khóa học đã bán
+    function openAllCoursesModal() {
+      document.getElementById('allCoursesModal').classList.add('show');
+      renderModalTable(currentBestsellerPeriod);
+    }
+
+    function closeAllCoursesModal() {
+      document.getElementById('allCoursesModal').classList.remove('show');
+    }
+
+    function filterModalCourses(period, btn) {
+      currentModalPeriod = period;
+      document.querySelectorAll('#allCoursesModal .bestseller-tab').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderModalTable(period);
+    }
+
+    function renderModalTable(period, searchKeyword = '') {
+      const tbody = document.getElementById('allCoursesTableBody');
+      let list = allSoldCoursesData[period] || allSoldCoursesData['month'];
+
+      if (searchKeyword) {
+        const kw = searchKeyword.toLowerCase();
+        list = list.filter(c => c.name.toLowerCase().includes(kw) || c.teacher.toLowerCase().includes(kw));
+      }
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #94a3b8; padding: 2rem;">Không tìm thấy khóa học nào phù hợp.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(c => `
+        <tr>
+          <td><span class="top-course-rank rank-${c.rank <= 3 ? c.rank : 5}" style="margin: 0 auto;">${c.rank}</span></td>
+          <td>
+            <div style="font-weight: 800; color: #0f172a;">${c.name}</div>
+            <div style="font-size: 0.78rem; color: #64748b;">${c.teacher}</div>
+          </td>
+          <td><span style="font-weight: 700; font-size: 0.8rem;">${c.lang}</span></td>
+          <td style="font-weight: 700; color: #475569;">${c.price}</td>
+          <td><strong style="color: #0b63e5;">${c.sales}</strong> lượt</td>
+          <td style="font-weight: 800; color: #16a34a;">${c.revenue}</td>
+          <td><span class="badge-status status-success">${c.comp}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function searchModalCourses() {
+      const kw = document.getElementById('courseSearchInput').value.trim();
+      renderModalTable(currentModalPeriod, kw);
+    }
+
+    // Đóng modal khi bấm ra ngoài
+    document.getElementById('allCoursesModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('allCoursesModal')) {
+        closeAllCoursesModal();
+      }
+    });
+
+    // Khởi chạy mặc định danh sách 5 khóa học bán chạy nhất (Tháng này)
+    renderBestsellerList('month');
+
+    // Quản lý phiên Quản trị viên
+    let adminUser = null;
+    try {
+      adminUser = JSON.parse(localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+    } catch (e) { adminUser = null; }
+
+    if (adminUser) {
+      document.querySelectorAll('.user-capsule-name').forEach(el => el.textContent = adminUser.name || 'Admin LHD');
+    }
+
+    function logoutAdmin() {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_info');
+      localStorage.removeItem('lhd_user_session');
+      localStorage.removeItem('lhd_learning_logged_in');
+      sessionStorage.clear();
+      window.location.href = '../auth/login.html';
+    }
+  </script>
+</body>
+
+</html>

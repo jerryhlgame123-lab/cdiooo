@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo Cáo Doanh Thu & Rút Tiền (Earnings Studio) | LHD Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #0b63e5;
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --accent-purple: #7c3aed;
+      --accent-pink: #ec4899;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --shadow-sm: 0 4px 16px rgba(11, 99, 229, 0.04);
+      --shadow-md: 0 10px 30px rgba(11, 99, 229, 0.08);
+      --shadow-glow: 0 12px 32px rgba(124, 58, 237, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+    }
+
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    .bg-blob-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #c084fc 0%, #f472b6 100%);
+      top: -120px;
+      right: -80px;
+    }
+    .bg-blob-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, #67e8f9 0%, #a855f7 100%);
+      bottom: -100px;
+      left: -100px;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-left-group, .nav-user-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 2px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.15);
+    }
+
+    .bell-badge, .cart-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .user-capsule:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown.show { display: flex; }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      object-fit: cover !important;
+    }
+
+    .menu-banner-meta { flex: 1 !important; min-width: 0 !important; }
+    .menu-banner-name { font-size: 0.92rem !important; font-weight: 800 !important; color: #ffffff !important; }
+    .menu-banner-sub { font-size: 0.72rem !important; color: #cbd5e1 !important; }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center;
+      font-size: 0.8rem !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.84rem !important;
+      cursor: pointer !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+    }
+
+    /* LAYOUT */
+    .app-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75rem;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.5rem 0.75rem 1.1rem;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-grad);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+
+    .sidebar-brand-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+    .sidebar-brand-sub { font-size: 0.72rem; color: var(--text-sub); }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 0.6rem;
+      padding-left: 0.8rem;
+    }
+
+    .sidebar-card .nav-group-title:not(:first-child) {
+      border-top: 1px solid #f1f5f9;
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(11, 99, 229, 0.07);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+      background: var(--primary-grad);
+      color: white;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.28);
+    }
+
+    .badge-count {
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.06);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .sidebar-link.active .badge-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* 4 FINANCIAL KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 22px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .kpi-badge-trend {
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .trend-up { background: #dcfce7; color: #15803d; }
+    .trend-neutral { background: #f1f5f9; color: #475569; }
+
+    .kpi-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    /* FINANCIAL HERO PAYOUT & BANK SECTION */
+    .payout-hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .payout-card {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
+      border-radius: 26px;
+      padding: 2.2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .payout-glow {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ec4899 0%, #8b5cf6 70%, transparent 90%);
+      filter: blur(35px);
+      opacity: 0.5;
+    }
+
+    .payout-balance-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .payout-balance-amount {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+
+    .payout-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-withdraw-now {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.8rem;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-withdraw-now:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.55);
+    }
+
+    .btn-payout-history {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.85rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* BANK ACCOUNTS CARD */
+    .bank-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 26px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .bank-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      margin-bottom: 10px;
+    }
+
+    .bank-logo-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #005f3b;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+
+    .bank-name {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .bank-acc {
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* CHART & STATEMENTS SECTION */
+    .section-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 26px;
+      padding: 1.85rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+    }
+
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* INTERACTIVE EARNINGS BARS */
+    .chart-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.5rem;
+      height: 220px;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1.5px solid #e2e8f0;
+      margin-bottom: 1rem;
+    }
+
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .chart-bar {
+      width: 100%;
+      max-width: 54px;
+      border-radius: 12px 12px 4px 4px;
+      background: linear-gradient(180deg, #7c3aed 0%, #0b63e5 100%);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .chart-bar:hover {
+      background: linear-gradient(180deg, #ec4899 0%, #7c3aed 100%);
+      transform: scaleY(1.04);
+    }
+
+    .chart-tooltip {
+      position: absolute;
+      top: -36px;
+      background: #0f172a;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .chart-bar:hover .chart-tooltip {
+      opacity: 1;
+    }
+
+    .chart-month {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-top: 8px;
+    }
+
+    /* TABLE */
+    .transactions-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .transactions-table th {
+      text-align: left;
+      padding: 0.85rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .transactions-table td {
+      padding: 1rem;
+      font-size: 0.88rem;
+      color: #1e293b;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .tx-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .tx-success { background: #dcfce7; color: #15803d; }
+    .tx-pending { background: #fef3c7; color: #92400e; }
+
+    /* WITHDRAW MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active { display: flex; animation: fadeIn 0.25s ease; }
+
+    .modal-card {
+      background: white;
+      border-radius: 28px;
+      max-width: 520px;
+      width: 100%;
+      padding: 2.4rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .modal-title { font-size: 1.35rem; font-weight: 900; color: #0f172a; }
+    .modal-close-btn { background: none; border: none; font-size: 1.25rem; color: #94a3b8; cursor: pointer; }
+
+    .amount-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .chip-btn {
+      padding: 6px 12px;
+      border-radius: 9999px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      background: #eff6ff;
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .app-layout { flex-direction: column; padding: 1.25rem; }
+      .sidebar { width: 100%; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+      .payout-hero-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="home.html">Trang chủ</a></li>
+        <li><a href="../courses.html">Khóa học</a></li>
+        <li><a href="home.html#about">Giới thiệu</a></li>
+        <li><a href="home.html#footer">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-actions-user" id="navActionsUser">
+        <!-- Thông báo & Giỏ hàng -->
+        <div class="nav-user-left-group">
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="headerBellBtn" onclick="toggleBellDropdown(event)" title="Thông báo hệ thống">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="headerBellBadge" style="display: none;">0</span>
+            </button>
+
+            <div class="nav-dropdown" id="bellDropdown" style="min-width: 340px; max-width: 380px; left: 0; right: auto; padding: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; margin-bottom: 8px;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Thông báo mới</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" onclick="markAllNotificationsRead()" style="background: none; border: none; color: #0b63e5; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Đã đọc</button>
+                  <span style="color: #cbd5e1; font-size: 0.75rem;">•</span>
+                  <button type="button" onclick="clearAllNotifications(event)" style="background: none; border: none; color: #ef4444; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Xóa tất cả</button>
+                </div>
+              </div>
+              <div id="bellNotificationList" style="max-height: 360px; overflow-y: auto;"></div>
+            </div>
+          </div>
+
+          <a href="../cart.html" class="nav-circle-btn btn-cart" title="Giỏ hàng">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+          </a>
+        </div>
+
+        <div class="nav-user-divider"></div>
+
+        <!-- Tài khoản & Menu -->
+        <div class="nav-user-right-group">
+          <a href="profile.html" class="user-capsule" id="userCapsuleBtn" title="Xem trang thông tin cá nhân">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+            <span class="user-capsule-name" id="headerUserName">Giảng viên</span>
+          </a>
+
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)" title="Menu quản lý">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-dropdown student-mega-dropdown" id="menuDropdown" style="right: 0; left: auto;">
+              <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+                <div class="menu-banner-meta">
+                  <div class="menu-banner-name" id="menuBannerName">Giảng viên Pro</div>
+                  <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
+                </div>
+              </div>
+
+              <div class="menu-group-heading" style="color: #9333ea; font-weight: 800;">Dành Cho Giảng Viên</div>
+              <a href="dashboard.html" class="student-menu-item" style="color: #7c3aed; font-weight: 800; background: rgba(124, 58, 237, 0.08); border-radius: 10px;">
+                <div class="menu-item-icon" style="background: var(--primary-grad); color: white;"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <span>Kênh Giảng Viên (Dashboard)</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Quản lý Học tập</div>
+              <a href="home.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+                <span>Trang chủ</span>
+              </a>
+              <a href="../my-courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <span>Khóa học của tôi</span>
+              </a>
+              <a href="../certificates.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-award"></i></div>
+                <span>Chứng chỉ</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Cài đặt & Hỗ trợ</div>
+              <a href="profile.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <span>Hồ sơ cá nhân</span>
+              </a>
+              <div style="padding-top: 6px;">
+                <button type="button" class="btn-menu-logout" id="btnLogoutUser" onclick="handleInstructorLogout()">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-brand-mini">
+          <div class="sidebar-brand-icon">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+          <div>
+            <div class="sidebar-brand-title">Earnings Hub</div>
+            <div class="sidebar-brand-sub">Tài chính &amp; Doanh số</div>
+          </div>
+        </div>
+
+        <div class="nav-group-title">Quản Trị Giảng Dạy</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-chart-pie"></i> Tổng quan</span>
+            </a>
+          </li>
+          <li>
+            <a href="../courses.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-book-bookmark"></i> Khóa học của tôi</span>
+            </a>
+          </li>
+          <li>
+            <a href="course-builder.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-square-plus"></i> Soạn khóa học</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Học Liệu & Đánh Giá</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="live-rooms.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-video"></i> Lớp học Live Meet</span>
+            </a>
+          </li>
+          <li>
+            <a href="qa.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-comments"></i> Hỏi đáp Q&amp;A</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Tài Chính & Cá Nhân</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="earnings.html" class="sidebar-link active">
+              <span class="sidebar-link-left"><i class="fa-solid fa-wallet"></i> Thu nhập & Doanh số</span>
+            </a>
+          </li>
+          <li>
+            <a href="profile.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-user-gear"></i> Hồ sơ giảng viên</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="handleInstructorLogout()" class="sidebar-link" style="color: #ef4444">
+              <span class="sidebar-link-left"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- 4 FINANCIAL KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon" style="background: rgba(11, 99, 229, 0.1); color: #0b63e5;">
+              <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+            <span class="kpi-badge-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +18.4%</span>
+          </div>
+          <div>
+            <div class="kpi-title">Tổng Thu Nhập Tích Lũy</div>
+            <div class="kpi-value">148.500.000 đ</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+              <i class="fa-solid fa-circle-dollar-to-slot"></i>
+            </div>
+            <span class="kpi-badge-trend trend-up" style="background: #f0fdf4; color: #16a34a;"><i class="fa-solid fa-check"></i> Sẵn sàng</span>
+          </div>
+          <div>
+            <div class="kpi-title">Số Dư Khả Dụng Rút</div>
+            <div class="kpi-value" style="color: #10b981;" id="availableBalanceText">32.850.000 đ</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <span class="kpi-badge-trend trend-neutral">7 ngày tới</span>
+          </div>
+          <div>
+            <div class="kpi-title">Đang Chờ Quyết Toán</div>
+            <div class="kpi-value">6.400.000 đ</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-top">
+            <div class="kpi-icon" style="background: rgba(124, 58, 237, 0.1); color: #7c3aed;">
+              <i class="fa-solid fa-users-viewfinder"></i>
+            </div>
+            <span class="kpi-badge-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +46</span>
+          </div>
+          <div>
+            <div class="kpi-title">Tổng Học Viên Mua</div>
+            <div class="kpi-value">1.248 HV</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYOUT & BANK SECTION -->
+      <div class="payout-hero-grid">
+        <!-- Payout Hero -->
+        <div class="payout-card">
+          <div class="payout-glow"></div>
+          <div>
+            <div class="payout-balance-title"><i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> Số Dư Khả Dụng Có Thể Rút Về Tài Khoản</div>
+            <div class="payout-balance-amount" id="payoutHeroBalance">32.850.000 đ</div>
+            <p style="font-size: 0.88rem; color: #cbd5e1; margin-bottom: 1.5rem; max-width: 480px;">
+              LHD Learning tự động miễn phí chuyển khoản vào tất cả các ngân hàng Việt Nam 24/7. Tiền về tài khoản trong 5-15 phút.
+            </p>
+          </div>
+          <div class="payout-actions">
+            <button type="button" class="btn-withdraw-now" onclick="openWithdrawModal()">
+              <i class="fa-solid fa-arrow-down-to-bracket"></i>
+              <span>Yêu Cầu Rút Tiền Ngay</span>
+            </button>
+            <button type="button" class="btn-payout-history" onclick="showToast('Đã lọc lịch sử rút tiền')">
+              <i class="fa-solid fa-receipt"></i>
+              <span>Lịch sử chi trả</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bank Account -->
+        <div class="bank-card">
+          <div>
+            <div style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+              <span><i class="fa-solid fa-building-columns" style="color: #0b63e5;"></i> Tài khoản nhận tiền</span>
+              <span style="font-size: 0.76rem; color: #10b981; font-weight: 800;"><i class="fa-solid fa-circle-check"></i> Đã xác minh</span>
+            </div>
+
+            <div class="bank-item">
+              <div class="bank-logo-box">VCB</div>
+              <div style="flex: 1;">
+                <div class="bank-name">Vietcombank - CN Sở Giao Dịch</div>
+                <div class="bank-acc">STK: **** 8899 • NGUYEN VAN A</div>
+              </div>
+              <i class="fa-solid fa-star" style="color: #f59e0b;" title="Mặc định"></i>
+            </div>
+
+            <div class="bank-item">
+              <div class="bank-logo-box" style="background: #e11d48;">TCB</div>
+              <div style="flex: 1;">
+                <div class="bank-name">Techcombank - CN Ba Đình</div>
+                <div class="bank-acc">STK: **** 3456 • NGUYEN VAN A</div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn-nav-step btn-prev" style="width: 100%; justify-content: center; padding: 0.75rem; font-size: 0.84rem;" onclick="showToast('Tính năng thêm ngân hàng mới đang được kích hoạt')">
+            <i class="fa-solid fa-plus"></i> Thêm tài khoản ngân hàng
+          </button>
+        </div>
+      </div>
+
+      <!-- 6-MONTH GROWTH CHART -->
+      <div class="section-card">
+        <div class="section-header-row">
+          <div class="section-title">
+            <i class="fa-solid fa-chart-simple" style="color: #7c3aed;"></i>
+            <span>Tăng Trưởng Doanh Thu 6 Tháng Gần Nhất (2026)</span>
+          </div>
+          <div style="font-size: 0.88rem; font-weight: 700; color: #10b981;">
+            <i class="fa-solid fa-arrow-trend-up"></i> Trung bình: 24.750.000 đ / tháng
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <div class="chart-col">
+            <div class="chart-bar" style="height: 45%;">
+              <div class="chart-tooltip">T5: 18.2M đ</div>
+            </div>
+            <div class="chart-month">Tháng 5</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-bar" style="height: 60%;">
+              <div class="chart-tooltip">T6: 22.4M đ</div>
+            </div>
+            <div class="chart-month">Tháng 6</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-bar" style="height: 55%;">
+              <div class="chart-tooltip">T7: 20.8M đ</div>
+            </div>
+            <div class="chart-month">Tháng 7</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-bar" style="height: 75%;">
+              <div class="chart-tooltip">T8: 26.5M đ</div>
+            </div>
+            <div class="chart-month">Tháng 8</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-bar" style="height: 85%;">
+              <div class="chart-tooltip">T9: 29.8M đ</div>
+            </div>
+            <div class="chart-month">Tháng 9</div>
+          </div>
+          <div class="chart-col">
+            <div class="chart-bar" style="height: 95%; background: linear-gradient(180deg, #ec4899 0%, #7c3aed 100%);">
+              <div class="chart-tooltip">T10: 32.8M đ (Hiện tại)</div>
+            </div>
+            <div class="chart-month" style="color: #7c3aed; font-weight: 800;">Tháng 10</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETAILED TRANSACTIONS STATEMENT -->
+      <div class="section-card">
+        <div class="section-header-row">
+          <div class="section-title">
+            <i class="fa-solid fa-receipt" style="color: #0b63e5;"></i>
+            <span>Sao Kê Lịch Sử Giao Dịch &amp; Đăng Ký Khóa Học</span>
+          </div>
+          <button type="button" class="btn-nav-step btn-prev" style="padding: 0.6rem 1.2rem; font-size: 0.84rem;" onclick="exportExcel()">
+            <i class="fa-solid fa-file-excel" style="color: #10b981;"></i> Xuất báo cáo Excel
+          </button>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="transactions-table">
+            <thead>
+              <tr>
+                <th>Mã đơn hàng</th>
+                <th>Học viên</th>
+                <th>Khóa học</th>
+                <th>Thời gian</th>
+                <th>Học phí</th>
+                <th>Thực nhận (85%)</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: #0b63e5;">#ORD-2026-9842</strong></td>
+                <td><strong>Nguyễn Văn An</strong></td>
+                <td>Luyện Thi IELTS 7.5+ Cấp Tốc</td>
+                <td>05/10/2026 14:20</td>
+                <td>1.290.000 đ</td>
+                <td><strong style="color: #10b981;">+1.096.500 đ</strong></td>
+                <td><span class="tx-badge tx-success"><i class="fa-solid fa-check"></i> Đã quyết toán</span></td>
+              </tr>
+              <tr>
+                <td><strong style="color: #0b63e5;">#ORD-2026-9841</strong></td>
+                <td><strong>Trần Minh Thư</strong></td>
+                <td>Luyện Thi IELTS 7.5+ Cấp Tốc</td>
+                <td>05/10/2026 11:15</td>
+                <td>1.290.000 đ</td>
+                <td><strong style="color: #10b981;">+1.096.500 đ</strong></td>
+                <td><span class="tx-badge tx-success"><i class="fa-solid fa-check"></i> Đã quyết toán</span></td>
+              </tr>
+              <tr>
+                <td><strong style="color: #0b63e5;">#ORD-2026-9839</strong></td>
+                <td><strong>Lê Hoàng Long</strong></td>
+                <td>Giải Đề Thi Thử JLPT N3 Cấp Tốc</td>
+                <td>04/10/2026 18:30</td>
+                <td>890.000 đ</td>
+                <td><strong style="color: #10b981;">+756.500 đ</strong></td>
+                <td><span class="tx-badge tx-success"><i class="fa-solid fa-check"></i> Đã quyết toán</span></td>
+              </tr>
+              <tr>
+                <td><strong style="color: #0b63e5;">#ORD-2026-9830</strong></td>
+                <td><strong>Phạm Quỳnh Nga</strong></td>
+                <td>Tiếng Trung HSK 4 Giao Tiếp</td>
+                <td>03/10/2026 09:40</td>
+                <td>990.000 đ</td>
+                <td><strong style="color: #10b981;">+841.500 đ</strong></td>
+                <td><span class="tx-badge tx-success"><i class="fa-solid fa-check"></i> Đã quyết toán</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- WITHDRAW MODAL -->
+  <div class="modal-overlay" id="withdrawModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 class="modal-title"><i class="fa-solid fa-wallet" style="color: #10b981;"></i> Yêu Cầu Rút Tiền</h3>
+        <button type="button" class="modal-close-btn" onclick="closeWithdrawModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="handleWithdrawSubmit(event)">
+        <div style="background: #f8fafc; border-radius: 16px; padding: 14px; margin-bottom: 1.25rem; border: 1.5px solid #e2e8f0;">
+          <div style="font-size: 0.82rem; color: #64748b; font-weight: 700;">Số dư khả dụng hiện tại:</div>
+          <div style="font-size: 1.5rem; font-weight: 900; color: #10b981;" id="modalAvailableBal">32.850.000 đ</div>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.88rem; font-weight: 700; color: #1e293b; margin-bottom: 0.4rem;">Số tiền muốn rút (VNĐ)</label>
+          <input type="number" id="withdrawAmountInput" class="form-input" required min="100000" max="32850000" value="10000000" style="width: 100%; padding: 0.85rem 1.1rem; border-radius: 12px; border: 1.5px solid #cbd5e1; font-size: 1.1rem; font-weight: 800; outline: none;" />
+          <div class="amount-chips">
+            <button type="button" class="chip-btn" onclick="setWithdrawAmount(5000000)">5.000.000 đ</button>
+            <button type="button" class="chip-btn" onclick="setWithdrawAmount(10000000)">10.000.000 đ</button>
+            <button type="button" class="chip-btn" onclick="setWithdrawAmount(20000000)">20.000.000 đ</button>
+            <button type="button" class="chip-btn" onclick="setWithdrawAmount(32850000)" style="color: #10b981; font-weight: 800;">Rút tất cả</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-size: 0.88rem; font-weight: 700; color: #1e293b; margin-bottom: 0.4rem;">Nhận tiền qua tài khoản</label>
+          <select class="form-select" style="width: 100%; padding: 0.8rem 1rem; border-radius: 12px; border: 1.5px solid #cbd5e1; outline: none;">
+            <option value="vcb">Vietcombank - **** 8899 (Mặc định)</option>
+            <option value="tcb">Techcombank - **** 3456</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button type="button" class="btn-nav-step btn-prev" onclick="closeWithdrawModal()">Hủy</button>
+          <button type="submit" class="btn-withdraw-now" style="padding: 0.75rem 1.6rem;">Xác Nhận Rút Tiền</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SCRIPTS -->
+  <script>
+    let currentBalance = 32850000;
+
+    function getInstructorUser() {
+      try {
+        const stored = localStorage.getItem('currentUser') || localStorage.getItem('user_info');
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error(e);
+      }
+      return {
+        name: 'Giảng Viên Pro',
+        email: 'instructor@lhd.edu.vn',
+        role: 'instructor',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+      };
+    }
+
+    function initUserHeader() {
+      const user = getInstructorUser();
+      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar;
+      
+      const headerAvatar = document.getElementById('headerUserAvatar');
+      const headerName = document.getElementById('headerUserName');
+      const menuAvatar = document.getElementById('menuBannerAvatar');
+      const menuName = document.getElementById('menuBannerName');
+      const menuEmail = document.getElementById('menuBannerEmail');
+
+      if (headerAvatar) headerAvatar.src = avatar;
+      if (headerName) headerName.textContent = user.name || 'Giảng viên';
+      if (menuAvatar) menuAvatar.src = avatar;
+      if (menuName) menuName.textContent = user.name || 'Giảng viên Pro';
+      if (menuEmail) menuEmail.textContent = user.email || 'instructor@lhd.edu.vn';
+
+      renderNotifications();
+    }
+
+    function getNotifications() {
+      try {
+        const notifs = localStorage.getItem('instructor_notifications');
+        if (notifs) return JSON.parse(notifs);
+      } catch (e) {}
+      return [
+        { id: 1, text: 'Học viên vừa thanh toán khóa IELTS 7.5+ (+1.096.500 đ)', time: '35 phút trước', read: false },
+        { id: 2, text: 'Lệnh rút tiền 10.000.000 đ đã được duyệt thành công', time: '1 ngày trước', read: true }
+      ];
+    }
+
+    function renderNotifications() {
+      const list = getNotifications();
+      const container = document.getElementById('bellNotificationList');
+      const badge = document.getElementById('headerBellBadge');
+      if (!container) return;
+
+      const unread = list.filter(n => !n.read).length;
+      if (badge) {
+        badge.textContent = unread;
+        badge.style.display = unread > 0 ? 'flex' : 'none';
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.85rem;">Không có thông báo mới</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div style="padding: 10px 12px; border-radius: 12px; margin-bottom: 6px; background: ${item.read ? '#ffffff' : '#f0fdf4'}; border: 1px solid ${item.read ? '#f1f5f9' : '#bbf7d0'}; display: flex; gap: 10px; align-items: flex-start;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: ${item.read ? '#cbd5e1' : '#10b981'}; margin-top: 6px; flex-shrink: 0;"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.84rem; font-weight: ${item.read ? '600' : '700'}; color: #1e293b;">${item.text}</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 2px;">${item.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleBellDropdown(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (m) m.classList.remove('show');
+      if (d) d.classList.toggle('show');
+    }
+
+    function toggleMegaMenu(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (d) d.classList.remove('show');
+      if (m) m.classList.toggle('show');
+    }
+
+    function markAllNotificationsRead() {
+      const list = getNotifications().map(n => ({ ...n, read: true }));
+      localStorage.setItem('instructor_notifications', JSON.stringify(list));
+      renderNotifications();
+      showToast('Đã đánh dấu tất cả thông báo là đã đọc');
+    }
+
+    function clearAllNotifications(e) {
+      e.stopPropagation();
+      localStorage.setItem('instructor_notifications', JSON.stringify([]));
+      renderNotifications();
+      showToast('Đã xóa tất cả thông báo');
+    }
+
+    function handleInstructorLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản giảng viên?')) {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user_info');
+        window.location.href = '../auth/login.html';
+      }
+    }
+
+    window.addEventListener('click', () => {
+      const b = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (b) b.classList.remove('show');
+      if (m) m.classList.remove('show');
+    });
+
+    // TOAST
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // WITHDRAW MODAL
+    function openWithdrawModal() {
+      document.getElementById('modalAvailableBal').textContent = currentBalance.toLocaleString('vi-VN') + ' đ';
+      document.getElementById('withdrawAmountInput').max = currentBalance;
+      document.getElementById('withdrawModal').classList.add('active');
+    }
+
+    function closeWithdrawModal() {
+      document.getElementById('withdrawModal').classList.remove('active');
+    }
+
+    function setWithdrawAmount(amt) {
+      document.getElementById('withdrawAmountInput').value = amt;
+    }
+
+    function handleWithdrawSubmit(e) {
+      e.preventDefault();
+      const amt = parseFloat(document.getElementById('withdrawAmountInput').value);
+      if (amt > currentBalance) {
+        alert('Số tiền rút không được vượt quá số dư khả dụng.');
+        return;
+      }
+
+      currentBalance -= amt;
+      const formatted = currentBalance.toLocaleString('vi-VN') + ' đ';
+      document.getElementById('availableBalanceText').textContent = formatted;
+      document.getElementById('payoutHeroBalance').textContent = formatted;
+
+      closeWithdrawModal();
+      showToast(`Lệnh rút ${amt.toLocaleString('vi-VN')} đ đã được khởi tạo thành công! Tiền sẽ về tài khoản Vietcombank trong 5-15 phút.`);
+    }
+
+    function exportExcel() {
+      showToast('Đang tạo và xuất báo cáo tài chính định dạng Excel...');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initUserHeader();
+    });
+  </script>
+</body>
+</html>

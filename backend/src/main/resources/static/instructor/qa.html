@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trung Tâm Hỏi Đáp & Hỗ Trợ Học Viên (Q&A Studio) | LHD Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #0b63e5;
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --accent-purple: #7c3aed;
+      --accent-pink: #ec4899;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --shadow-sm: 0 4px 16px rgba(11, 99, 229, 0.04);
+      --shadow-md: 0 10px 30px rgba(11, 99, 229, 0.08);
+      --shadow-glow: 0 12px 32px rgba(124, 58, 237, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+    }
+
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    .bg-blob-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #c084fc 0%, #f472b6 100%);
+      top: -120px;
+      right: -80px;
+    }
+    .bg-blob-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, #67e8f9 0%, #a855f7 100%);
+      bottom: -100px;
+      left: -100px;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-left-group, .nav-user-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 2px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.15);
+    }
+
+    .bell-badge, .cart-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .user-capsule:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown.show { display: flex; }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      object-fit: cover !important;
+    }
+
+    .menu-banner-meta { flex: 1 !important; min-width: 0 !important; }
+    .menu-banner-name { font-size: 0.92rem !important; font-weight: 800 !important; color: #ffffff !important; }
+    .menu-banner-sub { font-size: 0.72rem !important; color: #cbd5e1 !important; }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center;
+      font-size: 0.8rem !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.84rem !important;
+      cursor: pointer !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+    }
+
+    /* LAYOUT */
+    .app-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75rem;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.5rem 0.75rem 1.1rem;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-grad);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+
+    .sidebar-brand-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+    .sidebar-brand-sub { font-size: 0.72rem; color: var(--text-sub); }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 0.6rem;
+      padding-left: 0.8rem;
+    }
+
+    .sidebar-card .nav-group-title:not(:first-child) {
+      border-top: 1px solid #f1f5f9;
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(11, 99, 229, 0.07);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+      background: var(--primary-grad);
+      color: white;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.28);
+    }
+
+    .badge-count {
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.06);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .sidebar-link.active .badge-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* STATS ROW */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 20px;
+      padding: 1.35rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.25s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .stat-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .stat-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .stat-number {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    /* FILTER BAR */
+    .qa-filter-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 22px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.6rem;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      outline: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 14px;
+    }
+
+    .filter-btn {
+      padding: 6px 14px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn.active {
+      background: white;
+      color: #0b63e5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* THREADS LIST */
+    .threads-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .qa-thread-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 22px;
+      padding: 1.6rem 1.8rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+    }
+
+    .qa-thread-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .thread-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .student-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .student-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #e2e8f0;
+    }
+
+    .student-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .thread-meta {
+      font-size: 0.76rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .thread-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .badge-pending { background: #fef2f2; color: #dc2626; border: 1px solid #fee2e2; }
+    .badge-resolved { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+    .question-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .question-body {
+      font-size: 0.9rem;
+      color: #334155;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border-radius: 14px;
+      border-left: 3.5px solid #0b63e5;
+    }
+
+    /* INSTRUCTOR REPLIES */
+    .replies-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .reply-item {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 16px;
+      padding: 1.1rem 1.35rem;
+      position: relative;
+    }
+
+    .reply-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.5rem;
+    }
+
+    .instructor-badge-tag {
+      background: var(--primary-grad);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .reply-text {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    /* REPLY COMPOSER */
+    .reply-composer {
+      background: white;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .reply-composer:focus-within {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+
+    .composer-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .toolbar-tools {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-tool {
+      background: none;
+      border: none;
+      color: #64748b;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-tool:hover {
+      background: #f1f5f9;
+      color: #0b63e5;
+    }
+
+    .composer-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+      font-size: 0.9rem;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    .composer-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .btn-send-reply {
+      background: var(--primary-grad);
+      color: white;
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .btn-send-reply:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .app-layout { flex-direction: column; padding: 1.25rem; }
+      .sidebar { width: 100%; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .qa-filter-card { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="home.html">Trang chủ</a></li>
+        <li><a href="../courses.html">Khóa học</a></li>
+        <li><a href="home.html#about">Giới thiệu</a></li>
+        <li><a href="home.html#footer">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-actions-user" id="navActionsUser">
+        <!-- Thông báo & Giỏ hàng -->
+        <div class="nav-user-left-group">
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="headerBellBtn" onclick="toggleBellDropdown(event)" title="Thông báo hệ thống">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="headerBellBadge" style="display: none;">0</span>
+            </button>
+
+            <div class="nav-dropdown" id="bellDropdown" style="min-width: 340px; max-width: 380px; left: 0; right: auto; padding: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; margin-bottom: 8px;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Thông báo mới</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" onclick="markAllNotificationsRead()" style="background: none; border: none; color: #0b63e5; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Đã đọc</button>
+                  <span style="color: #cbd5e1; font-size: 0.75rem;">•</span>
+                  <button type="button" onclick="clearAllNotifications(event)" style="background: none; border: none; color: #ef4444; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Xóa tất cả</button>
+                </div>
+              </div>
+              <div id="bellNotificationList" style="max-height: 360px; overflow-y: auto;"></div>
+            </div>
+          </div>
+
+          <a href="../cart.html" class="nav-circle-btn btn-cart" title="Giỏ hàng">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+          </a>
+        </div>
+
+        <div class="nav-user-divider"></div>
+
+        <!-- Tài khoản & Menu -->
+        <div class="nav-user-right-group">
+          <a href="profile.html" class="user-capsule" id="userCapsuleBtn" title="Xem trang thông tin cá nhân">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+            <span class="user-capsule-name" id="headerUserName">Giảng viên</span>
+          </a>
+
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)" title="Menu quản lý">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-dropdown student-mega-dropdown" id="menuDropdown" style="right: 0; left: auto;">
+              <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+                <div class="menu-banner-meta">
+                  <div class="menu-banner-name" id="menuBannerName">Giảng viên Pro</div>
+                  <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
+                </div>
+              </div>
+
+              <div class="menu-group-heading" style="color: #9333ea; font-weight: 800;">Dành Cho Giảng Viên</div>
+              <a href="dashboard.html" class="student-menu-item" style="color: #7c3aed; font-weight: 800; background: rgba(124, 58, 237, 0.08); border-radius: 10px;">
+                <div class="menu-item-icon" style="background: var(--primary-grad); color: white;"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <span>Kênh Giảng Viên (Dashboard)</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Quản lý Học tập</div>
+              <a href="home.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+                <span>Trang chủ</span>
+              </a>
+              <a href="../my-courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <span>Khóa học của tôi</span>
+              </a>
+              <a href="../certificates.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-award"></i></div>
+                <span>Chứng chỉ</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Cài đặt & Hỗ trợ</div>
+              <a href="profile.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <span>Hồ sơ cá nhân</span>
+              </a>
+              <div style="padding-top: 6px;">
+                <button type="button" class="btn-menu-logout" id="btnLogoutUser" onclick="handleInstructorLogout()">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-brand-mini">
+          <div class="sidebar-brand-icon">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <div>
+            <div class="sidebar-brand-title">Q&amp;A Hub</div>
+            <div class="sidebar-brand-sub">Hỏi đáp &amp; Hỗ trợ học viên</div>
+          </div>
+        </div>
+
+        <div class="nav-group-title">Quản Trị Giảng Dạy</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-chart-pie"></i> Tổng quan</span>
+            </a>
+          </li>
+          <li>
+            <a href="../courses.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-book-bookmark"></i> Khóa học của tôi</span>
+            </a>
+          </li>
+          <li>
+            <a href="course-builder.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-square-plus"></i> Soạn khóa học</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Học Liệu & Đánh Giá</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="live-rooms.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-video"></i> Lớp học Live Meet</span>
+            </a>
+          </li>
+          <li>
+            <a href="qa.html" class="sidebar-link active">
+              <span class="sidebar-link-left"><i class="fa-solid fa-comments"></i> Hỏi đáp Q&amp;A</span>
+              <span class="badge-count">3 cần xử lý</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Tài Chính & Cá Nhân</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="earnings.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-wallet"></i> Thu nhập & Doanh số</span>
+            </a>
+          </li>
+          <li>
+            <a href="profile.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-user-gear"></i> Hồ sơ giảng viên</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="handleInstructorLogout()" class="sidebar-link" style="color: #ef4444">
+              <span class="sidebar-link-left"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- STATS GRID -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background: rgba(11, 99, 229, 0.1); color: #0b63e5;">
+            <i class="fa-solid fa-clipboard-question"></i>
+          </div>
+          <div>
+            <div class="stat-title">Tổng câu hỏi</div>
+            <div class="stat-number">142</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <div>
+            <div class="stat-title">Cần xử lý ngay</div>
+            <div class="stat-number" style="color: #ef4444;">3</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <div class="stat-title">Phản hồi TB</div>
+            <div class="stat-number">12 phút</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <div>
+            <div class="stat-title">Hài lòng</div>
+            <div class="stat-number">4.95 ⭐</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER & SEARCH BAR -->
+      <div class="qa-filter-card">
+        <div class="search-input-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="search-input" id="qaSearchInput" placeholder="Tìm kiếm theo học viên, tiêu đề, bài giảng..." oninput="searchQA()" />
+        </div>
+
+        <div class="filter-tabs">
+          <button type="button" class="filter-btn active" onclick="filterQA('all', this)">Tất cả</button>
+          <button type="button" class="filter-btn" onclick="filterQA('pending', this)">Chưa trả lời (3)</button>
+          <button type="button" class="filter-btn" onclick="filterQA('resolved', this)">Đã giải quyết (139)</button>
+        </div>
+
+        <select class="form-select" id="qaCourseSelect" style="width: auto; max-width: 220px; padding: 0.6rem 1rem;" onchange="searchQA()">
+          <option value="all">Tất cả khóa học</option>
+          <option value="ielts">IELTS 7.5+ Cấp Tốc</option>
+          <option value="jlpt">Tiếng Nhật JLPT N3</option>
+          <option value="hsk">Tiếng Trung HSK 4</option>
+        </select>
+      </div>
+
+      <!-- THREADS LIST -->
+      <div class="threads-container" id="qaThreadsContainer">
+        <!-- Thread 1 (Pending) -->
+        <div class="qa-thread-card" data-status="pending" data-course="ielts">
+          <div class="thread-header">
+            <div class="student-profile">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80" class="student-avatar" alt="Student" />
+              <div>
+                <div class="student-name">Nguyễn Mai Anh</div>
+                <div class="thread-meta">
+                  <span><i class="fa-solid fa-book" style="color: #0b63e5;"></i> IELTS 7.5+ • Chương 1 - Bài 3</span>
+                  <span>•</span>
+                  <span><i class="fa-regular fa-clock"></i> 8 phút trước</span>
+                </div>
+              </div>
+            </div>
+            <span class="thread-status-badge badge-pending"><i class="fa-solid fa-circle-exclamation"></i> Cần phản hồi</span>
+          </div>
+
+          <h3 class="question-title">Cách xử lý khi gặp chủ đề lạ trong Speaking Part 2 mà mình không có kiến thức thực tế?</h3>
+          <div class="question-body">
+            Chào cô ạ! Trong đề thi thật nếu giám khảo hỏi chủ đề về "Describe a piece of art or history" mà em hoàn toàn không biết gì về lịch sử nghệ thuật thì em có thể bịa chuyện (fake story) hoặc mượn câu chuyện phim ảnh để trả lời không cô? Có bị trừ điểm tiêu chí Coherence không ạ?
+          </div>
+
+          <div class="replies-list" id="replies_thread_1"></div>
+
+          <!-- Composer -->
+          <div class="reply-composer">
+            <div class="composer-toolbar">
+              <div class="toolbar-tools">
+                <button type="button" class="btn-tool" title="Đậm"><i class="fa-solid fa-bold"></i></button>
+                <button type="button" class="btn-tool" title="Nghiêng"><i class="fa-solid fa-italic"></i></button>
+                <button type="button" class="btn-tool" title="Code"><i class="fa-solid fa-code"></i></button>
+                <button type="button" class="btn-tool" onclick="insertTemplate(this, 'ielts_template')" style="color: #7c3aed; font-weight: 700;"><i class="fa-solid fa-wand-magic-sparkles"></i> Mẫu phản hồi chuẩn</button>
+              </div>
+              <span style="font-size: 0.75rem; color: #94a3b8;">Nhấn Gửi để đăng câu trả lời</span>
+            </div>
+            <textarea class="composer-textarea" placeholder="Nhập câu trả lời chi tiết và giải thích tận tâm cho Mai Anh..."></textarea>
+            <div class="composer-footer">
+              <button type="button" class="btn-tool" onclick="showToast('Đã đính kèm tài liệu!')"><i class="fa-solid fa-paperclip"></i> Đính kèm bài mẫu</button>
+              <button type="button" class="btn-send-reply" onclick="submitReply(this, 'thread_1')">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Gửi phản hồi cho học viên</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thread 2 (Pending) -->
+        <div class="qa-thread-card" data-status="pending" data-course="ielts">
+          <div class="thread-header">
+            <div class="student-profile">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=80" class="student-avatar" alt="Student" />
+              <div>
+                <div class="student-name">Trần Hoàng Long</div>
+                <div class="thread-meta">
+                  <span><i class="fa-solid fa-book" style="color: #0b63e5;"></i> IELTS 7.5+ • Chương 2 - Bài 1</span>
+                  <span>•</span>
+                  <span><i class="fa-regular fa-clock"></i> 25 phút trước</span>
+                </div>
+              </div>
+            </div>
+            <span class="thread-status-badge badge-pending"><i class="fa-solid fa-circle-exclamation"></i> Cần phản hồi</span>
+          </div>
+
+          <h3 class="question-title">Đoạn Overview trong Writing Task 1 có bắt buộc phải so sánh số liệu đầu cuối không?</h3>
+          <div class="question-body">
+            Thưa thầy cô, em xem nhiều bài mẫu band 8.0 thì đoạn Overview họ chỉ nêu xu hướng tăng giảm chung và điểm cao nhất, không ghi số liệu cụ thể. Nếu mình lỡ viết số liệu vào đoạn Overview thì có bị trừ điểm Task Achievement không ạ?
+          </div>
+
+          <div class="replies-list" id="replies_thread_2"></div>
+
+          <div class="reply-composer">
+            <div class="composer-toolbar">
+              <div class="toolbar-tools">
+                <button type="button" class="btn-tool" onclick="insertTemplate(this, 'task1_template')" style="color: #7c3aed; font-weight: 700;"><i class="fa-solid fa-wand-magic-sparkles"></i> Mẫu trả lời Task 1</button>
+              </div>
+            </div>
+            <textarea class="composer-textarea" placeholder="Nhập câu trả lời giải đáp cho Hoàng Long..."></textarea>
+            <div class="composer-footer">
+              <div></div>
+              <button type="button" class="btn-send-reply" onclick="submitReply(this, 'thread_2')">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Gửi phản hồi</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thread 3 (Resolved) -->
+        <div class="qa-thread-card" data-status="resolved" data-course="jlpt">
+          <div class="thread-header">
+            <div class="student-profile">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=80" class="student-avatar" alt="Student" />
+              <div>
+                <div class="student-name">Lê Quỳnh Trang</div>
+                <div class="thread-meta">
+                  <span><i class="fa-solid fa-book" style="color: #7c3aed;"></i> JLPT N3 • Chương 1 - Bài 5</span>
+                  <span>•</span>
+                  <span><i class="fa-regular fa-clock"></i> 3 giờ trước</span>
+                </div>
+              </div>
+            </div>
+            <span class="thread-status-badge badge-resolved"><i class="fa-solid fa-circle-check"></i> Đã giải quyết</span>
+          </div>
+
+          <h3 class="question-title">Phân biệt ngữ pháp N3: 〜に関して và 〜について</h3>
+          <div class="question-body">
+            Sensei cho em hỏi hai mẫu câu này đều dịch là "Về / Liên quan đến" thì ngữ cảnh trang trọng trong bài đọc Dokkai N3 sẽ ưu tiên dùng mẫu nào hơn ạ?
+          </div>
+
+          <div class="replies-list">
+            <div class="reply-item">
+              <div class="reply-head">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" alt="Avt" />
+                <strong style="font-size: 0.88rem; color: #0f172a;">Giảng Viên Pro</strong>
+                <span class="instructor-badge-tag">Giảng viên phụ trách</span>
+                <span style="font-size: 0.72rem; color: #94a3b8; margin-left: auto;">2 giờ trước</span>
+              </div>
+              <div class="reply-text">
+                Chào Trang nhé! Cả 2 mẫu đều có nghĩa là "về ~". Tuy nhiên, <strong>〜に関して (ni kanshite)</strong> mang sắc thái trang trọng, văn viết học thuật hoặc báo cáo kinh doanh hơn. Trong bài thi Dokkai N3, khi gặp bài văn nghị luận hoặc thông báo chính thức, tác giả thường ưu tiên dùng 〜に関して nhé em!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SCRIPTS -->
+  <script>
+    function getInstructorUser() {
+      try {
+        const stored = localStorage.getItem('currentUser') || localStorage.getItem('user_info');
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error(e);
+      }
+      return {
+        name: 'Giảng Viên Pro',
+        email: 'instructor@lhd.edu.vn',
+        role: 'instructor',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+      };
+    }
+
+    function initUserHeader() {
+      const user = getInstructorUser();
+      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar;
+      
+      const headerAvatar = document.getElementById('headerUserAvatar');
+      const headerName = document.getElementById('headerUserName');
+      const menuAvatar = document.getElementById('menuBannerAvatar');
+      const menuName = document.getElementById('menuBannerName');
+      const menuEmail = document.getElementById('menuBannerEmail');
+
+      if (headerAvatar) headerAvatar.src = avatar;
+      if (headerName) headerName.textContent = user.name || 'Giảng viên';
+      if (menuAvatar) menuAvatar.src = avatar;
+      if (menuName) menuName.textContent = user.name || 'Giảng viên Pro';
+      if (menuEmail) menuEmail.textContent = user.email || 'instructor@lhd.edu.vn';
+
+      renderNotifications();
+    }
+
+    function getNotifications() {
+      try {
+        const notifs = localStorage.getItem('instructor_notifications');
+        if (notifs) return JSON.parse(notifs);
+      } catch (e) {}
+      return [
+        { id: 1, text: 'Học viên Nguyễn Mai Anh vừa hỏi trong bài Speaking Part 2', time: '8 phút trước', read: false },
+        { id: 2, text: 'Học viên Trần Hoàng Long vừa hỏi trong bài Writing Task 1', time: '25 phút trước', read: false },
+        { id: 3, text: 'Bạn đã hoàn tất trả lời cho học viên Lê Quỳnh Trang', time: '2 giờ trước', read: true }
+      ];
+    }
+
+    function renderNotifications() {
+      const list = getNotifications();
+      const container = document.getElementById('bellNotificationList');
+      const badge = document.getElementById('headerBellBadge');
+      if (!container) return;
+
+      const unread = list.filter(n => !n.read).length;
+      if (badge) {
+        badge.textContent = unread;
+        badge.style.display = unread > 0 ? 'flex' : 'none';
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.85rem;">Không có thông báo mới</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div style="padding: 10px 12px; border-radius: 12px; margin-bottom: 6px; background: ${item.read ? '#ffffff' : '#f0fdf4'}; border: 1px solid ${item.read ? '#f1f5f9' : '#bbf7d0'}; display: flex; gap: 10px; align-items: flex-start;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: ${item.read ? '#cbd5e1' : '#10b981'}; margin-top: 6px; flex-shrink: 0;"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.84rem; font-weight: ${item.read ? '600' : '700'}; color: #1e293b;">${item.text}</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 2px;">${item.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleBellDropdown(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (m) m.classList.remove('show');
+      if (d) d.classList.toggle('show');
+    }
+
+    function toggleMegaMenu(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (d) d.classList.remove('show');
+      if (m) m.classList.toggle('show');
+    }
+
+    function markAllNotificationsRead() {
+      const list = getNotifications().map(n => ({ ...n, read: true }));
+      localStorage.setItem('instructor_notifications', JSON.stringify(list));
+      renderNotifications();
+      showToast('Đã đánh dấu tất cả thông báo là đã đọc');
+    }
+
+    function clearAllNotifications(e) {
+      e.stopPropagation();
+      localStorage.setItem('instructor_notifications', JSON.stringify([]));
+      renderNotifications();
+      showToast('Đã xóa tất cả thông báo');
+    }
+
+    function handleInstructorLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản giảng viên?')) {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user_info');
+        window.location.href = '../auth/login.html';
+      }
+    }
+
+    window.addEventListener('click', () => {
+      const b = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (b) b.classList.remove('show');
+      if (m) m.classList.remove('show');
+    });
+
+    // TOAST
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // SEARCH & FILTER
+    let currentFilterStatus = 'all';
+
+    function filterQA(status, btn) {
+      currentFilterStatus = status;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      searchQA();
+    }
+
+    function searchQA() {
+      const q = document.getElementById('qaSearchInput').value.toLowerCase().trim();
+      const course = document.getElementById('qaCourseSelect').value;
+      const cards = document.querySelectorAll('#qaThreadsContainer .qa-thread-card');
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const status = card.getAttribute('data-status');
+        const crs = card.getAttribute('data-course');
+
+        const matchStatus = currentFilterStatus === 'all' || status === currentFilterStatus;
+        const matchCourse = course === 'all' || crs === course;
+        const matchText = !q || text.includes(q);
+
+        if (matchStatus && matchCourse && matchText) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // TEMPLATES INSERTER
+    function insertTemplate(btn, type) {
+      const composer = btn.closest('.reply-composer');
+      const textarea = composer.querySelector('textarea');
+      if (type === 'ielts_template') {
+        textarea.value = 'Chào em nhé! Giám khảo IELTS không kiểm tra tính chân thực của câu chuyện (factual truth) mà chỉ đánh giá khả năng sử dụng ngôn ngữ linh hoạt, từ vựng và sự trôi chảy. Em hoàn toàn có thể hư cấu câu chuyện miễn là bám sát đề bài và sử dụng cấu trúc ngữ pháp tự nhiên nhé!';
+      } else if (type === 'task1_template') {
+        textarea.value = 'Chào em! Tuyệt đối KHÔNG đưa số liệu chi tiết vào đoạn Overview của Task 1 em nhé. Overview chỉ dành cho General Trend (xu hướng chung) hoặc điểm nổi bật nhất. Việc đưa số liệu vào Overview sẽ bị trừ điểm Task Achievement vì làm mất tính khái quát của đoạn!';
+      }
+      textarea.focus();
+      showToast('Đã chèn mẫu phản hồi!');
+    }
+
+    // SUBMIT REPLY
+    function submitReply(btn, threadId) {
+      const composer = btn.closest('.reply-composer');
+      const textarea = composer.querySelector('textarea');
+      const text = textarea.value.trim();
+
+      if (!text) {
+        alert('Vui lòng nhập nội dung câu trả lời trước khi gửi.');
+        textarea.focus();
+        return;
+      }
+
+      const card = btn.closest('.qa-thread-card');
+      const repliesList = card.querySelector('.replies-list');
+      const user = getInstructorUser();
+      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar;
+
+      const replyEl = document.createElement('div');
+      replyEl.className = 'reply-item';
+      replyEl.innerHTML = `
+        <div class="reply-head">
+          <img src="${avatar}" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;" alt="Avt" />
+          <strong style="font-size: 0.88rem; color: #0f172a;">${user.name}</strong>
+          <span class="instructor-badge-tag">Giảng viên</span>
+          <span style="font-size: 0.72rem; color: #94a3b8; margin-left: auto;">Vừa xong</span>
+        </div>
+        <div class="reply-text">${text}</div>
+      `;
+
+      repliesList.appendChild(replyEl);
+      textarea.value = '';
+
+      // Update card status to resolved
+      card.setAttribute('data-status', 'resolved');
+      const badge = card.querySelector('.thread-status-badge');
+      if (badge) {
+        badge.className = 'thread-status-badge badge-resolved';
+        badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Đã giải quyết';
+      }
+
+      showToast('Đã gửi phản hồi thành công & Đánh dấu đã giải quyết!');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initUserHeader();
+    });
+  </script>
+</body>
+</html>

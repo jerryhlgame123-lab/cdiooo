@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phê Duyệt Khóa Học | LHD – Learning Admin Portal</title>
+  <!-- Google Fonts & Font Awesome đồng bộ toàn hệ thống -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --primary-color: #0b63e5;
+      --purple-color: #8b5cf6;
+      --pink-color: #ec4899;
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --border-subtle: rgba(226, 232, 240, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, button, input, select, textarea {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .fa, .fa-solid, .fa-regular, .fa-brands, .fas, .far, .fab {
+      font-family: "Font Awesome 6 Free" !important;
+    }
+    .fa-brands, .fab {
+      font-family: "Font Awesome 6 Brands" !important;
+    }
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Ambient background glows đồng bộ profile.html */
+    /* Sticky Navbar phong cách index.html */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.05), rgba(236, 72, 153, 0.08));
+    }
+
+    .nav-links a:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes navPillPop {
+      0% {
+        transform: scale(0.92);
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 22px rgba(236, 72, 153, 0.55);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
+      }
+    }
+
+    /* Active pill state - Gradient Xanh - Hồng Tím chuẩn 100% index.html */
+    .nav-links a.nav-item-active,
+    .nav-links a.active {
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 8px 20px;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: navPillPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-links a.nav-item-active:hover,
+    .nav-links a.active:hover {
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .nav-links a.nav-item-active:active,
+    .nav-links a.active:active {
+      transform: scale(0.95);
+    }
+
+    /* Header Right Actions - 100% Đồng bộ index.html */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-user-left-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 4px;
+    }
+
+    .nav-user-right-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid #dce4ec;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #273746;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      flex-shrink: 0;
+      font-size: 1.05rem;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-circle-btn.btn-bell {
+      font-size: 17px;
+      color: #273746;
+    }
+
+    .nav-circle-btn.btn-menu {
+      font-size: 16px;
+      color: #0b63e5;
+    }
+
+    .nav-circle-btn.btn-menu:hover {
+      background: rgba(11, 99, 229, 0.06);
+    }
+
+    .bell-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #ea4335;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(234, 67, 53, 0.4);
+    }
+
+    /* User Capsule - Match Image 2 & index.html */
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid #dce4ec;
+      border-radius: 9999px;
+      padding: 4px 18px 4px 5px;
+      background: #ffffff;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      position: relative;
+      user-select: none;
+    }
+
+    .user-capsule:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .user-capsule-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #0b63e5;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .user-capsule-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #24292f;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    /* Nút Thoát Đăng Xuất Chuẩn Header Right (Đồng bộ toàn bộ Admin Portal) */
+    .btn-header-logout {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.08);
+      color: #ef4444;
+      border: 1.5px solid rgba(239, 68, 68, 0.25);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-header-logout:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-header-logout:active {
+      transform: scale(0.96);
+    }
+
+    /* Dropdown Menus for User, Menu, Bell */
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 1500;
+      animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-dropdown.show {
+      display: flex;
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-header {
+      padding: 0.5rem 0.85rem 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 4px;
+    }
+
+    .dropdown-header-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .dropdown-header-sub {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .dropdown-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.65rem 0.85rem;
+      border-radius: 12px;
+      color: #334155;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .dropdown-link:hover {
+      background: #f1f5f9;
+      color: #0b63e5;
+    }
+
+    .dropdown-link i {
+      width: 18px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .dropdown-link:hover i {
+      color: #0b63e5;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #f1f5f9;
+      margin: 4px 0;
+    }
+
+    .dropdown-link.logout-link {
+      color: #dc2626;
+      cursor: pointer;
+    }
+
+    .dropdown-link.logout-link:hover {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .dropdown-link.logout-link i {
+      color: #dc2626;
+    }
+
+    /* Student / Admin Mega Dropdown Styles - Đồng bộ index.html */
+    .student-mega-dropdown {
+      min-width: 290px;
+      max-width: 320px;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+      padding: 0.85rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+      border: 1.5px solid rgba(226, 232, 240, 0.95);
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
+      border-radius: 18px;
+      padding: 1.1rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.5rem;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-user-banner-glow {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      filter: blur(25px);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .menu-banner-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      background: #ffffff;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .menu-banner-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .menu-banner-name {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      margin: 2px 0 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .menu-banner-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      color: #4ade80;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .menu-group-heading {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.5rem 0.6rem 0.2rem;
+    }
+
+    .student-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.65rem 0.85rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.18s ease;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9;
+      transform: translateX(4px);
+    }
+
+    .menu-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(11, 99, 229, 0.08);
+      color: #0b63e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .student-menu-item:hover .menu-item-icon {
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      color: #ffffff;
+    }
+
+    .student-menu-item .menu-item-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e293b;
+      transition: color 0.18s ease;
+    }
+
+    .student-menu-item:hover .menu-item-title {
+      color: #0b63e5;
+    }
+
+    .btn-menu-logout {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1.5px solid rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 0.35rem;
+    }
+
+    .btn-menu-logout:hover {
+      background: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+    }
+
+    /* Main Container with 2-Column Layout matching image & profile.html */
+    .container {
+      width: 100%;
+      max-width: 1380px;
+      margin: 2.2rem auto 4rem;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+    }
+
+    .admin-layout-grid {
+      display: flex;
+      gap: 1.8rem;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .admin-sidebar {
+      flex: 0 0 280px;
+      width: 280px;
+      max-width: 280px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 90px;
+      z-index: 10;
+    }
+
+    .admin-main-content {
+      flex: 1 1 0%;
+      min-width: 0;
+      max-width: 100%;
+      width: auto;
+      box-sizing: border-box;
+    }
+
+    /* Sidebar Cards - Chuẩn phong cách 100% theo ảnh đính kèm */
+    .sidebar-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.35rem 1.15rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      margin-bottom: 1.25rem;
+    }
+
+    .sidebar-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+      padding: 0 12px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #334155;
+      transition: all 0.2s ease;
+      margin-bottom: 5px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover {
+      background: #f8fafc;
+      color: var(--primary-color);
+      transform: translateX(3px);
+    }
+
+    .sidebar-item i {
+      font-size: 1.05rem;
+      width: 22px;
+      text-align: center;
+      color: #64748b;
+      transition: color 0.2s ease;
+    }
+
+    .sidebar-item:hover i {
+      color: var(--primary-color);
+    }
+
+    /* Active Item - Như ảnh: gradient hồng tím, chữ trắng, shadow nổi bật */
+    .sidebar-item.active {
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      color: #ffffff !important;
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.35);
+    }
+
+    .sidebar-item.active i {
+      color: #ffffff !important;
+    }
+
+    .sidebar-item .item-text {
+      flex: 1;
+    }
+
+    /* Badges trong Sidebar như ảnh */
+    .badge-count-active {
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+    }
+
+    .badge-count-gray {
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 9999px;
+      margin-left: auto;
+    }
+
+    .badge-count-amber {
+      background: #fef3c7;
+      color: #d97706;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: 9999px;
+      margin-left: auto;
+    }
+
+
+
+    /* Hero Banner Card - Style Dark Navy Nebula từ profile.html */
+    .profile-hero {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 50%, #31104b 100%);
+      border-radius: 28px;
+      padding: 2.4rem 2.8rem;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-glow-blob {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(75px);
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .hero-glow-1 {
+      top: -100px;
+      right: -80px;
+      background: #8b5cf6;
+    }
+
+    .hero-glow-2 {
+      bottom: -100px;
+      left: 25%;
+      background: #ec4899;
+    }
+
+    .profile-hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.8rem;
+    }
+
+    .hero-title-area h1 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .hero-title-area p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      max-width: 620px;
+      line-height: 1.5;
+    }
+
+    .hero-stat-box {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 1rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .stat-icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      background: var(--primary-grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+    }
+
+    .stat-text-label {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-text-value {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* Content Box Container - Style profile.html */
+    .content-box {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2rem 2.2rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .box-header {
+      margin-bottom: 1.8rem;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .box-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .box-title i {
+      color: var(--purple-color);
+    }
+
+    .box-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+
+    /* Status Tabs Navigation */
+    .tab-nav {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.65rem 1.4rem;
+      border-radius: 9999px;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      color: var(--text-sub);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary-color);
+      border-color: #cbd5e1;
+      background: rgba(11, 99, 229, 0.05);
+    }
+
+    .tab-btn.active {
+      background: var(--primary-grad);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+    }
+
+    .tab-count {
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .tab-btn.active .tab-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .count-pending { background: #fee2e2; color: #dc2626; }
+    .count-approved { background: #dcfce7; color: #15803d; }
+    .count-rejected { background: #f1f5f9; color: #64748b; }
+
+    /* Approval Course Cards - Khoa học, tối ưu diện tích, phong cách profile.html */
+    .course-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.3rem 1.6rem;
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+      margin-bottom: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.25rem;
+      transition: all 0.25s ease;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
+    .course-card:hover {
+      transform: translateY(-2px);
+      border-color: #8b5cf6;
+      box-shadow: 0 10px 28px rgba(139, 92, 246, 0.12);
+    }
+
+    .course-main-info {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      flex: 1 1 0%;
+      min-width: 0;
+    }
+
+    .course-thumb-box {
+      width: 105px;
+      height: 80px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.08), rgba(236, 72, 153, 0.08));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(139, 92, 246, 0.2);
+      position: relative;
+    }
+
+    .lang-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      color: #0f172a;
+    }
+
+    .course-details {
+      flex: 1 1 0%;
+      min-width: 0;
+    }
+
+    .course-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem 0.75rem;
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+    }
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f8fafc;
+      padding: 4px 10px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .meta-item i {
+      color: var(--purple-color);
+    }
+
+    .meta-price {
+      background: rgba(236, 72, 153, 0.08);
+      border-color: rgba(236, 72, 153, 0.25);
+      color: #db2777;
+      font-weight: 800;
+    }
+
+    .submission-time {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Action Buttons - Nhỏ gọn, phong cách profile.html */
+    .action-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 6px 8px;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+
+    .btn-action-sm {
+      padding: 7px 14px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-preview {
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      color: #475569;
+    }
+
+    .btn-preview:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      background: rgba(11, 99, 229, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .btn-approve {
+      border: none;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-approve:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(16, 185, 129, 0.45);
+    }
+
+    .btn-reject {
+      border: 1.5px solid rgba(239, 68, 68, 0.25);
+      background: rgba(239, 68, 68, 0.08);
+      color: #dc2626;
+    }
+
+    .btn-reject:hover {
+      background: #fee2e2;
+      border-color: #f87171;
+      color: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    /* Empty state */
+    .empty-card {
+      text-align: center;
+      padding: 4.5rem 2rem;
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1.5px dashed #cbd5e1;
+      display: none;
+    }
+
+    /* Modal System - Giống style chat modal & avatar modal trong profile.html */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+      animation: modalFadeIn 0.25s ease forwards;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-window {
+      background: #ffffff;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+      position: relative;
+    }
+
+    .modal-header-profile {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
+      color: #ffffff;
+      padding: 1.3rem 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      position: relative;
+    }
+
+    .modal-header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-header-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--primary-grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    }
+
+    .modal-header-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .modal-header-sub {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 1.8rem;
+    }
+
+    .curriculum-item {
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1.5px solid #f1f5f9;
+      margin-bottom: 0.8rem;
+      transition: all 0.2s ease;
+    }
+
+    .curriculum-item:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+
+    .curriculum-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-main);
+    }
+
+    .curriculum-desc {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    .reason-chip {
+      padding: 6px 14px;
+      border-radius: 9999px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      margin: 4px;
+      transition: all 0.2s;
+      color: var(--text-sub);
+    }
+
+    .reason-chip:hover {
+      border-color: #8b5cf6;
+      color: #8b5cf6;
+      background: #f5f3ff;
+    }
+
+    .form-textarea {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      border-radius: 16px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+      background: #f8fafc;
+      font-family: inherit;
+    }
+
+    .form-textarea:focus {
+      border-color: #8b5cf6;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .btn-primary-grad {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.6rem;
+      border-radius: 9999px;
+      background: var(--primary-grad);
+      color: #ffffff;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary-grad:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.45);
+    }
+
+    .btn-cancel-pill {
+      padding: 0.75rem 1.4rem;
+      border-radius: 9999px;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-cancel-pill:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    /* Toast Alert */
+    #toast-box {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast-msg {
+      pointer-events: auto;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+      border: 1.5px solid var(--border-subtle);
+      min-width: 320px;
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @media (max-width: 1200px) {
+      .header-left { gap: 1.8rem; }
+      .container { padding: 0 1rem; }
+    }
+
+    @media (max-width: 1100px) {
+      .course-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      .action-group {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .admin-layout-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .admin-sidebar {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        top: 0;
+      }
+      .admin-main-content {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .profile-hero { padding: 2rem 1.6rem; }
+      .content-box { padding: 1.6rem 1.4rem; }
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 0.75rem 1rem; }
+      .brand-title { font-size: 1.15rem; }
+      .profile-hero { padding: 1.6rem 1.2rem; border-radius: 20px; }
+      .hero-title-area h1 { font-size: 1.45rem; }
+      .content-box { padding: 1.2rem 1rem; border-radius: 20px; }
+      .box-header { flex-direction: column; align-items: flex-start; }
+      .course-main-info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .action-group {
+        justify-content: stretch;
+      }
+      .btn-action-sm {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header đồng bộ hoàn toàn style index.html -->
+  <header>
+    <div class="header-left">
+      <a href="../index.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="dashboard.html">Tổng quan</a></li>
+        <li><a href="courses-approval.html" class="nav-item-active">Duyệt khóa học</a></li>
+        <li><a href="users.html">Người dùng</a></li>
+        <li><a href="marketing.html">Marketing</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-actions-user" id="navActionsUser">
+        <!-- Nhóm 1: Thông báo & Về trang chủ -->
+        <div class="nav-user-left-group">
+          <!-- Bell Button -->
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="adminBellBtn" title="Thông báo hệ thống" onclick="toggleAdminNotif(event)">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="adminBellBadge">3</span>
+            </button>
+
+            <!-- Bell Dropdown -->
+            <div class="nav-dropdown" id="adminNotifDropdown" style="min-width: 320px; left: 0; right: auto;">
+              <div class="dropdown-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="dropdown-header-title">Thông báo hệ thống</div>
+                <button type="button" onclick="document.getElementById('adminBellBadge').style.display='none'" style="background: none; border: none; color: #0b63e5; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Đã xem hết</button>
+              </div>
+              <div style="padding: 0.65rem 0.85rem; border-radius: 12px; background: #f8fafc; margin-bottom: 6px;">
+                <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-clipboard-check" style="color: #f59e0b;"></i>
+                  <span>3 khóa học mới chờ duyệt</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">Cần phê duyệt từ các giảng viên đối tác trước 18:00 hôm nay.</div>
+                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">15 phút trước</div>
+              </div>
+              <div style="padding: 0.65rem 0.85rem; border-radius: 12px; background: #f8fafc;">
+                <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px;">
+                  <i class="fa-solid fa-user-plus" style="color: #10b981;"></i>
+                  <span>+24 học viên đăng ký mới</span>
+                </div>
+                <div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">Số lượng người dùng kích hoạt tài khoản tăng trưởng 18.4%.</div>
+                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">2 giờ trước</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Home Button -->
+          <a href="../index.html" class="nav-circle-btn" title="Về trang chủ sàn học tập">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </div>
+
+        <!-- Vạch phân cách -->
+        <div class="nav-user-divider"></div>
+
+        <!-- Nhóm 2: Quản trị viên Capsule & Menu ☰ -->
+        <div class="nav-user-right-group">
+          <!-- User Capsule -->
+          <a href="../student/profile.html" class="user-capsule" title="Xem thông tin quản trị viên">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64' shape-rendering='crispEdges'><rect width='64' height='64' fill='%23a4c68d'/><rect x='0' y='0' width='64' height='28' fill='%237ba36a'/><rect x='6' y='8' width='12' height='14' fill='%23507c43'/><rect x='46' y='10' width='14' height='12' fill='%23507c43'/><rect x='22' y='4' width='20' height='8' fill='%23669152'/><rect x='0' y='32' width='64' height='32' fill='%23c4936d'/><rect x='0' y='42' width='64' height='22' fill='%23b17c54'/><rect x='20' y='12' width='24' height='16' fill='%231e1e24'/><rect x='22' y='16' width='20' height='20' fill='%23fddbc3'/><rect x='24' y='34' width='16' height='4' fill='%23fbc5a3'/><rect x='18' y='10' width='28' height='8' fill='%2322242a'/><rect x='18' y='18' width='6' height='8' fill='%2322242a'/><rect x='40' y='18' width='6' height='8' fill='%2322242a'/><rect x='24' y='14' width='8' height='6' fill='%2330323a'/><rect x='34' y='14' width='8' height='5' fill='%2322242a'/><rect x='18' y='24' width='4' height='6' fill='%23fbc5a3'/><rect x='42' y='24' width='4' height='6' fill='%23fbc5a3'/><rect x='25' y='25' width='4' height='4' fill='%231e1e24'/><rect x='35' y='25' width='4' height='4' fill='%231e1e24'/><rect x='23' y='28' width='4' height='2' fill='%23f7a799'/><rect x='37' y='28' width='4' height='2' fill='%23f7a799'/><rect x='29' y='31' width='6' height='2' fill='%23d97d64'/><rect x='22' y='21' width='10' height='9' fill='none' stroke='%23111' stroke-width='2'/><rect x='32' y='21' width='10' height='9' fill='none' stroke='%23111' stroke-width='2'/><rect x='31' y='24' width='2' height='2' fill='%23111'/><rect x='24' y='22' width='2' height='2' fill='%23ffffff'/><rect x='34' y='22' width='2' height='2' fill='%23ffffff'/><rect x='16' y='38' width='32' height='26' fill='%232b2d35'/><rect x='28' y='38' width='8' height='8' fill='%23b91c1c'/><rect x='22' y='38' width='6' height='26' fill='%233a3d47'/><rect x='36' y='38' width='6' height='26' fill='%233a3d47'/><rect x='29' y='44' width='6' height='20' fill='%23dc2626'/><rect x='31' y='42' width='2' height='22' fill='%23991b1b'/></svg>" class="user-capsule-avatar" alt="Avatar">
+            <span class="user-capsule-name">Admin LHD</span>
+          </a>
+
+          <!-- Nút Thoát Đăng Xuất -->
+          <button type="button" class="btn-header-logout" onclick="logoutAdmin()" title="Đăng xuất khỏi hệ thống">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Thoát</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Hero Banner Card phong cách profile.html -->
+    <div class="profile-hero">
+      <div class="hero-glow-blob hero-glow-1"></div>
+      <div class="hero-glow-blob hero-glow-2"></div>
+      <div class="profile-hero-content">
+        <div class="hero-title-area">
+          <h1>Phê Duyệt Khóa Học Từ Giảng Viên</h1>
+          <p>Thẩm định chất lượng giáo trình, video bài giảng và học phí trước khi phát hành toàn hệ thống</p>
+        </div>
+        <div class="hero-stat-box">
+          <div class="stat-icon-wrap">
+            <i class="fa-solid fa-hourglass-half"></i>
+          </div>
+          <div>
+            <div class="stat-text-label">Hàng đợi xét duyệt</div>
+            <div class="stat-text-value" id="heroPendingCount">3 khóa học chờ duyệt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-Column Grid: Left Sidebar (như ảnh người dùng) + Right Main Content -->
+    <div class="admin-layout-grid">
+      <!-- Left Sidebar: Đồng bộ chuẩn Quản trị viên hệ thống -->
+      <aside class="admin-sidebar">
+        <!-- Card 1: QUẢN TRỊ HỆ THỐNG -->
+        <div class="sidebar-card">
+          <div class="sidebar-group-title">QUẢN TRỊ HỆ THỐNG</div>
+          <a href="dashboard.html" class="sidebar-item">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span class="item-text">Tổng quan & Doanh thu</span>
+          </a>
+          <a href="courses-approval.html" class="sidebar-item active">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span class="item-text">Phê duyệt khóa học</span>
+            <span class="badge-count-active" id="sidebarApprovalBadge">3</span>
+          </a>
+          <a href="users.html" class="sidebar-item">
+            <i class="fa-solid fa-users-gear"></i>
+            <span class="item-text">Quản lý người dùng</span>
+            <span class="badge-count-gray">15.4k</span>
+          </a>
+          <a href="marketing.html" class="sidebar-item">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span class="item-text">Marketing & Banner</span>
+          </a>
+        </div>
+
+        <!-- Card 2: ĐIỀU HÀNH SÀN -->
+        <div class="sidebar-card">
+          <div class="sidebar-group-title">ĐIỀU HÀNH SÀN</div>
+          <a href="../index.html" class="sidebar-item" target="_blank">
+            <i class="fa-solid fa-globe"></i>
+            <span class="item-text">Xem sàn học tập</span>
+            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem; margin-left: auto; color: #94a3b8;"></i>
+          </a>
+          <a href="../courses.html" class="sidebar-item" target="_blank">
+            <i class="fa-solid fa-compass"></i>
+            <span class="item-text">Khám phá khóa học</span>
+            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem; margin-left: auto; color: #94a3b8;"></i>
+          </a>
+          <a href="javascript:void(0)" class="sidebar-item" onclick="openCertificateModal()">
+            <i class="fa-solid fa-award"></i>
+            <span class="item-text">Mẫu phôi chứng chỉ</span>
+          </a>
+        </div>
+
+        <!-- Card 3: TÀI KHOẢN QUẢN TRỊ -->
+        <div class="sidebar-card">
+          <div class="sidebar-group-title">TÀI KHOẢN QUẢN TRỊ</div>
+          <a href="../student/profile.html" class="sidebar-item">
+            <i class="fa-regular fa-user"></i>
+            <span class="item-text">Hồ sơ cá nhân</span>
+          </a>
+          <a href="javascript:void(0)" class="sidebar-item" onclick="logoutAdmin()" style="color: #ef4444;">
+            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #ef4444;"></i>
+            <span class="item-text" style="color: #ef4444; font-weight: 700;">Đăng xuất</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Right Main Content Area -->
+      <main class="admin-main-content">
+        <!-- Main Content Box -->
+        <div class="content-box">
+      <div class="box-header">
+        <div>
+          <div class="box-title">
+            <i class="fa-solid fa-list-check"></i> Danh Sách Yêu Cầu Phê Duyệt
+          </div>
+          <div class="box-subtitle">Xem xét đề cương giáo trình, chất lượng nội dung và kích hoạt phát hành</div>
+        </div>
+
+        <!-- Status Tabs phong cách profile.html -->
+        <div class="tab-nav">
+          <button class="tab-btn active" onclick="switchApprovalTab('pending', this)">
+            <i class="fa-solid fa-clock"></i> Chờ Phê Duyệt <span class="tab-count count-pending" id="tabPendingBadge">3</span>
+          </button>
+          <button class="tab-btn" onclick="switchApprovalTab('approved', this)">
+            <i class="fa-solid fa-circle-check"></i> Đã Duyệt Xuất Bản <span class="tab-count count-approved">84</span>
+          </button>
+          <button class="tab-btn" onclick="switchApprovalTab('rejected', this)">
+            <i class="fa-solid fa-circle-xmark"></i> Bị Từ Chối <span class="tab-count count-rejected">2</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Danh sách khóa học chờ duyệt -->
+      <div id="courseListPending">
+        <!-- Course 1 -->
+        <div class="course-card" id="course-card-1">
+          <div class="course-main-info">
+            <div class="course-thumb-box">
+              <span class="lang-badge">🇯🇵 N3</span>
+              <span>⛩️</span>
+            </div>
+            <div class="course-details">
+              <h2 class="course-title" title="Luyện Thi JLPT N3 Đọc Hiểu & Nghe Hiểu Chuyên Sâu">Luyện Thi JLPT N3 Đọc Hiểu & Nghe Hiểu Chuyên Sâu</h2>
+              <div class="course-meta">
+                <span class="meta-item"><i class="fa-solid fa-chalkboard-user"></i> Thầy Kenji Tanaka</span>
+                <span class="meta-item"><i class="fa-solid fa-video"></i> 18 bài (24.5h)</span>
+                <span class="meta-item meta-price"><i class="fa-solid fa-tag"></i> 1,690,000đ</span>
+                <span class="meta-item"><i class="fa-solid fa-file-pdf"></i> 12 tài liệu</span>
+              </div>
+              <div class="submission-time"><i class="fa-regular fa-clock"></i> #CRS-1082 • Gửi duyệt: Hôm nay lúc 14:30</div>
+            </div>
+          </div>
+          <div class="action-group">
+            <button class="btn-action-sm btn-preview" title="Xem thẩm định giáo trình" onclick="openPreviewModal('JLPT N3 Đọc Hiểu & Nghe Hiểu Chuyên Sâu', 'Thầy Kenji Tanaka', '1,690,000đ', '18 bài video (Full HD 1080p)', '12 file PDF bài tập Dokkai & Choukai')">
+              <i class="fa-regular fa-eye"></i> Thẩm định
+            </button>
+            <button class="btn-action-sm btn-approve" title="Duyệt xuất bản khóa học" onclick="handleApprove(1, 'Luyện Thi JLPT N3 Đọc Hiểu')">
+              <i class="fa-solid fa-check"></i> Duyệt
+            </button>
+            <button class="btn-action-sm btn-reject" title="Từ chối phê duyệt" onclick="openRejectModal(1, 'Luyện Thi JLPT N3 Đọc Hiểu')">
+              <i class="fa-solid fa-xmark"></i> Từ chối
+            </button>
+          </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="course-card" id="course-card-2">
+          <div class="course-main-info">
+            <div class="course-thumb-box">
+              <span class="lang-badge">🇬🇧 C1</span>
+              <span>💼</span>
+            </div>
+            <div class="course-details">
+              <h2 class="course-title" title="Tiếng Anh Giao Tiếp Thương Mại (Business English) Cho Người Đi Làm">Tiếng Anh Giao Tiếp Thương Mại (Business English) Cho Người Đi Làm</h2>
+              <div class="course-meta">
+                <span class="meta-item"><i class="fa-solid fa-chalkboard-user"></i> Cô Emily Watson</span>
+                <span class="meta-item"><i class="fa-solid fa-video"></i> 24 bài (32h)</span>
+                <span class="meta-item meta-price"><i class="fa-solid fa-tag"></i> 1,450,000đ</span>
+                <span class="meta-item"><i class="fa-solid fa-file-pdf"></i> 8 template</span>
+              </div>
+              <div class="submission-time"><i class="fa-regular fa-clock"></i> #CRS-1081 • Gửi duyệt: Hôm qua lúc 09:15</div>
+            </div>
+          </div>
+          <div class="action-group">
+            <button class="btn-action-sm btn-preview" title="Xem thẩm định giáo trình" onclick="openPreviewModal('Tiếng Anh Giao Tiếp Thương Mại', 'Cô Emily Watson', '1,450,000đ', '24 bài video', '8 template tài liệu thực hành')">
+              <i class="fa-regular fa-eye"></i> Thẩm định
+            </button>
+            <button class="btn-action-sm btn-approve" title="Duyệt xuất bản khóa học" onclick="handleApprove(2, 'Tiếng Anh Thương Mại')">
+              <i class="fa-solid fa-check"></i> Duyệt
+            </button>
+            <button class="btn-action-sm btn-reject" title="Từ chối phê duyệt" onclick="openRejectModal(2, 'Tiếng Anh Thương Mại')">
+              <i class="fa-solid fa-xmark"></i> Từ chối
+            </button>
+          </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="course-card" id="course-card-3">
+          <div class="course-main-info">
+            <div class="course-thumb-box">
+              <span class="lang-badge">🇯🇵 N4</span>
+              <span>🌸</span>
+            </div>
+            <div class="course-details">
+              <h2 class="course-title" title="Ngữ Pháp & Kanji N4 Cấp Tốc - Chinh Phục Trong 30 Ngày">Ngữ Pháp & Kanji N4 Cấp Tốc - Chinh Phục Trong 30 Ngày</h2>
+              <div class="course-meta">
+                <span class="meta-item"><i class="fa-solid fa-chalkboard-user"></i> Sensei Yamada Ryouta</span>
+                <span class="meta-item"><i class="fa-solid fa-video"></i> 15 bài (18h)</span>
+                <span class="meta-item meta-price"><i class="fa-solid fa-tag"></i> 890,000đ</span>
+                <span class="meta-item"><i class="fa-solid fa-file-pdf"></i> 300 Flashcards</span>
+              </div>
+              <div class="submission-time"><i class="fa-regular fa-clock"></i> #CRS-1080 • Gửi duyệt: 2 ngày trước</div>
+            </div>
+          </div>
+          <div class="action-group">
+            <button class="btn-action-sm btn-preview" title="Xem thẩm định giáo trình" onclick="openPreviewModal('Ngữ Pháp & Kanji N4 Cấp Tốc', 'Sensei Yamada Ryouta', '890,000đ', '15 bài video', 'Bộ Flashcard 300 chữ Kanji')">
+              <i class="fa-regular fa-eye"></i> Thẩm định
+            </button>
+            <button class="btn-action-sm btn-approve" title="Duyệt xuất bản khóa học" onclick="handleApprove(3, 'Ngữ Pháp & Kanji N4')">
+              <i class="fa-solid fa-check"></i> Duyệt
+            </button>
+            <button class="btn-action-sm btn-reject" title="Từ chối phê duyệt" onclick="openRejectModal(3, 'Ngữ Pháp & Kanji N4')">
+              <i class="fa-solid fa-xmark"></i> Từ chối
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State khi duyệt hết -->
+      <div class="empty-card" id="emptyPendingCard">
+        <div style="font-size: 3.5rem; margin-bottom: 1rem;">🎉</div>
+        <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Tất cả khóa học đã được xử lý xong!</h3>
+        <p style="color: var(--text-sub); font-size: 0.95rem;">Không còn khóa học nào đang chờ phê duyệt vào thời điểm này.</p>
+      </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL XEM THẨM ĐỊNH CHI TIẾT KHÓA HỌC (Style profile.html) -->
+  <div class="modal-backdrop" id="previewModal">
+    <div class="modal-window">
+      <div class="modal-header-profile">
+        <div class="modal-header-info">
+          <div class="modal-header-icon">
+            <i class="fa-solid fa-file-circle-check"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Thẩm Định Nội Dung Khóa Học</div>
+            <div class="modal-header-sub">Hồ sơ giáo trình và tài liệu đính kèm từ giảng viên</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('previewModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 20px; padding: 1.25rem 1.4rem; margin-bottom: 1.5rem;">
+          <h3 id="modalCourseTitle" style="font-weight: 800; font-size: 1.15rem; color: #0f172a; margin-bottom: 0.6rem;">Tiêu đề</h3>
+          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;"><strong>Giảng viên:</strong> <span id="modalCourseTeacher"></span></p>
+          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;"><strong>Đơn giá bán niêm yết:</strong> <span id="modalCoursePrice" style="color: #16a34a; font-weight: 800;"></span></p>
+          <p style="font-size: 0.9rem; color: #475569;"><strong>Quy mô khóa học:</strong> <span id="modalCourseLessons"></span> • <span id="modalCourseDocs"></span></p>
+        </div>
+
+        <h4 style="font-weight: 800; font-size: 1rem; margin-bottom: 0.8rem; color: var(--text-main);">Cấu trúc giáo trình đính kèm:</h4>
+        <div class="curriculum-item">
+          <div class="curriculum-title"><span>Chương 1: Khởi động & Kỹ năng nền tảng</span><span style="color: var(--primary-color); font-size: 0.85rem;">4 bài (45 phút)</span></div>
+          <div class="curriculum-desc">Video bài giảng giới thiệu phương pháp học và phân bổ thời gian làm bài chuẩn kỳ thi.</div>
+        </div>
+        <div class="curriculum-item">
+          <div class="curriculum-title"><span>Chương 2: Đọc hiểu văn bản trung cấp</span><span style="color: var(--primary-color); font-size: 0.85rem;">8 bài (120 phút)</span></div>
+          <div class="curriculum-desc">Phân tích cấu trúc đoạn văn ngắn và bài đọc hiểu dạng thông báo/quảng cáo.</div>
+        </div>
+        <div class="curriculum-item">
+          <div class="curriculum-title"><span>Chương 3: Luyện nghe hiểu và bẫy hội thoại</span><span style="color: var(--primary-color); font-size: 0.85rem;">6 bài (90 phút)</span></div>
+          <div class="curriculum-desc">Luyện nghe phản xạ tức thì với giọng phát âm người bản xứ chuẩn Tokyo.</div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.6rem;">
+          <button class="btn-cancel-pill" onclick="closeModal('previewModal')">Đóng Xem Thử</button>
+          <button class="btn-primary-grad" onclick="closeModal('previewModal'); showToast('Thẩm định hợp lệ', 'Khóa học đạt tiêu chuẩn chất lượng của sàn.', 'success');">
+            <i class="fa-solid fa-check"></i> Đánh Giá Đạt Chuẩn
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TỪ CHỐI PHÊ DUYỆT (Style profile.html) -->
+  <div class="modal-backdrop" id="rejectModal">
+    <div class="modal-window">
+      <div class="modal-header-profile" style="background: linear-gradient(135deg, #450a0a 0%, #1e1b4b 60%, #31104b 100%);">
+        <div class="modal-header-info">
+          <div class="modal-header-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Từ Chối Phê Duyệt Khóa Học</div>
+            <div class="modal-header-sub">Gửi thông báo phản hồi lý do đến giảng viên</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('rejectModal')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 0.92rem; color: var(--text-sub); margin-bottom: 1.2rem; line-height: 1.5;">
+          Hệ thống sẽ gửi email và thông báo trực tiếp đến tài khoản giảng viên để họ chỉnh sửa và gửi lại yêu cầu duyệt.
+        </p>
+
+        <div style="margin-bottom: 1.2rem;">
+          <label style="font-weight: 700; font-size: 0.88rem; display: block; margin-bottom: 0.5rem; color: var(--text-main);">Gợi ý lý do thường gặp:</label>
+          <div>
+            <span class="reason-chip" onclick="fillReason('Chất lượng video/âm thanh bài giảng chưa đạt chuẩn Full HD 1080p.')">Chất lượng âm thanh chưa đạt</span>
+            <span class="reason-chip" onclick="fillReason('Thiếu file tài liệu bài tập hoặc giáo trình đính kèm theo từng chương.')">Thiếu tài liệu thực hành</span>
+            <span class="reason-chip" onclick="fillReason('Nội dung đề cương khóa học chưa đầy đủ so với đơn giá bán niêm yết.')">Đề cương quá ngắn</span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.6rem;">
+          <label style="font-weight: 700; font-size: 0.88rem; display: block; margin-bottom: 0.5rem; color: var(--text-main);">Chi tiết lý do từ chối gửi giảng viên (*):</label>
+          <textarea id="rejectReasonText" rows="4" class="form-textarea" placeholder="Nhập chi tiết nhận xét để giảng viên hoàn thiện giáo trình..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn-cancel-pill" onclick="closeModal('rejectModal')">Hủy Bỏ</button>
+          <button class="btn-primary-grad" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);" onclick="confirmReject()">
+            <i class="fa-solid fa-paper-plane"></i> Gửi Quyết Định Từ Chối
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CHẤM BÀI TẬP (Khớp chức năng 'Chấm bài tập' như ảnh) -->
+  <div class="modal-backdrop" id="assignmentModal">
+    <div class="modal-window" style="max-width: 720px;">
+      <div class="modal-header-profile">
+        <div class="modal-header-info">
+          <div class="modal-header-icon" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Hàng Đợi Chấm Bài Tập Học Viên</div>
+            <div class="modal-header-sub">5 bài tập tự luận đang chờ giảng viên và ban đào tạo đánh giá</div>
+          </div>
+        </div>
+        <button class="btn-close-circle" onclick="closeModal('assignmentModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body-profile">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài luận B2: The Impact of AI on Modern Education</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Nguyễn Hoàng Nam</b> • Nộp lúc 14:15 hôm nay</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Nguyễn Hoàng Nam...', 'success')">Chấm điểm</button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bản dịch JLPT N3: Đoạn văn về Văn hóa Trà Đạo Nhật Bản</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Lê Thị Mai</b> • Nộp lúc 10:30 hôm nay</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Lê Thị Mai...', 'success')">Chấm điểm</button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Audio phát âm: Bài tập Shadowing Hội thoại Du lịch</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Trần Tuấn Anh</b> • Nộp hôm qua</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Trần Tuấn Anh...', 'success')">Chấm điểm</button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài tập Ngữ pháp HSK 4: Cấu trúc câu chữ Bả (把)</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Phạm Diệu Linh</b> • Nộp hôm qua</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Phạm Diệu Linh...', 'success')">Chấm điểm</button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div>
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài viết Business Email: Báo giá & Chiết khấu dịch vụ</div>
+              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Vũ Quốc Bảo</b> • Nộp 2 ngày trước</div>
+            </div>
+            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Vũ Quốc Bảo...', 'success')">Chấm điểm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL QUẢN LÝ CHỨNG CHỈ (Khớp chức năng 'Quản lý chứng chỉ' như ảnh) -->
+  <div class="modal-backdrop" id="certificateModal">
+    <div class="modal-window" style="max-width: 680px;">
+      <div class="modal-header-profile">
+        <div class="modal-header-info">
+          <div class="modal-header-icon" style="background: rgba(139, 92, 246, 0.2); color: #8b5cf6;">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <div>
+            <div class="modal-header-title">Quản Lý Chứng Chỉ Hoàn Thành Khóa Học</div>
+            <div class="modal-header-sub">Danh sách mẫu phôi chứng chỉ điện tử cấp tự động cho học viên</div>
+          </div>
+        </div>
+        <button class="btn-close-circle" onclick="closeModal('certificateModal')">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body-profile">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🇯🇵</span>
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ JLPT N3 Chuyên Sâu</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>428</b> học viên • Tiêu chuẩn: Hoàn thành 100% bài học</div>
+              </div>
+            </div>
+            <span class="tab-count count-approved" style="font-size: 0.78rem;">Đang cấp phát</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🇬🇧</span>
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ Business English & IELTS 6.5+</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>315</b> học viên • Tiêu chuẩn: Điểm test cuối khóa >= 80%</div>
+              </div>
+            </div>
+            <span class="tab-count count-approved" style="font-size: 0.78rem;">Đang cấp phát</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <span style="font-size: 2rem;">🇰🇷</span>
+              <div>
+                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ Tiếng Hàn Giao Tiếp Sơ Cấp TOPIK I</div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>182</b> học viên • Tiêu chuẩn: Hoàn thành giáo trình</div>
+              </div>
+            </div>
+            <span class="tab-count count-approved" style="font-size: 0.78rem;">Đang cấp phát</span>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 10px;">
+          <button class="btn-cancel-pill" onclick="closeModal('certificateModal')">Đóng</button>
+          <button class="btn-primary-grad" onclick="showToast('Thêm mẫu', 'Tính năng tải lên template phôi chứng chỉ SVG/PDF mới', 'info')"><i class="fa-solid fa-plus"></i> Thêm Mẫu Mới</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div id="toast-box"></div>
+
+  <!-- Inline Core Script -->
+  <script>
+    let currentRejectId = null;
+    let pendingCount = 3;
+
+    function openAssignmentModal() {
+      document.getElementById('assignmentModal').classList.add('show');
+    }
+
+    function openCertificateModal() {
+      document.getElementById('certificateModal').classList.add('show');
+    }
+
+    function toggleAdminNotif(e) {
+      if (e) e.stopPropagation();
+      const menuDd = document.getElementById('adminMenuDropdown');
+      if (menuDd) menuDd.classList.remove('show');
+      const dropdown = document.getElementById('adminNotifDropdown');
+      if (dropdown) dropdown.classList.toggle('show');
+    }
+
+    function toggleAdminMenu(e) {
+      if (e) e.stopPropagation();
+      const notifDd = document.getElementById('adminNotifDropdown');
+      if (notifDd) notifDd.classList.remove('show');
+      const dropdown = document.getElementById('adminMenuDropdown');
+      if (dropdown) dropdown.classList.toggle('show');
+    }
+
+    // Đóng dropdown khi click ngoài
+    document.addEventListener('click', (e) => {
+      const notifDd = document.getElementById('adminNotifDropdown');
+      if (notifDd && !e.target.closest('#adminBellBtn') && !e.target.closest('#adminNotifDropdown')) {
+        notifDd.classList.remove('show');
+      }
+      const menuDd = document.getElementById('adminMenuDropdown');
+      if (menuDd && !e.target.closest('#adminMenuBtn') && !e.target.closest('#adminMenuDropdown')) {
+        menuDd.classList.remove('show');
+      }
+    });
+
+    function showToast(title, desc, type = 'success') {
+      const box = document.getElementById('toast-box');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+
+      const icon = type === 'success' 
+        ? '<i class="fa-solid fa-circle-check" style="color: #16a34a; font-size: 1.25rem;"></i>' 
+        : '<i class="fa-solid fa-circle-exclamation" style="color: #ef4444; font-size: 1.25rem;"></i>';
+
+      toast.innerHTML = `
+        ${icon}
+        <div>
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a;">${title}</div>
+          <div style="font-size: 0.82rem; color: #64748b; margin-top: 2px;">${desc}</div>
+        </div>
+      `;
+
+      box.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(50px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function openPreviewModal(title, teacher, price, lessons, docs) {
+      document.getElementById('modalCourseTitle').textContent = title;
+      document.getElementById('modalCourseTeacher').textContent = teacher;
+      document.getElementById('modalCoursePrice').textContent = price;
+      document.getElementById('modalCourseLessons').textContent = lessons;
+      document.getElementById('modalCourseDocs').textContent = docs;
+      document.getElementById('previewModal').classList.add('show');
+    }
+
+    function openRejectModal(id, title) {
+      currentRejectId = id;
+      document.getElementById('rejectReasonText').value = '';
+      document.getElementById('rejectModal').classList.add('show');
+    }
+
+    function fillReason(text) {
+      document.getElementById('rejectReasonText').value = text;
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    function handleApprove(id, name) {
+      const card = document.getElementById(`course-card-${id}`);
+      if (card) {
+        card.style.transition = 'all 0.35s ease';
+        card.style.transform = 'scale(0.95)';
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.remove();
+          updateCounters();
+          showToast('Phê duyệt thành công!', `Khóa học "${name}" đã được chuyển sang trạng thái Xuất Bản công khai.`, 'success');
+        }, 300);
+      }
+    }
+
+    function confirmReject() {
+      const reason = document.getElementById('rejectReasonText').value.trim();
+      if (!reason) {
+        alert('Vui lòng nhập lý do từ chối!');
+        return;
+      }
+
+      closeModal('rejectModal');
+      const card = document.getElementById(`course-card-${currentRejectId}`);
+      if (card) {
+        card.style.transition = 'all 0.35s ease';
+        card.style.transform = 'scale(0.95)';
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.remove();
+          updateCounters();
+          showToast('Đã gửi từ chối', 'Lý do từ chối đã được gửi qua email cho giảng viên.', 'danger');
+        }, 300);
+      }
+    }
+
+    function updateCounters() {
+      pendingCount = Math.max(0, pendingCount - 1);
+      const hBadge = document.getElementById('headerPendingBadge');
+      if (hBadge) hBadge.textContent = pendingCount;
+      const sBadge = document.getElementById('sidebarApprovalBadge');
+      if (sBadge) sBadge.textContent = pendingCount;
+      document.getElementById('tabPendingBadge').textContent = pendingCount;
+      document.getElementById('heroPendingCount').textContent = `${pendingCount} khóa học chờ duyệt`;
+
+      if (pendingCount === 0) {
+        document.getElementById('emptyPendingCard').style.display = 'block';
+      }
+    }
+
+    function switchApprovalTab(tab, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (tab === 'pending') {
+        document.getElementById('courseListPending').style.display = 'block';
+        if (pendingCount === 0) document.getElementById('emptyPendingCard').style.display = 'block';
+        else document.getElementById('emptyPendingCard').style.display = 'none';
+      } else {
+        document.getElementById('courseListPending').style.display = 'none';
+        document.getElementById('emptyPendingCard').style.display = 'block';
+        document.getElementById('emptyPendingCard').querySelector('h3').textContent = `Danh sách khóa học [${tab === 'approved' ? 'Đã duyệt xuất bản' : 'Đã từ chối'}]`;
+        document.getElementById('emptyPendingCard').querySelector('p').textContent = `Hiển thị lịch sử các khóa học đã được xử lý trong hệ thống.`;
+      }
+    }
+
+    // Đóng modal khi click ra ngoài vùng nền
+    document.querySelectorAll('.modal-backdrop').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+        }
+      });
+    });
+
+    // Quản lý phiên Quản trị viên
+    let adminUser = null;
+    try {
+      adminUser = JSON.parse(localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+    } catch (e) { adminUser = null; }
+
+    if (adminUser) {
+      document.querySelectorAll('.user-capsule-name').forEach(el => el.textContent = adminUser.name || 'Admin LHD');
+    }
+
+    function logoutAdmin() {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user_info');
+      localStorage.removeItem('lhd_user_session');
+      localStorage.removeItem('lhd_learning_logged_in');
+      sessionStorage.clear();
+      window.location.href = '../auth/login.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Không Gian Học Tập & Lịch Trình Buổi Học | LHD – Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #0b63e5;
+      --purple-color: #8b5cf6;
+      --pink-color: #ec4899;
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --accent-grad: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      --bg-page: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --border-light: #e2e8f0;
+      --badge-done-bg: #ecfdf5;
+      --badge-done-text: #059669;
+      --badge-done-border: #a7f3d0;
+      --badge-upcoming-bg: #fffbeb;
+      --badge-upcoming-text: #d97706;
+      --badge-upcoming-border: #fde68a;
+      --badge-future-bg: #f1f5f9;
+      --badge-future-text: #64748b;
+      --badge-future-border: #e2e8f0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Sticky Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-grad);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.05);
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      background: var(--primary-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .course-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-left: 1.5px solid #e2e8f0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .course-breadcrumb a {
+      color: #0b63e5;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .course-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-exit-learn {
+      padding: 0.6rem 1.25rem;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      border: 1.5px solid #e2e8f0;
+      color: #334155;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.86rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-exit-learn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+      transform: translateY(-1px);
+    }
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 14px 4px 4px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      text-decoration: none;
+      color: #0f172a;
+      font-size: 0.86rem;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .user-pill-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1240px;
+      margin: 2rem auto 4rem;
+      padding: 0 4%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Course Hero Banner Card */
+    .course-hero-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #2e1065 100%);
+      border-radius: 24px;
+      padding: 2.2rem;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      margin-bottom: 2rem;
+      animation: bannerFade 0.4s ease forwards;
+    }
+
+    @keyframes bannerFade {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-glow-orb {
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      filter: blur(60px);
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2.5rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-course-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta-item i {
+      color: #38bdf8;
+    }
+
+    /* Hero Progress Box */
+    .hero-progress-box {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hero-progress-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    .hero-progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+
+    .hero-progress-bar-fill {
+      height: 100%;
+      background: var(--primary-grad);
+      border-radius: 9999px;
+      transition: width 0.6s ease;
+    }
+
+    /* Live Session Quick Callout Card */
+    .hero-live-callout {
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.2) 0%, rgba(139, 92, 246, 0.25) 100%);
+      border: 1.5px solid rgba(139, 92, 246, 0.5);
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 4px 20px rgba(11, 99, 229, 0.15);
+    }
+
+    .hero-callout-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pulse-ring-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary-grad);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
+      animation: livePulseGlow 1.8s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes livePulseGlow {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
+      }
+
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+      }
+    }
+
+    .callout-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .callout-sub {
+      font-size: 0.75rem;
+      color: #c4b5fd;
+    }
+
+    .btn-hero-enter-live {
+      padding: 8px 18px;
+      border-radius: 9999px;
+      background: var(--primary-grad);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 16px rgba(11, 99, 229, 0.35);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+
+    .btn-hero-enter-live:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(139, 92, 246, 0.55);
+    }
+
+    /* Filter & Controls Toolbar */
+    .schedule-toolbar {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1rem 1.4rem;
+      border: 1.5px solid var(--border-light);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+      margin-bottom: 1.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filter-tabs-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      background: #f1f5f9;
+      color: var(--text-sub);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-pill:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    .filter-pill.active {
+      background: var(--primary-grad);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.25);
+    }
+
+    .search-sessions-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-sessions-wrap input {
+      width: 100%;
+      padding: 8px 16px 8px 36px;
+      border-radius: 9999px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-sessions-wrap input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(11, 99, 229, 0.12);
+    }
+
+    .search-sessions-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    /* Simulation Switcher Bar (Demo Time Changer) */
+    .time-simulation-bar {
+      background: #eff6ff;
+      border: 1.5px dashed #93c5fd;
+      border-radius: 16px;
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.86rem;
+    }
+
+    .sim-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #1e40af;
+      font-weight: 700;
+    }
+
+    .sim-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-sim-mode {
+      padding: 5px 14px;
+      border-radius: 9999px;
+      border: 1px solid #bfdbfe;
+      background: #ffffff;
+      color: #1e40af;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-sim-mode:hover,
+    .btn-sim-mode.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+
+    /* Curriculum Schedule Section */
+    .schedule-chapter-block {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1.5px solid var(--border-light);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+      margin-bottom: 1.8rem;
+      overflow: hidden;
+      animation: cardFadeIn 0.35s ease forwards;
+    }
+
+    @keyframes cardFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chapter-heading-bar {
+      background: #f8fafc;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chapter-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #0f172a;
+    }
+
+    .chapter-progress-pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #0b63e5;
+      background: rgba(11, 99, 229, 0.08);
+      padding: 3px 10px;
+      border-radius: 9999px;
+    }
+
+    /* Lesson / Session Row Items */
+    .session-list-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .session-item-card {
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      border-bottom: 1px solid #f1f5f9;
+      transition: all 0.22s ease;
+      position: relative;
+    }
+
+    .session-item-card:last-child {
+      border-bottom: none;
+    }
+
+    .session-item-card:hover {
+      background: #f8fafc;
+    }
+
+    .session-item-card.highlight-live {
+      background: linear-gradient(90deg, rgba(11, 99, 229, 0.06) 0%, rgba(255, 255, 255, 0.98) 100%);
+      border-left: 4px solid var(--primary-color);
+    }
+
+    /* Left Session Number Pill */
+    .session-num-badge {
+      width: 70px;
+      height: 52px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      color: #475569;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+
+    .session-num-badge strong {
+      font-size: 1.05rem;
+      color: #0f172a;
+    }
+
+    .session-item-card.done .session-num-badge {
+      background: #ecfdf5;
+      color: #059669;
+      border-color: #a7f3d0;
+    }
+
+    .session-item-card.done .session-num-badge strong {
+      color: #059669;
+    }
+
+    .session-item-card.live-ready .session-num-badge {
+      background: var(--primary-grad);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.35);
+    }
+
+    .session-item-card.live-ready .session-num-badge strong {
+      color: #ffffff;
+    }
+
+    .session-item-card.upcoming .session-num-badge {
+      background: #fef3c7;
+      color: #d97706;
+      border-color: #fde68a;
+    }
+
+    .session-item-card.upcoming .session-num-badge strong {
+      color: #d97706;
+    }
+
+    /* Center Session Content */
+    .session-main-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .session-title-text {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .session-sub-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.82rem;
+      color: var(--text-sub);
+    }
+
+    .session-sub-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Right Side Status & Actions (THE 4 STATES) */
+    .session-right-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    /* 1. ĐÃ HOÀN THÀNH */
+    .badge-status-done {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      background: var(--badge-done-bg);
+      color: var(--badge-done-text);
+      border: 1.5px solid var(--badge-done-border);
+      font-weight: 800;
+      font-size: 0.84rem;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.1);
+    }
+
+    .btn-watch-record {
+      padding: 7px 14px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: #0b63e5;
+      border: 1px solid #cbd5e1;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-watch-record:hover {
+      background: #0b63e5;
+      color: #ffffff;
+      border-color: #0b63e5;
+      transform: translateY(-1px);
+    }
+
+    /* 2. SẮP BẮT ĐẦU */
+    .badge-status-upcoming {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      background: var(--badge-upcoming-bg);
+      color: var(--badge-upcoming-text);
+      border: 1.5px solid var(--badge-upcoming-border);
+      font-weight: 800;
+      font-size: 0.84rem;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.12);
+    }
+
+    /* 3. VÀO PHÒNG HỌC LIVE (Button) */
+    .btn-enter-live-room {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 22px;
+      border-radius: 9999px;
+      background: var(--primary-grad);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(11, 99, 229, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: liveBtnGlow 1.8s infinite;
+    }
+
+    @keyframes liveBtnGlow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(11, 99, 229, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(11, 99, 229, 0);
+      }
+    }
+
+    .btn-enter-live-room:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.55);
+    }
+
+    /* 4. CHƯA BẮT ĐẦU */
+    .badge-status-future {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      background: var(--badge-future-bg);
+      color: var(--badge-future-text);
+      border: 1.5px solid var(--badge-future-border);
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+
+    /* Video Player Modal for Record */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-video-card {
+      background: #0f172a;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 900px;
+      color: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid #334155;
+      animation: modalPop 0.25s ease forwards;
+    }
+
+    @keyframes modalPop {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-video-header {
+      padding: 1.1rem 1.5rem;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+
+    .modal-video-viewport {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+    }
+
+    .modal-video-viewport video {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .session-item-card {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .session-right-status {
+        justify-content: flex-start;
+      }
+
+      .course-breadcrumb {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header Navbar -->
+  <header>
+    <div class="header-left">
+      <a href="student/home.html" class="brand-logo" id="learnBrandLogo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <div class="course-breadcrumb">
+        <a href="my-courses.html"><i class="fa-solid fa-book-bookmark"></i> Khóa học của tôi</a>
+        <i class="fa-solid fa-chevron-right" style="font-size: 0.7rem; color: #94a3b8;"></i>
+        <span id="headerCourseTitle" style="color: #0f172a; font-weight: 800;">Tiếng Anh Giao Tiếp Bản Xứ Siêu Phản
+          Xạ</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <a href="student/profile.html" class="user-pill" id="learnUserPill" title="Xem trang thông tin cá nhân">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          class="user-pill-avatar" id="headerAvatarImg" alt="Avatar">
+        <span id="headerUserName">Tài khoản</span>
+      </a>
+
+      <a href="my-courses.html" class="btn-exit-learn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Về Khóa học của tôi</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Top Course Hero Banner -->
+    <div class="course-hero-banner">
+      <div class="hero-glow-orb"></div>
+      <div class="hero-grid">
+        <div>
+          <span class="hero-tag-badge">
+            <i class="fa-solid fa-graduation-cap"></i> Khóa Học Trực Tuyến Live
+          </span>
+          <h1 class="hero-course-title" id="bannerCourseTitle">Tiếng Anh Giao Tiếp Bản Xứ Siêu Phản Xạ</h1>
+
+          <div class="hero-meta-row">
+            <div class="hero-meta-item">
+              <i class="fa-solid fa-chalkboard-user"></i>
+              <span>Giảng viên: <strong id="bannerInstructor">Cô Emily Watson • TESOL Quốc Tế</strong></span>
+            </div>
+            <div class="hero-meta-item">
+              <i class="fa-regular fa-calendar-check"></i>
+              <span>Lịch học: <strong id="bannerSchedule">Thứ 2 - 4 - 6 (19:30 – 21:00)</strong></span>
+            </div>
+            <div class="hero-meta-item">
+              <i class="fa-solid fa-video"></i>
+              <span>Hình thức: <strong>Live HD Tương Tác</strong></span>
+            </div>
+          </div>
+
+          <div class="hero-live-callout">
+            <div class="hero-callout-left">
+              <div class="pulse-ring-icon">
+                <i class="fa-solid fa-video"></i>
+              </div>
+              <div>
+                <div class="callout-title" id="calloutLessonTitle">Buổi 15: Thuyết trình & Đàm phán trực tiếp</div>
+                <div class="callout-sub" id="calloutLessonSub">Phòng học đang mở (Còn 15 phút vào học)</div>
+              </div>
+            </div>
+            <button type="button" class="btn-hero-enter-live" onclick="goToWaitingLobby('lesson_15')">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i>
+              <span>Vào phòng học Live</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Progress Overview Box -->
+        <div class="hero-progress-box">
+          <div class="hero-progress-head">
+            <span>Tiến độ hoàn thành khóa học</span>
+            <strong id="progressPercentTxt" style="color: #38bdf8;">14 / 36 Buổi (38%)</strong>
+          </div>
+          <div class="hero-progress-bar-bg">
+            <div class="hero-progress-bar-fill" id="progressBarFill" style="width: 38%;"></div>
+          </div>
+          <div
+            style="display: flex; justify-content: space-between; font-size: 0.78rem; color: #cbd5e1; margin-top: 4px;">
+            <span>🟢 Đã học: <strong>14 buổi</strong></span>
+            <span>⏳ Sắp tới: <strong>1 buổi</strong></span>
+            <span>🔒 Chưa học: <strong>21 buổi</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Time Simulation Switcher (Cho phép trải nghiệm đầy đủ các mốc thời gian) -->
+    <div class="time-simulation-bar">
+      <div class="sim-info">
+        <i class="fa-solid fa-clock-rotate-left" style="font-size: 1.1rem;"></i>
+        <span>Mô phỏng mốc thời gian buổi học:</span>
+      </div>
+      <div class="sim-buttons-group">
+        <button type="button" class="btn-sim-mode active" onclick="setSimulationMode('default', this)">
+          Mặc định (Buổi 15: Còn 15p Vào học live)
+        </button>
+        <button type="button" class="btn-sim-mode" onclick="setSimulationMode('one_day', this)">
+          Còn 1 ngày nữa (Hiện "Sắp bắt đầu")
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter Toolbar -->
+    <div class="schedule-toolbar">
+      <div class="filter-tabs-pills">
+        <button type="button" class="filter-pill active" onclick="filterSessions('all', this)">
+          <span>Tất cả các buổi</span>
+          <strong>(36)</strong>
+        </button>
+        <button type="button" class="filter-pill" onclick="filterSessions('done', this)">
+          <span>🟢 Đã hoàn thành</span>
+          <strong>(14)</strong>
+        </button>
+        <button type="button" class="filter-pill" onclick="filterSessions('live', this)">
+          <span>🎥 Vào phòng học Live</span>
+          <strong>(1)</strong>
+        </button>
+        <button type="button" class="filter-pill" onclick="filterSessions('upcoming', this)">
+          <span>⏳ Sắp bắt đầu</span>
+          <strong>(1)</strong>
+        </button>
+        <button type="button" class="filter-pill" onclick="filterSessions('future', this)">
+          <span>🔒 Chưa bắt đầu</span>
+          <strong>(20)</strong>
+        </button>
+      </div>
+
+      <div class="search-sessions-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="sessionSearchInput" placeholder="Tìm kiếm nội dung buổi học..."
+          oninput="handleSearchSessions()">
+      </div>
+    </div>
+
+    <!-- Curriculum Sessions List -->
+    <div id="curriculumContainer">
+      <!-- Chapters and sessions rendered dynamically by JS -->
+    </div>
+
+  </main>
+
+  <!-- Video Player Modal for Record -->
+  <div class="modal-overlay" id="recordModal">
+    <div class="modal-video-card">
+      <div class="modal-video-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-circle-play" style="color: #38bdf8;"></i>
+          <span id="recordModalTitle" style="font-weight: 800; font-size: 1rem;">Xem lại Record Buổi Học</span>
+        </div>
+        <button type="button" onclick="closeRecordModal()"
+          style="background: none; border: none; color: #cbd5e1; font-size: 1.3rem; cursor: pointer;">
+          &times;
+        </button>
+      </div>
+      <div class="modal-video-viewport">
+        <video id="recordVideoPlayer" controls
+          poster="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=1200">
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+            type="video/mp4">
+        </video>
+      </div>
+      <div
+        style="padding: 1.25rem; background: #0f172a; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 0.85rem; color: #94a3b8;">
+          <i class="fa-solid fa-file-arrow-down" style="color: #38bdf8; margin-right: 6px;"></i>
+          Tài liệu đính kèm: <strong>Slide_BaiGiang_Record.pdf (4.8 MB)</strong>
+        </div>
+        <button type="button" onclick="alert('Đang tải tài liệu buổi học...');" class="filter-pill"
+          style="background: #1e293b; color: #fff;">
+          <i class="fa-solid fa-download"></i> Tải tài liệu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Data Schema for 36 sessions with full details
+    const SESSIONS_DATA = [
+      // Chapter 1
+      {
+        chapter: "Chương 1: Nền tảng Ngữ âm & Kỹ thuật Phát âm Chuẩn Bản Xứ",
+        lessons: [
+          { num: 1, title: "Hệ thống nguyên âm đơn & nguyên âm đôi trong Anh - Mỹ", time: "19:30 - 21:00 • Thứ Hai, 15/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 2, title: "Kỹ thuật nối âm (Linking sounds) & nuốt âm chuẩn xác", time: "19:30 - 21:00 • Thứ Tư, 17/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 3, title: "Trọng âm của từ và nhịp điệu tự nhiên của câu (Rhythm)", time: "19:30 - 21:00 • Thứ Sáu, 19/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 4, title: "Biến âm Flap T & Chặn âm Glottal Stop", time: "19:30 - 21:00 • Thứ Hai, 22/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 5, title: "Ngữ điệu ngữ cảnh (Intonation in conversations)", time: "19:30 - 21:00 • Thứ Tư, 24/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 6, title: "Tổng kết & Thực hành chỉnh âm 1-1 cùng Giảng viên", time: "19:30 - 21:00 • Thứ Sáu, 26/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" }
+        ]
+      },
+      // Chapter 2
+      {
+        chapter: "Chương 2: Giao Tiếp Phản Xạ Đời Thường & Nơi Công Sở",
+        lessons: [
+          { num: 7, title: "Mẫu câu mở đầu cuộc trò chuyện tự nhiên (Small Talk)", time: "19:30 - 21:00 • Thứ Hai, 29/09", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 8, title: "Bày tỏ quan điểm & kỹ thuật đồng tình / phản biện lịch sự", time: "19:30 - 21:00 • Thứ Tư, 01/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 9, title: "Xử lý tình huống giao tiếp khi không nghe kịp câu hỏi", time: "19:30 - 21:00 • Thứ Sáu, 03/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 10, title: "Giao tiếp qua Email công việc & Viết báo cáo chuyên nghiệp", time: "19:30 - 21:00 • Thứ Hai, 06/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 11, title: "Kỹ năng gọi điện thoại thoại & họp trực tuyến từ xa", time: "19:30 - 21:00 • Thứ Tư, 08/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 12, title: "Thực hành phản xạ theo nhóm: Xử lý sự cố với đối tác", time: "19:30 - 21:00 • Thứ Sáu, 10/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 13, title: "Mở rộng vốn từ vựng Collocations & Idioms phổ biến", time: "19:30 - 21:00 • Thứ Hai, 13/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 14, title: "Kỹ thuật phản xạ đối thoại cấp tốc không cần dịch nhẩm", time: "19:30 - 21:00 • Thứ Tư, 15/10", status: "done", duration: "90 phút", teacher: "Cô Emily Watson" }
+        ]
+      },
+      // Chapter 3: Live Session (Buổi 15)
+      {
+        chapter: "Chương 3: Kỹ Năng Đàm Phán & Thuyết Trình Chuyên Nghiệp",
+        lessons: [
+          { num: 15, title: "Kỹ thuật Thuyết trình & Đàm phán trực tiếp trong phòng họp", time: "19:30 - 21:00 • Hôm nay", status: "live", duration: "90 phút", teacher: "Cô Emily Watson", highlight: true },
+          { num: 16, title: "Nghệ thuật thương lượng giá cả & điều khoản hợp đồng", time: "19:30 - 21:00 • Thứ Sáu, 24/10", status: "upcoming", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 17, title: "Kỹ năng trả lời câu hỏi hóc búa trong phần Q&A", time: "19:30 - 21:00 • Thứ Hai, 27/10", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 18, title: "Thực hành Pitching dự án & kêu gọi vốn đầu tư", time: "19:30 - 21:00 • Thứ Tư, 29/10", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" }
+        ]
+      },
+      // Chapter 4: Future Sessions
+      {
+        chapter: "Chương 4: Kỹ Năng Phỏng Vấn & Làm Việc Đa Quốc Gia",
+        lessons: [
+          { num: 19, title: "Chiến lược trả lời phỏng vấn theo mô hình STAR", time: "19:30 - 21:00 • Thứ Sáu, 31/10", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 20, title: "Đàm phán mức lương & phúc lợi bổng lộc chuẩn quốc tế", time: "19:30 - 21:00 • Thứ Hai, 03/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 21, title: "Văn hóa giao tiếp đa quốc gia & tránh sốc văn hóa", time: "19:30 - 21:00 • Thứ Tư, 05/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 22, title: "Quản lý xung đột & giải quyết mâu thuẫn trong team", time: "19:30 - 21:00 • Thứ Sáu, 07/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 23, title: "Dẫn dắt cuộc họp & điều phối thảo luận hiệu quả", time: "19:30 - 21:00 • Thứ Hai, 10/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 24, title: "Thực hành mô phỏng phỏng vấn xin việc vòng Final", time: "19:30 - 21:00 • Thứ Tư, 12/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" }
+        ]
+      },
+      // Chapter 5
+      {
+        chapter: "Chương 5: Bứt Phá Trôi Chảy & Tổng Kết Tốt Nghiệp",
+        lessons: [
+          { num: 25, title: "Kỹ năng kể chuyện (Storytelling) hấp dẫn người nghe", time: "19:30 - 21:00 • Thứ Sáu, 14/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 26, title: "Tư duy phản biện (Critical Thinking) bằng tiếng Anh", time: "19:30 - 21:00 • Thứ Hai, 17/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 27, title: "Thảo luận chủ đề Kinh tế & Tài chính toàn cầu", time: "19:30 - 21:00 • Thứ Tư, 19/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 28, title: "Thảo luận chủ đề Trí tuệ nhân tạo (AI) & Công nghệ mới", time: "19:30 - 21:00 • Thứ Sáu, 21/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 29, title: "Thảo luận chủ đề Phát triển bền vững & Môi trường", time: "19:30 - 21:00 • Thứ Hai, 24/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 30, title: "Luyện phản xạ tranh luận trực tiếp 1-1 (Debate)", time: "19:30 - 21:00 • Thứ Tư, 26/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 31, title: "Kỹ năng đọc báo cáo nghiên cứu & tổng hợp ý chính", time: "19:30 - 21:00 • Thứ Sáu, 28/11", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 32, title: "Kỹ năng viết tóm tắt Executive Summary", time: "19:30 - 21:00 • Thứ Hai, 01/12", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 33, title: "Luyện thi nói & Đánh giá năng lực chuẩn quốc tế", time: "19:30 - 21:00 • Thứ Tư, 03/12", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 34, title: "Buổi tổng duyệt bài thuyết trình tốt nghiệp khóa học", time: "19:30 - 21:00 • Thứ Sáu, 05/12", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 35, title: "Báo cáo đề tài tốt nghiệp & nhận xét từ Hội đồng", time: "19:30 - 21:00 • Thứ Hai, 08/12", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" },
+          { num: 36, title: "Lễ Tốt Nghiệp, Trao Chứng Chỉ & Định hướng phát triển", time: "19:30 - 21:00 • Thứ Tư, 10/12", status: "future", duration: "90 phút", teacher: "Cô Emily Watson" }
+        ]
+      }
+    ];
+
+    let currentFilter = 'all';
+    let simulationMode = 'default'; // 'default' = live (15 mins), 'one_day' = upcoming (còn 1 ngày)
+
+    function getCurrentUser() {
+      try {
+        const raw = localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || localStorage.getItem('current_user') || localStorage.getItem('lhd_user');
+        if (raw) return JSON.parse(raw);
+      } catch (e) { }
+      return null;
+    }
+
+    function syncUserUI() {
+      const u = getCurrentUser();
+      const displayName = u ? (u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : 'talooc')) : 'talooc';
+
+      const headerName = document.getElementById('headerUserName');
+      if (headerName) headerName.textContent = displayName;
+
+      const savedAvatar = localStorage.getItem('lhd_user_avatar');
+      const img = document.getElementById('headerAvatarImg');
+      if (savedAvatar && img) {
+        img.src = savedAvatar;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Sync User Profile
+      syncUserUI();
+
+      // 2. Check course parameter from URL or localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = urlParams.get('id');
+      try {
+        let enrolled = [];
+        const raw = localStorage.getItem('lhd_enrolled_courses') || localStorage.getItem('lhd_my_courses');
+        if (raw) enrolled = JSON.parse(raw);
+        const course = enrolled.find(c => c.id === courseId || c.title === courseId);
+        if (course) {
+          if (course.title) {
+            document.getElementById('headerCourseTitle').textContent = course.title;
+            document.getElementById('bannerCourseTitle').textContent = course.title;
+          }
+          if (course.instructor) {
+            document.getElementById('bannerInstructor').textContent = course.instructor;
+          }
+          if (course.schedule) {
+            document.getElementById('bannerSchedule').textContent = course.schedule;
+          }
+        }
+      } catch (e) { }
+
+      // 3. Render Session List
+      renderScheduleList();
+    });
+
+    window.addEventListener('storage', syncUserUI);
+
+    // 2. Render Curriculum with the 4 Exact Status Requirements
+    function renderScheduleList() {
+      const container = document.getElementById('curriculumContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const searchInput = document.getElementById('sessionSearchInput');
+      const searchVal = (searchInput ? searchInput.value : '').toLowerCase().trim();
+
+      SESSIONS_DATA.forEach((chap, cIdx) => {
+        const matchingLessons = chap.lessons.filter(lesson => {
+          // Adjust status based on simulation mode for lesson 15
+          let actualStatus = lesson.status;
+          if (lesson.num === 15) {
+            actualStatus = (simulationMode === 'one_day') ? 'upcoming' : 'live';
+          }
+
+          const matchFilter = (currentFilter === 'all') || (actualStatus === currentFilter);
+          const matchSearch = !searchVal || lesson.title.toLowerCase().includes(searchVal) || ('buổi ' + lesson.num).includes(searchVal);
+          return matchFilter && matchSearch;
+        });
+
+        if (matchingLessons.length === 0) return;
+
+        const chapCard = document.createElement('div');
+        chapCard.className = 'schedule-chapter-block';
+
+        let lessonsHtml = '';
+        matchingLessons.forEach(l => {
+          let actualStatus = l.status;
+          if (l.num === 15) {
+            actualStatus = (simulationMode === 'one_day') ? 'upcoming' : 'live';
+          }
+
+          let rightStatusHtml = '';
+          let rowClass = 'session-item-card';
+
+          // THE 4 STATUSES AS SPECIFIED BY USER:
+          if (actualStatus === 'done') {
+            // 1. Đã hoàn thành
+            rowClass += ' done';
+            rightStatusHtml = `
+              <div class="session-right-status">
+                <span class="badge-status-done">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span>Đã hoàn thành</span>
+                </span>
+                <button type="button" class="btn-watch-record" onclick="openRecordVideo('Buổi ${l.num}: ${l.title}')" title="Xem lại bài giảng Record">
+                  <i class="fa-solid fa-circle-play"></i>
+                  <span>Xem Record</span>
+                </button>
+              </div>
+            `;
+          } else if (actualStatus === 'upcoming') {
+            // 2. Sắp bắt đầu (còn 1 ngày)
+            rowClass += ' upcoming';
+            rightStatusHtml = `
+              <div class="session-right-status">
+                <span class="badge-status-upcoming">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Sắp bắt đầu (còn 1 ngày)</span>
+                </span>
+              </div>
+            `;
+          } else if (actualStatus === 'live') {
+            // 3. Vào phòng học Live (Còn 15 phút nữa vào học)
+            rowClass += ' live-ready highlight-live';
+            rightStatusHtml = `
+              <div class="session-right-status">
+                <button type="button" class="btn-enter-live-room" onclick="goToWaitingLobby('lesson_${l.num}')">
+                  <i class="fa-solid fa-video"></i>
+                  <span>Vào phòng học Live</span>
+                </button>
+              </div>
+            `;
+          } else {
+            // 4. Chưa bắt đầu (Mấy bữa chưa học)
+            rowClass += ' future';
+            rightStatusHtml = `
+              <div class="session-right-status">
+                <span class="badge-status-future">
+                  <i class="fa-solid fa-lock" style="font-size: 0.75rem;"></i>
+                  <span>Chưa bắt đầu</span>
+                </span>
+              </div>
+            `;
+          }
+
+          lessonsHtml += `
+            <div class="${rowClass}">
+              <div class="session-num-badge">
+                <span>BUỔI</span>
+                <strong>${l.num < 10 ? '0' + l.num : l.num}</strong>
+              </div>
+
+              <div class="session-main-info">
+                <div class="session-title-text">
+                  <span>${l.title}</span>
+                  ${actualStatus === 'live' ? '<span style="background: var(--primary-grad); color: #fff; font-size: 0.68rem; padding: 2px 8px; border-radius: 9999px; font-weight: 800; box-shadow: 0 2px 8px rgba(11, 99, 229, 0.4);">ĐANG MỞ</span>' : ''}
+                </div>
+                <div class="session-sub-meta">
+                  <span><i class="fa-regular fa-clock" style="color: #0b63e5;"></i> ${l.time}</span>
+                  <span><i class="fa-solid fa-chalkboard-user" style="color: #8b5cf6;"></i> ${l.teacher}</span>
+                  <span><i class="fa-solid fa-stopwatch" style="color: #64748b;"></i> ${l.duration}</span>
+                </div>
+              </div>
+
+              ${rightStatusHtml}
+            </div>
+          `;
+        });
+
+        chapCard.innerHTML = `
+          <div class="chapter-heading-bar">
+            <div class="chapter-title-wrap">
+              <i class="fa-solid fa-folder-open" style="color: var(--primary-color);"></i>
+              <span>${chap.chapter}</span>
+            </div>
+            <span class="chapter-progress-pill">${matchingLessons.length} Buổi học</span>
+          </div>
+          <div class="session-list-group">
+            ${lessonsHtml}
+          </div>
+        `;
+
+        container.appendChild(chapCard);
+      });
+    }
+
+    // 3. Navigation to Waiting Room Lobby (Giao diện chờ theo Hình 2)
+    function goToWaitingLobby(lessonId) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = urlParams.get('id') || 'course_progress_1';
+      window.location.href = `student/live-lobby.html?courseId=${encodeURIComponent(courseId)}&lessonId=${encodeURIComponent(lessonId)}`;
+    }
+
+    // 4. Filtering Tabs
+    function filterSessions(status, btn) {
+      currentFilter = status;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderScheduleList();
+    }
+
+    // 5. Search Function
+    function handleSearchSessions() {
+      renderScheduleList();
+    }
+
+    // 6. Time Simulation Switcher
+    function setSimulationMode(mode, btn) {
+      simulationMode = mode;
+      document.querySelectorAll('.btn-sim-mode').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const calloutTitle = document.getElementById('calloutLessonTitle');
+      const calloutSub = document.getElementById('calloutLessonSub');
+
+      if (mode === 'one_day') {
+        if (calloutSub) calloutSub.textContent = 'Sắp bắt đầu (còn 1 ngày nữa là đến giờ học)';
+      } else {
+        if (calloutSub) calloutSub.textContent = 'Phòng học đang mở (Còn 15 phút vào học)';
+      }
+
+      renderScheduleList();
+    }
+
+    // 7. Video Record Modal
+    function openRecordVideo(title) {
+      const modal = document.getElementById('recordModal');
+      const t = document.getElementById('recordModalTitle');
+      if (t) t.textContent = title;
+      if (modal) modal.classList.add('show');
+    }
+
+    function closeRecordModal() {
+      const modal = document.getElementById('recordModal');
+      const player = document.getElementById('recordVideoPlayer');
+      if (player) player.pause();
+      if (modal) modal.classList.remove('show');
+    }
+  </script>
+
+  <!-- ROLE-ADAPTIVE USER SYNC SCRIPT -->
+  <script>
+    (function () {
+      function getCurrentUser() {
+        try {
+          let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+          if (u) {
+            const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+            const foundReg = regUsers.find(function (r) {
+              return (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) ||
+                (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase());
+            });
+            if (foundReg) {
+              if (foundReg.name && (!u.name || u.name === 'Học Viên' || u.name === 'Giảng viên' || u.name === 'Học viên')) u.name = foundReg.name;
+              if (foundReg.email && !u.email) u.email = foundReg.email;
+              if (foundReg.role && !u.role) u.role = foundReg.role;
+              if (foundReg.avatarUrl && !u.avatarUrl) u.avatarUrl = foundReg.avatarUrl;
+            }
+            return u;
+          }
+        } catch (e) { }
+        return null;
+      }
+
+      window.addEventListener('DOMContentLoaded', function () {
+        const u = getCurrentUser();
+        if (!u) return;
+
+        const isInstructor = (u.role === 'ROLE_INSTRUCTOR');
+        const isAdmin = (u.role === 'ROLE_ADMIN');
+        const displayName = u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : (isInstructor ? 'Giảng viên' : 'Học viên'));
+
+        const userNameEl = document.getElementById('headerUserName');
+        if (userNameEl) userNameEl.textContent = displayName;
+
+        const savedAvatar = localStorage.getItem('lhd_user_avatar') || u.avatarUrl;
+        const avatarImg = document.getElementById('headerAvatarImg');
+        if (avatarImg && savedAvatar && (savedAvatar.startsWith('data:image') || savedAvatar.startsWith('http') || savedAvatar.startsWith('blob'))) {
+          avatarImg.src = savedAvatar;
+        }
+
+        const pill = document.getElementById('learnUserPill');
+        const logo = document.getElementById('learnBrandLogo');
+
+        if (isInstructor) {
+          if (pill) {
+            pill.href = 'instructor/profile.html';
+            pill.title = 'Xem thông tin giảng viên';
+          }
+          if (logo) logo.href = 'instructor/home.html';
+        } else if (isAdmin) {
+          if (pill) {
+            pill.href = 'admin/dashboard.html';
+            pill.title = 'Quản trị viên';
+          }
+          if (logo) logo.href = 'admin/dashboard.html';
+        } else {
+          if (pill) {
+            pill.href = 'student/profile.html';
+            pill.title = 'Xem thông tin học viên';
+          }
+          if (logo) logo.href = 'student/home.html';
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>

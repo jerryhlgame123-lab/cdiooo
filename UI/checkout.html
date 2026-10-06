@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh Toán VNPay | LHD – Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --primary-color: #0b63e5;
+      --purple-color: #8b5cf6;
+      --pink-color: #ec4899;
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-subtle: rgba(226, 232, 240, 0.85);
+    }
+
+    html {
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      overflow-x: clip;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Sticky Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #ffffff;
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.05), rgba(236, 72, 153, 0.08));
+    }
+
+    .nav-links a.nav-item-active {
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%) !important;
+      color: #ffffff !important;
+      padding: 8px 20px;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-links a.nav-item-active:hover {
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    .nav-click-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-left-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 2px;
+    }
+
+    .nav-user-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .bell-badge,
+    .cart-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .user-capsule:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown.show {
+      display: flex;
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Main Checkout Container */
+    .checkout-container {
+      max-width: 950px;
+      margin: 2.5rem auto;
+      padding: 0 5%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .checkout-card {
+      background: var(--card-bg);
+      border-radius: 32px;
+      padding: 2.8rem;
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 20px 50px rgba(11, 99, 229, 0.08);
+    }
+
+    .checkout-top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 1.8rem;
+      border-bottom: 1.5px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .vnpay-badge-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vnpay-tag {
+      background: #005baa;
+      color: white;
+      font-weight: 900;
+      font-size: 1rem;
+      padding: 6px 14px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .checkout-h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .checkout-order-meta {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    .price-total-badge {
+      text-align: right;
+    }
+
+    .price-total-label {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .price-total-val {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary-color);
+      letter-spacing: -0.5px;
+    }
+
+    /* Payer info banner */
+    .payer-info-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 18px;
+      padding: 1rem 1.4rem;
+      margin: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      font-size: 0.88rem;
+    }
+
+    .payer-info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #1e3a8a;
+    }
+
+    /* Methods selection */
+    .methods-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .methods-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 1.8rem;
+    }
+
+    .method-item {
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      background: #ffffff;
+    }
+
+    .method-item:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .method-item.active {
+      border-color: var(--primary-color);
+      background: rgba(11, 99, 229, 0.05);
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.08);
+    }
+
+    .method-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .method-text {
+      flex: 1;
+    }
+
+    .method-name {
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .method-sub {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* QR Display Box */
+    .qr-box-center {
+      text-align: center;
+      padding: 2.2rem 2rem;
+      background: #f8fafc;
+      border-radius: 24px;
+      border: 1.5px dashed #cbd5e1;
+      margin-bottom: 1.8rem;
+    }
+
+    .qr-countdown {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+
+    .qr-img {
+      width: 220px;
+      height: 220px;
+      border-radius: 18px;
+      border: 6px solid #ffffff;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+      margin-bottom: 1.2rem;
+    }
+
+    .qr-instruction {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    .qr-tip {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 6px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Action button */
+    .btn-confirm-payment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 1.1rem;
+      border-radius: 9999px;
+      border: none;
+      background: var(--primary-grad);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.05rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(11, 99, 229, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .btn-confirm-payment:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(139, 92, 246, 0.45);
+    }
+
+    .security-guarantee {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    @media (max-width: 650px) {
+      .checkout-card {
+        padding: 1.8rem;
+      }
+
+      .price-total-badge {
+        text-align: left;
+      }
+    }
+  </style>
+
+  <!-- UNIFIED STUDENT HEADER & NAVIGATION STYLES -->
+  
+
+
+  <script id="student-global-dropdown-handlers">
+    // Auto ensure student logged in state
+    
+
+    window.closeAllDropdowns = function() {
+      const m = document.getElementById('menuDropdown');
+      const b = document.getElementById('bellDropdown');
+      if (m) m.classList.remove('show');
+      if (b) b.classList.remove('show');
+    };
+
+    window.toggleMegaMenu = function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const m = document.getElementById('menuDropdown');
+      const b = document.getElementById('bellDropdown');
+      if (b) b.classList.remove('show');
+      if (m) {
+        m.classList.toggle('show');
+      }
+    };
+
+    window.toggleBellDropdown = function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const m = document.getElementById('menuDropdown');
+      const b = document.getElementById('bellDropdown');
+      if (m) m.classList.remove('show');
+      if (b) {
+        b.classList.toggle('show');
+      }
+    };
+
+    // Global click: close dropdowns when clicking outside OR when clicking any item inside
+    document.addEventListener('click', function(e) {
+      const isDropdown = e.target.closest('.nav-dropdown');
+      const isTriggerBtn = e.target.closest('.nav-circle-btn') || e.target.closest('#headerMenuBtn') || e.target.closest('#headerBellBtn');
+
+      // Click outside
+      if (!isDropdown && !isTriggerBtn) {
+        window.closeAllDropdowns();
+        return;
+      }
+
+      // Click on any item inside mega menu -> auto close
+      if (isDropdown && isDropdown.id === 'menuDropdown') {
+        const item = e.target.closest('.student-menu-item, .menu-user-banner, .btn-menu-logout, a, button');
+        if (item) {
+          window.closeAllDropdowns();
+        }
+      }
+
+      // Click on notification item in bell dropdown -> auto close
+      if (isDropdown && isDropdown.id === 'bellDropdown') {
+        const notifItem = e.target.closest('.bell-notif-item, a');
+        const isActionBtn = e.target.closest('#btnMarkAllRead, #btnClearAllNotifs, .btn-delete-notif');
+        if (notifItem && !isActionBtn) {
+          window.closeAllDropdowns();
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const navUser = document.getElementById('navActionsUser');
+      if (navUser) navUser.style.display = 'inline-flex';
+
+      const menu = document.getElementById('menuDropdown');
+      if (menu) {
+        menu.addEventListener('click', function (e) {
+          const item = e.target.closest('.student-menu-item, .menu-user-banner, .btn-menu-logout, a, button');
+          if (item) {
+            window.closeAllDropdowns();
+          }
+        });
+      }
+    });
+  </script>
+
+<style id="student-banner-enhancement-style">
+    /* Ultra-compact & Sleek Student Mega Dropdown (Fits All Items + Logout on Screen) */
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+      scrollbar-width: thin !important;
+      scrollbar-color: #cbd5e1 transparent !important;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar {
+      width: 4px !important;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar-thumb {
+      background: #cbd5e1 !important;
+      border-radius: 4px !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+      min-height: 66px !important;
+      box-sizing: border-box !important;
+      transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+    }
+
+    .menu-user-banner:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.35) !important;
+    }
+
+    .menu-user-banner-glow {
+      position: absolute !important;
+      top: -25px !important;
+      right: -25px !important;
+      width: 80px !important;
+      height: 80px !important;
+      border-radius: 50% !important;
+      background: #8b5cf6 !important;
+      filter: blur(22px) !important;
+      opacity: 0.55 !important;
+      pointer-events: none !important;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+      object-fit: cover !important;
+      background: #ffffff !important;
+      flex-shrink: 0 !important;
+    }
+
+    .menu-banner-meta {
+      flex: 1 !important;
+      min-width: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
+      justify-content: center !important;
+    }
+
+    .menu-banner-name {
+      font-size: 0.92rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.72rem !important;
+      color: #cbd5e1 !important;
+      line-height: 1.2 !important;
+      margin: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-verified {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 0.68rem !important;
+      color: #38bdf8 !important;
+      font-weight: 700 !important;
+      margin-top: 2px !important;
+      width: fit-content !important;
+      line-height: 1 !important;
+    }
+
+    .menu-banner-verified i {
+      font-size: 0.68rem !important;
+    }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+      margin-top: 1px !important;
+      line-height: 1 !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+      margin-bottom: 1px !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.8rem !important;
+      flex-shrink: 0 !important;
+      transition: all 0.15s ease !important;
+    }
+
+    .student-menu-item:hover .menu-item-icon {
+      background: #0b63e5 !important;
+      color: #ffffff !important;
+    }
+
+    .menu-item-title {
+      font-size: 0.84rem !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      transition: color 0.15s ease !important;
+    }
+
+    .student-menu-item:hover .menu-item-title {
+      color: #0b63e5 !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.84rem !important;
+      cursor: pointer !important;
+      transition: all 0.18s ease !important;
+      margin-top: 2px !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.18) !important;
+    }
+  </style>
+  <style id="nav-guest-and-user-styles">
+    /* Header Right Actions Styling */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    /* 1. Guest Actions (Chưa đăng nhập: Nút Đăng nhập & Đăng ký) */
+    .nav-actions-guest {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .btn-guest-login {
+      padding: 0.62rem 1.45rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #7c3aed;
+      background: #ffffff;
+      border: 1.5px solid rgba(139, 92, 246, 0.4);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-guest-login:hover {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+
+    .btn-guest-register {
+      padding: 0.62rem 1.45rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #ffffff;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border: none;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-guest-register:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(236, 72, 153, 0.45);
+      filter: brightness(1.05);
+    }
+
+    /* 2. User Actions (Đã đăng nhập) */
+    .nav-actions-user {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-user-left-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 4px;
+    }
+
+    .nav-user-right-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script id="protected-page-auth-guard">
+    (function() {
+      const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+      const uStr = localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || sessionStorage.getItem('user_info');
+      let isLogged = false;
+      if (token) isLogged = true;
+      if (uStr) {
+        try {
+          const u = JSON.parse(uStr);
+          if (u && (u.email || u.name || u.id)) isLogged = true;
+        } catch(e) {}
+      }
+      if (!isLogged) {
+        window.location.href = 'auth/login.html';
+      }
+    })();
+  </script>
+
+
+  <!-- Header -->
+    <!-- Header Navbar (Tự động nhận diện Role: Giảng viên / Học viên / Admin) -->
+    <!-- Header Navbar (Tự động nhận diện Khách / Giảng viên / Học viên / Admin) -->
+  <header>
+    <div class="header-left">
+      <a href="index.html" class="brand-logo" id="headerBrandLogo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="student/home.html" id="navHomeLink">Trang chủ</a></li>
+        <li><a href="courses.html">Khóa học</a></li>
+        <li><a href="index.html#about" id="navAboutLink">Giới thiệu</a></li>
+        <li><a href="index.html#footer" id="navContactLink">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <!-- 1. Guest Actions (Chưa đăng nhập -> Hiện nút Đăng nhập & Đăng ký) -->
+      <div class="nav-actions-guest" id="navActionsGuest">
+        <a href="auth/login.html" class="btn-guest-login" id="btnNavLogin">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Đăng nhập</span>
+        </a>
+        <a href="auth/register.html" class="btn-guest-register" id="btnNavRegister">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Đăng ký</span>
+        </a>
+      </div>
+
+      <!-- 2. Logged in Actions (Đã đăng nhập -> Hiện Thông báo, Giỏ hàng, Tài khoản & Menu ☰) -->
+      <div class="nav-actions-user" id="navActionsUser" style="display: none;">
+        <!-- Nhóm 1: Thông báo & Giỏ hàng -->
+        <div class="nav-user-left-group">
+          <!-- Bell Button (with Popover) -->
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="headerBellBtn" onclick="toggleBellDropdown(event)"
+              title="Thông báo hệ thống">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="headerBellBadge" style="display: none;">0</span>
+            </button>
+
+            <!-- Bell Dropdown Popover -->
+            <div class="nav-dropdown" id="bellDropdown"
+              style="min-width: 340px; max-width: 380px; left: 0; right: auto; padding: 0.85rem;">
+              <div class="dropdown-header"
+                style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; margin-bottom: 8px;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Thông báo mới</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" id="btnMarkAllRead" onclick="markAllNotificationsRead()"
+                    style="background: none; border: none; color: #0b63e5; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Đã
+                    đọc</button>
+                  <span style="color: #cbd5e1; font-size: 0.75rem;">•</span>
+                  <button type="button" id="btnClearAllNotifs" onclick="clearAllNotifications(event)"
+                    style="background: none; border: none; color: #ef4444; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Xóa
+                    tất cả</button>
+                </div>
+              </div>
+              <div id="bellNotificationList" style="max-height: 380px; overflow-y: auto;">
+                <!-- Dynamic notifications injected by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Shopping Cart Button -->
+          <a href="cart.html" class="nav-circle-btn btn-cart" title="Giỏ hàng khóa học">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+          </a>
+        </div>
+
+        <!-- Vạch phân cách & đẩy các mục còn lại sang bên phải -->
+        <div class="nav-user-divider"></div>
+
+        <!-- Nhóm 2: Tài khoản (Phân biệt Role: Giảng viên / Học viên) & Menu ☰ -->
+        <div class="nav-user-right-group">
+          <!-- User Capsule (Tự động chuyển vào instructor/profile.html nếu là giảng viên hoặc student/profile.html nếu là học viên) -->
+          <a href="student/profile.html" class="user-capsule" id="userCapsuleBtn" title="Xem trang thông tin cá nhân">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+            <span class="user-capsule-name" id="headerUserName">Tài khoản</span>
+          </a>
+
+          <!-- Nút tròn (3 gạch ngang ☰) -->
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)"
+              title="Menu quản lý (☰)">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Mega Dropdown Menu Đồng Bộ Chuẩn Phân Biệt Role -->
+            <div class="nav-dropdown student-mega-dropdown" id="menuDropdown" style="right: 0; left: auto;">
+              <!-- 1. Khu vực Thông tin cá nhân -->
+              <div class="menu-user-banner" id="menuUserBanner" onclick="handleMenuBannerClick()">
+                <div class="menu-user-banner-glow"></div>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                  class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+                <div class="menu-banner-meta">
+                  <div class="menu-banner-name" id="menuBannerName">Người dùng</div>
+                  <div class="menu-banner-sub" id="menuBannerEmail">user@lhd.edu.vn</div>
+                  <div class="menu-banner-verified">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span id="menuBannerRole">Đã xác thực</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mục Kênh Giảng Viên (Hiển thị khi role là INSTRUCTOR hoặc ADMIN) -->
+              <div id="instructorMenuSection" style="display: none;">
+                <div class="menu-group-heading" style="color: #9333ea; font-weight: 800; letter-spacing: 0.06em;">Dành Cho Giảng Viên</div>
+                <a href="instructor/dashboard.html" class="student-menu-item"
+                  style="color: #7c3aed; font-weight: 800; background: linear-gradient(135deg, rgba(147, 51, 234, 0.08) 0%, rgba(11, 99, 229, 0.06) 100%); border: 1.5px solid #e9d5ff; box-shadow: 0 3px 10px rgba(147, 51, 234, 0.12); margin-bottom: 6px;">
+                  <div class="menu-item-icon" style="background: linear-gradient(135deg, #7c3aed 0%, #0b63e5 100%); color: #ffffff; box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                  </div>
+                  <span class="menu-item-title" style="color: #7c3aed; font-weight: 800; font-size: 0.92rem;">Kênh Giảng Viên (Dashboard)</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; color: #9333ea; margin-left: auto;"></i>
+                </a>
+                <div class="dropdown-divider"></div>
+              </div>
+
+              <!-- 2. Quản lý Học tập & Giảng dạy -->
+              <div class="menu-group-heading" id="menuStudyHeading">Quản lý Học tập</div>
+              <a href="student/home.html" class="student-menu-item" id="menuHomeLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+                <span class="menu-item-title" id="menuHomeTitle">Trang chủ học viên</span>
+              </a>
+
+              <a href="my-courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <span class="menu-item-title">Khóa học của tôi</span>
+              </a>
+
+              <a href="courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-compass"></i></div>
+                <span class="menu-item-title">Khám phá khóa học</span>
+              </a>
+
+              <a href="certificates.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-award"></i></div>
+                <span class="menu-item-title">Chứng chỉ đạt được</span>
+              </a>
+
+              <a href="student/profile.html#orders" class="student-menu-item" id="menuOrdersLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-receipt"></i></div>
+                <span class="menu-item-title">Lịch sử giao dịch</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <!-- 3. Cài đặt & Hỗ trợ -->
+              <div class="menu-group-heading">Cài đặt & Hỗ trợ</div>
+              <a href="student/profile.html" class="student-menu-item" id="menuProfileLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <span class="menu-item-title">Thông tin cá nhân</span>
+              </a>
+
+              <a href="student/profile.html#security" class="student-menu-item" id="menuSecurityLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <span class="menu-item-title">Đổi mật khẩu / Bảo mật</span>
+              </a>
+
+              <a href="javascript:void(0)" class="student-menu-item" id="btnMenuSupportLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-headset"></i></div>
+                <span class="menu-item-title">Hỗ trợ & Phản hồi</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <!-- 4. Đăng xuất -->
+              <div style="padding-top: 4px;">
+                <button type="button" class="btn-menu-logout" id="btnLogoutUser">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="checkout-container">
+
+    <div class="checkout-card">
+
+      <div class="checkout-top-header">
+        <div class="vnpay-badge-box">
+          <div class="vnpay-tag">VNPay</div>
+          <div>
+            <h1 class="checkout-h1">Cổng Thanh Toán VNPay Sandbox</h1>
+            <div class="checkout-order-meta">Mã hóa đơn giao dịch: <strong id="checkoutOrderCodeText">#HD-2026-89410</strong></div>
+          </div>
+        </div>
+
+        <div class="price-total-badge">
+          <div class="price-total-label">Số tiền thanh toán</div>
+          <div class="price-total-val">2.540.000đ</div>
+        </div>
+      </div>
+
+      <!-- Payer Info Banner -->
+      <div class="payer-info-banner">
+        <div class="payer-info-item">
+          <i class="fa-solid fa-user-graduate"></i>
+          <span>Học viên: <strong id="payerName">Học Viên</strong></span>
+        </div>
+        <div class="payer-info-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Email: <strong id="payerEmail">user@lhd.edu.vn</strong></span>
+        </div>
+        <div class="payer-info-item">
+          <i class="fa-solid fa-tag"></i>
+          <span>Voucher: <strong style="color: #059669;">CHAOMUNG2026 (-200k)</strong></span>
+        </div>
+      </div>
+
+      <!-- Payment Methods -->
+      <div class="methods-title">Chọn phương thức thanh toán VNPay:</div>
+      <div class="methods-list">
+        <div class="method-item active" onclick="selectMethod(this, 'qr')">
+          <input type="radio" checked name="payMethod" style="accent-color: var(--primary-color);">
+          <div class="method-icon-wrap" style="background: rgba(11, 99, 229, 0.1); color: var(--primary-color);">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <div class="method-text">
+            <div class="method-name">Ứng dụng Ngân hàng / Ví VNPay quét mã QR</div>
+            <div class="method-sub">Quét mã nhanh chóng qua Vietcombank, MB Bank, Techcombank, BIDV, Agribank...</div>
+          </div>
+        </div>
+
+        <div class="method-item" onclick="selectMethod(this, 'atm')">
+          <input type="radio" name="payMethod" style="accent-color: var(--primary-color);">
+          <div class="method-icon-wrap" style="background: rgba(139, 92, 246, 0.1); color: var(--purple-color);">
+            <i class="fa-solid fa-credit-card"></i>
+          </div>
+          <div class="method-text">
+            <div class="method-name">Thẻ ATM / Tài khoản ngân hàng nội địa (NCB Sandbox)</div>
+            <div class="method-sub">Hỗ trợ hơn 40 ngân hàng nội địa tại Việt Nam với xác thực OTP</div>
+          </div>
+        </div>
+
+        <div class="method-item" onclick="selectMethod(this, 'card')">
+          <input type="radio" name="payMethod" style="accent-color: var(--primary-color);">
+          <div class="method-icon-wrap" style="background: rgba(236, 72, 153, 0.1); color: var(--pink-color);">
+            <i class="fa-brands fa-cc-visa"></i>
+          </div>
+          <div class="method-text">
+            <div class="method-name">Thẻ quốc tế (Visa, MasterCard, JCB)</div>
+            <div class="method-sub">Bảo mật chuẩn 3D Secure quốc tế</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Display Box -->
+      <div class="qr-box-center" id="qrDisplayBox">
+        <div class="qr-countdown">
+          <i class="fa-regular fa-clock"></i>
+          <span>Giao dịch hết hạn sau: <strong id="countdownTimer">14:59</strong></span>
+        </div>
+        <div>
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=VNPay-LHDLearning-HD202689410-2540000"
+            alt="Mã QR VNPay" class="qr-img">
+        </div>
+        <div class="qr-instruction">Mở ứng dụng Ngân hàng hoặc Ví VNPay để quét mã QR</div>
+        <p class="qr-tip">Hệ thống LHD – Learning sẽ tự động kích hoạt khóa học vào tài khoản học viên ngay khi nhận được tín hiệu thanh toán thành công.</p>
+      </div>
+
+      <!-- Confirm Action -->
+      <a href="order-success.html" class="btn-confirm-payment" onclick="handleConfirmPayment(event)">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>XÁC NHẬN ĐÃ THANH TOÁN THÀNH CÔNG (MÔ PHỎNG)</span>
+      </a>
+
+      <div class="security-guarantee">
+        <i class="fa-solid fa-lock" style="color: #10b981;"></i>
+        <span>Giao dịch được mã hóa an toàn 256-bit SSL theo tiêu chuẩn bảo mật PCI-DSS của VNPay</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    let user = null;
+    const token = sessionStorage.getItem('auth_token') || localStorage.getItem('auth_token');
+
+    function getCurrentUser() {
+      try {
+        let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || localStorage.getItem('user') || sessionStorage.getItem('current_user') || 'null');
+        if (u) {
+          if (!u.name || u.name === 'Học Viên' || u.name === 'Học viên') {
+            const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+            const foundReg = regUsers.find(function (r) {
+              return (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) || 
+                     (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase());
+            });
+            if (foundReg && foundReg.name) u.name = foundReg.name;
+            if (foundReg && foundReg.email && !u.email) u.email = foundReg.email;
+          }
+          return u;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    user = getCurrentUser();
+    if (!user && token) {
+      user = {
+        id: 'std_' + Date.now(),
+        name: 'Học viên',
+        email: 'student@lhd.edu.vn',
+        role: 'ROLE_STUDENT'
+      };
+    }
+
+    if (user) {
+      const displayName = user.name || user.fullName || (user.email ? user.email.split('@')[0] : 'Học Viên');
+      document.querySelectorAll('.user-capsule-name').forEach(el => el.textContent = displayName);
+      const payerName = document.getElementById('payerName');
+      if (payerName) payerName.textContent = displayName;
+      const payerEmail = document.getElementById('payerEmail');
+      if (payerEmail) payerEmail.textContent = user.email || 'student@lhd.edu.vn';
+      const savedAvatar = localStorage.getItem('lhd_user_avatar');
+      if (savedAvatar) {
+        document.querySelectorAll('.user-capsule-avatar').forEach(img => img.src = savedAvatar);
+      }
+    }
+
+    // =========================================================================
+    // TẠO MÃ HÓA ĐƠN DUY NHẤT & ĐỒNG BỘ GIÁ TIỀN CHO MỖI LẦN THANH TOÁN
+    // =========================================================================
+    const randInvoiceNum = Math.floor(10000 + Math.random() * 90000);
+    const currentOrderCode = '#HD-2026-' + randInvoiceNum;
+    const orderCodeTextEl = document.getElementById('checkoutOrderCodeText');
+    if (orderCodeTextEl) {
+      orderCodeTextEl.textContent = currentOrderCode;
+    }
+
+    let checkoutTotalAmount = 2540000;
+    try {
+      const cart = JSON.parse(localStorage.getItem('lhd_cart') || '[]');
+      if (cart.length > 0) {
+        let totalVal = 0;
+        cart.forEach(item => {
+          totalVal += item.priceVal || parseInt(String(item.price || item.priceText || '0').replace(/[^0-9]/g, '')) || 0;
+        });
+        if (totalVal > 0) checkoutTotalAmount = totalVal;
+      }
+    } catch (e) {}
+
+    const totalElem = document.querySelector('.price-total-val');
+    if (totalElem) {
+      totalElem.textContent = checkoutTotalAmount.toLocaleString('vi-VN') + 'đ';
+    }
+
+    const qrImg = document.querySelector('.qr-img');
+    if (qrImg) {
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=VNPay-LHDLearning-${currentOrderCode.replace('#', '')}-${checkoutTotalAmount}`;
+    }
+
+    function selectMethod(element, type) {
+      document.querySelectorAll('.method-item').forEach(item => {
+        item.classList.remove('active');
+        item.querySelector('input[type="radio"]').checked = false;
+      });
+      element.classList.add('active');
+      element.querySelector('input[type="radio"]').checked = true;
+    }
+
+    // Countdown timer simulation
+    let secondsLeft = 899;
+    const timerEl = document.getElementById('countdownTimer');
+    if (timerEl) {
+      setInterval(() => {
+        if (secondsLeft > 0) {
+          secondsLeft--;
+          const m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+          const s = (secondsLeft % 60).toString().padStart(2, '0');
+          timerEl.textContent = `${m}:${s}`;
+        }
+      }, 1000);
+    }
+
+    // Xử lý xác nhận thanh toán thành công
+    window.handleConfirmPayment = function (e) {
+      if (e) e.preventDefault();
+      try {
+        const cart = JSON.parse(localStorage.getItem('lhd_cart') || '[]');
+        const now = new Date();
+        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+
+        let totalAmountVal = 0;
+        let orderItems = [];
+
+        if (cart.length > 0) {
+          orderItems = cart.map(item => {
+            const pVal = item.priceVal || parseInt(String(item.price || item.priceText || '0').replace(/[^0-9]/g, '')) || 1290000;
+            totalAmountVal += pVal;
+            const priceFormatted = (typeof item.price === 'string' && item.price.includes('đ')) ? item.price : (pVal.toLocaleString('vi-VN') + 'đ');
+            return {
+              id: item.id || ('item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4)),
+              title: item.title || 'Khóa học LHD',
+              instructor: item.instructor || 'Giảng viên LHD',
+              price: priceFormatted,
+              priceVal: pVal,
+              thumb: item.image || item.thumb || 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600',
+              schedule: item.schedule || 'Thứ 2 - 4 - 6 (19:30 – 21:00)'
+            };
+          });
+        } else {
+          totalAmountVal = checkoutTotalAmount;
+          orderItems = [
+            {
+              id: 'course_default_' + Date.now(),
+              title: 'Tiếng Anh Giao Tiếp Bản Xứ Thực Chiến',
+              instructor: 'Cô Jennifer Miller',
+              price: checkoutTotalAmount.toLocaleString('vi-VN') + 'đ',
+              priceVal: checkoutTotalAmount,
+              thumb: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600',
+              schedule: 'Thứ 2 - 4 - 6 (19:30 – 21:00)'
+            }
+          ];
+        }
+
+        const currentUserObj = (typeof getCurrentUser === 'function' ? getCurrentUser() : null) || user;
+        const payerNameVal = currentUserObj?.name || currentUserObj?.fullName || 'Học Viên';
+        const payerEmailVal = currentUserObj?.email || 'student@lhd.edu.vn';
+
+        const newOrder = {
+          orderCode: currentOrderCode,
+          date: `${dateStr} • ${timeStr}`,
+          timestamp: Date.now(),
+          items: orderItems,
+          totalAmount: totalAmountVal.toLocaleString('vi-VN') + 'đ',
+          totalVal: totalAmountVal,
+          paymentMethod: 'VNPay QR / Mobile Banking',
+          status: 'Thành công',
+          payerName: payerNameVal,
+          payerEmail: payerEmailVal
+        };
+
+        // Lưu last order vào cả sessionStorage và localStorage
+        sessionStorage.setItem('lhd_last_order', JSON.stringify(newOrder));
+        localStorage.setItem('lhd_last_order', JSON.stringify(newOrder));
+
+        // Save into orders history (unshift to show as newest transaction)
+        let orders = [];
+        try {
+          const rawOrders = localStorage.getItem('lhd_orders');
+          if (rawOrders) orders = JSON.parse(rawOrders);
+        } catch(e) {}
+        if (!orders.some(o => o.orderCode === newOrder.orderCode)) {
+          orders.unshift(newOrder);
+        }
+        localStorage.setItem('lhd_orders', JSON.stringify(orders));
+
+        // Kích hoạt khóa học vào mục Khóa học của tôi
+        let enrolled = [];
+        try {
+          const rawEnrolled = localStorage.getItem('lhd_enrolled_courses') || localStorage.getItem('lhd_my_courses');
+          if (rawEnrolled) enrolled = JSON.parse(rawEnrolled);
+        } catch(e) {}
+
+        orderItems.forEach(item => {
+          if (!enrolled.some(e => e.title === item.title)) {
+            enrolled.unshift({
+              id: 'course_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+              title: item.title,
+              instructor: item.instructor,
+              schedule: item.schedule || 'Thứ 2 - 4 - 6 (19:30 – 21:00)',
+              status: 'progress',
+              progress: 0,
+              lessonsDone: 0,
+              totalLessons: 36,
+              thumb: item.thumb,
+              enrolledAt: new Date().toISOString()
+            });
+          }
+        });
+        localStorage.setItem('lhd_enrolled_courses', JSON.stringify(enrolled));
+        localStorage.setItem('lhd_my_courses', JSON.stringify(enrolled));
+
+        // Xóa sạch giỏ hàng hoàn toàn
+        localStorage.setItem('lhd_cart', '[]');
+
+        // Thông báo hệ thống
+        if (typeof window.addNotification === 'function') {
+          window.addNotification('💳 Thanh toán thành công', 'Đơn hàng ' + newOrder.orderCode + ' đã được thanh toán thành công qua VNPay. Khóa học đã được kích hoạt!', 'student/profile.html#orders');
+        }
+
+        window.location.href = 'order-success.html';
+      } catch (err) {
+        console.error(err);
+        window.location.href = 'order-success.html';
+      }
+    };
+  </script>
+
+    <!-- Support Live Chat Modal -->
+  <div class="chat-modal-overlay" id="adminChatModal">
+    <div class="chat-modal-window">
+      <div class="chat-modal-header">
+        <div class="chat-admin-info">
+          <div class="chat-admin-avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120" class="chat-admin-avatar"
+              alt="Admin LHD">
+            <span class="chat-online-badge"></span>
+          </div>
+          <div>
+            <div class="chat-admin-name">Hỗ Trợ Học Viên LHD</div>
+            <div class="chat-admin-status">Trực tuyến • Phản hồi tức thì</div>
+          </div>
+        </div>
+        <button type="button" class="btn-close-chat" id="btnCloseChatModal" title="Đóng cửa sổ">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="chat-messages-area" id="chatMessagesContainer">
+        <div class="chat-msg-row admin-row">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120" class="chat-bubble-avatar"
+            alt="Admin">
+          <div class="chat-bubble admin-bubble">
+            Xin chào! 👋<br>
+            Chúng tôi có thể hỗ trợ gì cho lộ trình học của bạn hôm nay?
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-quick-options" id="chatQuickOptions">
+        <button type="button" class="quick-chip" onclick="sendQuickMessage('🇬🇧 Hướng dẫn vào phòng học Live')">🇬🇧 Lớp Live</button>
+        <button type="button" class="quick-chip" onclick="sendQuickMessage('💳 Xác nhận kích hoạt khóa học VNPay')">💳 Thanh toán</button>
+        <button type="button" class="quick-chip" onclick="sendQuickMessage('🎓 Cấp chứng chỉ hoàn thành')">🎓 Chứng chỉ</button>
+      </div>
+
+      <form class="chat-modal-footer" onsubmit="handleSendChatMessage(event)">
+        <input type="text" id="chatInputMessage" placeholder="Nhập câu hỏi hoặc yêu cầu hỗ trợ..."
+          class="chat-input-field" autocomplete="off" required>
+        <button type="submit" class="btn-chat-send" title="Gửi tin nhắn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- UNIFIED STUDENT HEADER INTERACTIVE LOGIC -->
+  <script id="student-unified-header-script">
+    (function () {
+      // 1. User Info & Avatar Synchronization
+      function getCurrentUser() {
+        try {
+          let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || localStorage.getItem('user') || sessionStorage.getItem('current_user') || 'null');
+          if (u) {
+            if (!u.name || u.name === 'Học Viên' || u.name === 'Học viên') {
+              const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+              const foundReg = regUsers.find(function (r) {
+                return (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) || 
+                       (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase());
+              });
+              if (foundReg && foundReg.name) u.name = foundReg.name;
+              if (foundReg && foundReg.email && !u.email) u.email = foundReg.email;
+            }
+            return u;
+          }
+        } catch (e) {}
+
+        return null;
+      }
+
+      function syncUserUI() {
+        const u = getCurrentUser();
+        if (!u) return;
+        const displayName = u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : 'talooc');
+        const userEmail = u.email || 'jerryhlgame123@gmail.com';
+
+        document.querySelectorAll('.user-capsule-name, .menu-banner-name, #headerUserName, #welcomeUserName, #menuBannerName').forEach(function (el) {
+          el.textContent = displayName;
+        });
+        document.querySelectorAll('.menu-banner-sub, #menuBannerEmail').forEach(function (el) {
+          el.textContent = userEmail;
+        });
+        document.querySelectorAll('.chat-user-name').forEach(function (el) {
+          el.textContent = displayName;
+        });
+
+        const savedAvatar = localStorage.getItem('lhd_user_avatar');
+        if (savedAvatar) {
+          document.querySelectorAll('.user-capsule-avatar, .menu-banner-avatar, #headerUserAvatar, #menuBannerAvatar, #heroAvatarImg').forEach(function (img) {
+            img.src = savedAvatar;
+          });
+        }
+      }
+
+      function updateCartBadgeCount() {
+        try {
+          const cart = JSON.parse(localStorage.getItem('lhd_cart') || '[]');
+          const badge = document.getElementById('cartBadge');
+          if (badge) {
+            if (cart.length > 0) {
+              badge.textContent = cart.length;
+              badge.style.display = 'inline-flex';
+            } else {
+              badge.style.display = 'none';
+            }
+          }
+          const cartHeaderBadge = document.getElementById('cartHeaderBadge');
+          if (cartHeaderBadge) {
+            cartHeaderBadge.textContent = cart.length + ' Khóa học';
+          }
+        } catch (e) {}
+      }
+
+      // ====================================================================
+      // 2. Notification Management (LocalStorage: lhd_notifications)
+      // ====================================================================
+      function getNotifications() {
+        try {
+          return JSON.parse(localStorage.getItem('lhd_notifications') || '[]');
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveNotifications(notifs) {
+        localStorage.setItem('lhd_notifications', JSON.stringify(notifs));
+        renderNotifications();
+      }
+
+      window.addNotification = function (title, message, link) {
+        const notifs = getNotifications();
+        const newNotif = {
+          id: Date.now(),
+          title: title || '🛒 Đã thêm vào giỏ hàng',
+          message: message || 'Bạn vừa thêm khóa học vào giỏ hàng thành công.',
+          time: 'Vừa xong',
+          link: link || 'cart.html',
+          unread: true
+        };
+        notifs.unshift(newNotif);
+        if (notifs.length > 20) notifs.length = 20;
+        saveNotifications(notifs);
+      };
+
+      function renderNotifications() {
+        const notifs = getNotifications();
+        const badge = document.getElementById('headerBellBadge');
+        const notifList = document.getElementById('bellNotificationList');
+
+        const unreadCount = notifs.filter(function (n) { return n.unread; }).length;
+
+        // 1. Update Bell Badge (0 is hidden)
+        if (badge) {
+          if (unreadCount > 0) {
+            badge.textContent = unreadCount;
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.textContent = '0';
+            badge.style.display = 'none';
+          }
+        }
+
+        // 2. Render List inside #bellNotificationList
+        if (notifList) {
+          if (notifs.length === 0) {
+            notifList.innerHTML = '<div class="bell-empty-state" style="text-align: center; padding: 1.6rem 1rem; color: #94a3b8; font-size: 0.85rem;"><i class="fa-regular fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 8px; display: block; color: #cbd5e1;"></i><span>Hiện tại bạn không có thông báo mới</span></div>';
+          } else {
+            notifList.innerHTML = notifs.map(function (n) {
+              const bg = n.unread ? '#f0fdf4' : '#f8fafc';
+              const border = n.unread ? '#bbf7d0' : '#f1f5f9';
+              const titleColor = n.unread ? '#15803d' : '#0f172a';
+              const targetLink = n.link || 'cart.html';
+              const badgeHtml = n.unread ? '<span style="font-size: 0.65rem; background: #22c55e; color: #ffffff; padding: 1px 6px; border-radius: 999px; font-weight: 700;">Mới</span>' : '<span style="font-size: 0.72rem; color: #94a3b8;">' + (n.time || '') + '</span>';
+              const timeHtml = n.unread ? '<div style="font-size: 0.72rem; color: #16a34a; margin-top: 4px; font-weight: 600;">' + (n.time || 'Vừa xong') + '</div>' : '';
+              return '<div class="bell-notif-item" onclick="window.location.href=\'' + targetLink + '\'" style="padding: 0.65rem 0.85rem; border-radius: 12px; background: ' + bg + '; border: 1px solid ' + border + '; margin-bottom: 6px; cursor: pointer; transition: all 0.15s ease;"><div style="font-weight: 700; font-size: 0.85rem; color: ' + titleColor + '; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;"><span>' + n.title + '</span>' + badgeHtml + '</div><div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">' + n.message + '</div>' + timeHtml + '</div>';
+            }).join('');
+          }
+        }
+      }
+
+      window.markAllNotificationsRead = function () {
+        const notifs = getNotifications();
+        notifs.forEach(function (n) { n.unread = false; });
+        saveNotifications(notifs);
+        if (typeof showToast === 'function') {
+          showToast('Đã đánh dấu tất cả thông báo là đã đọc.');
+        }
+      };
+
+      function logout() {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_info');
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('lhd_learning_logged_in');
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+      }
+
+      // Live Chat Modal handlers
+      const adminChatModal = document.getElementById('adminChatModal');
+      const btnCloseChatModal = document.getElementById('btnCloseChatModal');
+      const btnMenuSupportLink = document.getElementById('btnMenuSupportLink');
+      const chatMessagesContainer = document.getElementById('chatMessagesContainer');
+      const chatInputMessage = document.getElementById('chatInputMessage');
+      const chatQuickOptions = document.getElementById('chatQuickOptions');
+      const btnLogoutUser = document.getElementById('btnLogoutUser');
+      const btnMarkAllRead = document.getElementById('btnMarkAllRead');
+
+      window.openChatModal = function () {
+        if (window.closeAllDropdowns) window.closeAllDropdowns();
+        if (adminChatModal) {
+          adminChatModal.classList.add('show');
+          if (chatInputMessage) setTimeout(function () { chatInputMessage.focus(); }, 200);
+        }
+      };
+
+      window.closeChatModal = function () {
+        if (adminChatModal) adminChatModal.classList.remove('show');
+      };
+
+      if (btnMenuSupportLink) {
+        btnMenuSupportLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          window.openChatModal();
+        });
+      }
+
+      if (btnCloseChatModal) {
+        btnCloseChatModal.addEventListener('click', window.closeChatModal);
+      }
+
+      if (adminChatModal) {
+        adminChatModal.addEventListener('click', function (e) {
+          if (e.target === adminChatModal) window.closeChatModal();
+        });
+      }
+
+      if (btnLogoutUser) {
+        btnLogoutUser.addEventListener('click', logout);
+      }
+
+      if (btnMarkAllRead) {
+        btnMarkAllRead.addEventListener('click', window.markAllNotificationsRead);
+      }
+
+      window.appendUserMessage = function (text) {
+        if (!chatMessagesContainer) return;
+        const row = document.createElement('div');
+        row.className = 'chat-msg-row user-row';
+        row.innerHTML = '<div class="chat-bubble user-bubble">' + text + '</div>';
+        chatMessagesContainer.appendChild(row);
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+      };
+
+      window.appendAdminMessage = function (text) {
+        if (!chatMessagesContainer) return;
+        const row = document.createElement('div');
+        row.className = 'chat-msg-row admin-row';
+        row.innerHTML = '<img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120" class="chat-bubble-avatar" alt="Admin"><div class="chat-bubble admin-bubble">' + text + '</div>';
+        chatMessagesContainer.appendChild(row);
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+      };
+
+      window.sendQuickMessage = function (text) {
+        window.appendUserMessage(text);
+        if (chatQuickOptions) chatQuickOptions.style.display = 'none';
+        setTimeout(function () {
+          let reply = 'Cảm ơn bạn đã liên hệ! Admin LHD – Learning đã ghi nhận yêu cầu: <strong>"' + text + '"</strong>. Chúng tôi đang kiểm tra thông tin và sẽ hỗ trợ giải quyết ngay!';
+          if (text.includes('Live')) {
+            reply = 'Để vào phòng học Live, bạn vào mục <strong>"Khóa học của tôi"</strong> -> Chọn khóa học -> Bấm <strong>"Tham gia lớp học trực tuyến"</strong>. Giảng viên sẽ mở phòng trước 10 phút!';
+          } else if (text.includes('VNPay') || text.includes('toán')) {
+            reply = 'Hệ thống kết nối cổng thanh toán VNPay hoàn toàn tự động. Sau khi thanh toán thành công, khóa học sẽ được kích hoạt ngay lập tức vào tài khoản!';
+          } else if (text.includes('chứng chỉ')) {
+            reply = 'Chứng chỉ hoàn thành được cấp tự động sau khi bạn đạt trên 80% điểm bài test. Bạn có thể tải file PDF sắc nét tại trang <strong>"Chứng chỉ đạt được"</strong>!';
+          }
+          window.appendAdminMessage(reply);
+        }, 700);
+      };
+
+      window.handleSendChatMessage = function (e) {
+        if (e) e.preventDefault();
+        if (!chatInputMessage) return;
+        const val = chatInputMessage.value.trim();
+        if (!val) return;
+        window.appendUserMessage(val);
+        chatInputMessage.value = '';
+        if (chatQuickOptions) chatQuickOptions.style.display = 'none';
+
+        setTimeout(function () {
+          const u = getCurrentUser();
+          const userName = u ? u.name : 'bạn';
+          window.appendAdminMessage('Cảm ơn câu hỏi của ' + userName + ': <em>"' + val + '"</em>. Đội ngũ trợ giảng của LHD đã tiếp nhận và sẽ phản hồi trực tiếp cho bạn ngay!');
+        }, 800);
+      };
+
+      // Nav-links ripple animation
+      document.querySelectorAll('.nav-links a').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          const rect = this.getBoundingClientRect();
+          const ripple = document.createElement('span');
+          ripple.className = 'nav-click-ripple';
+          const diameter = Math.max(rect.width, rect.height);
+          ripple.style.width = ripple.style.height = diameter + 'px';
+          ripple.style.left = (e.clientX - rect.left - diameter / 2) + 'px';
+          ripple.style.top = (e.clientY - rect.top - diameter / 2) + 'px';
+          this.appendChild(ripple);
+          setTimeout(function () { ripple.remove(); }, 600);
+        });
+      });
+
+      // Initial synchronization
+      window.addEventListener('DOMContentLoaded', function () {
+        syncUserUI();
+        updateCartBadgeCount();
+        renderNotifications();
+      });
+
+      syncUserUI();
+      updateCartBadgeCount();
+      renderNotifications();
+    })();
+  </script>
+
+    <!-- ROLE-ADAPTIVE UNIVERSAL USER & DROPDOWN SYNC SCRIPT -->
+  <script id="universal-role-sync-script">
+    (function () {
+      // 1. Account Discovery
+      function getCurrentUser() {
+        try {
+          const uStr = localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || sessionStorage.getItem('user_info');
+          if (!uStr) return null;
+          let u = JSON.parse(uStr);
+          if (u && (u.email || u.name || u.username)) {
+            const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+            const foundReg = regUsers.find(function (r) {
+              return (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) ||
+                (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase());
+            });
+            if (foundReg) {
+              if (foundReg.name && (!u.name || u.name === 'Học Viên' || u.name === 'Giảng viên' || u.name === 'Học viên')) u.name = foundReg.name;
+              if (foundReg.email && !u.email) u.email = foundReg.email;
+              if (foundReg.role && !u.role) u.role = foundReg.role;
+              if (foundReg.avatarUrl && !u.avatarUrl) u.avatarUrl = foundReg.avatarUrl;
+            }
+            return u;
+          }
+        } catch (e) { }
+
+        return null;
+      }
+
+      window.handleMenuBannerClick = function () {
+        const u = getCurrentUser();
+        if (u && u.role === 'ROLE_INSTRUCTOR') {
+          window.location.href = 'instructor/profile.html';
+        } else if (u && u.role === 'ROLE_ADMIN') {
+          window.location.href = 'admin/dashboard.html';
+        } else {
+          window.location.href = 'student/profile.html';
+        }
+      };
+
+      window.syncUniversalUserUI = function () {
+        const u = getCurrentUser();
+        const guestBlock = document.getElementById('navActionsGuest');
+        const userBlock = document.getElementById('navActionsUser');
+
+        if (!u) {
+          // CHƯA ĐĂNG NHẬP -> Hiện nút Đăng nhập & Đăng ký, Ẩn khu vực tài khoản
+          if (guestBlock) guestBlock.style.display = 'flex';
+          if (userBlock) userBlock.style.display = 'none';
+
+          const navHomeLink = document.getElementById('navHomeLink');
+          const headerBrandLogo = document.getElementById('headerBrandLogo');
+          if (navHomeLink) navHomeLink.href = 'index.html';
+          if (headerBrandLogo) headerBrandLogo.href = 'index.html';
+          return;
+        }
+
+        // ĐÃ ĐĂNG NHẬP -> Ẩn nút khách, Hiện khu vực tài khoản + chuông + giỏ hàng + menu ☰
+        if (guestBlock) guestBlock.style.display = 'none';
+        if (userBlock) userBlock.style.display = 'flex';
+
+        const isInstructor = (u.role === 'ROLE_INSTRUCTOR');
+        const isAdmin = (u.role === 'ROLE_ADMIN');
+
+        const displayName = u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : (isInstructor ? 'Giảng viên' : 'Học viên'));
+        const userEmail = u.email || (isInstructor ? 'instructor@lhd.edu.vn' : 'student@lhd.edu.vn');
+
+        // 1. Sync Text (Name, Email)
+        document.querySelectorAll('.user-capsule-name, .menu-banner-name, #headerUserName, #welcomeUserName, #menuBannerName').forEach(function (el) {
+          el.textContent = displayName;
+        });
+        document.querySelectorAll('.menu-banner-sub, #menuBannerEmail').forEach(function (el) {
+          el.textContent = userEmail;
+        });
+
+        // 2. Sync Avatar
+        const savedAvatar = localStorage.getItem('lhd_user_avatar') || u.avatarUrl;
+        if (savedAvatar && (savedAvatar.startsWith('data:image') || savedAvatar.startsWith('http') || savedAvatar.startsWith('blob'))) {
+          document.querySelectorAll('.user-capsule-avatar, .menu-banner-avatar, #headerUserAvatar, #menuBannerAvatar').forEach(function (img) {
+            img.src = savedAvatar;
+          });
+        }
+
+        // 3. Adapt Links based on Role (Instructor vs Student vs Admin)
+        const capsuleBtn = document.getElementById('userCapsuleBtn');
+        const instMenuSection = document.getElementById('instructorMenuSection');
+        const roleEl = document.getElementById('menuBannerRole');
+        const menuHomeLink = document.getElementById('menuHomeLink');
+        const menuHomeTitle = document.getElementById('menuHomeTitle');
+        const menuOrdersLink = document.getElementById('menuOrdersLink');
+        const menuProfileLink = document.getElementById('menuProfileLink');
+        const menuSecurityLink = document.getElementById('menuSecurityLink');
+        const navHomeLink = document.getElementById('navHomeLink');
+        const navAboutLink = document.getElementById('navAboutLink');
+        const navContactLink = document.getElementById('navContactLink');
+        const headerBrandLogo = document.getElementById('headerBrandLogo');
+
+        if (isInstructor) {
+          // Instructor Role
+          if (capsuleBtn) {
+            capsuleBtn.href = 'instructor/profile.html';
+            capsuleBtn.title = 'Xem trang thông tin cá nhân giảng viên';
+          }
+          if (roleEl) roleEl.textContent = 'Giảng viên / Đã xác thực';
+          if (instMenuSection) instMenuSection.style.display = 'block';
+
+          if (menuHomeLink) menuHomeLink.href = 'instructor/home.html';
+          if (menuHomeTitle) menuHomeTitle.textContent = 'Trang chủ giảng viên';
+          if (menuOrdersLink) menuOrdersLink.href = 'instructor/profile.html#orders';
+          if (menuProfileLink) menuProfileLink.href = 'instructor/profile.html';
+          if (menuSecurityLink) menuSecurityLink.href = 'instructor/profile.html#security';
+
+          if (navHomeLink) navHomeLink.href = 'instructor/home.html';
+          if (navAboutLink) navAboutLink.href = 'instructor/home.html#about';
+          if (navContactLink) navContactLink.href = 'instructor/home.html#footer';
+          if (headerBrandLogo) headerBrandLogo.href = 'instructor/home.html';
+
+        } else if (isAdmin) {
+          // Admin Role
+          if (capsuleBtn) {
+            capsuleBtn.href = 'admin/dashboard.html';
+            capsuleBtn.title = 'Cổng Quản trị viên';
+          }
+          if (roleEl) roleEl.textContent = 'Quản trị viên';
+          if (instMenuSection) instMenuSection.style.display = 'block';
+
+          if (navHomeLink) navHomeLink.href = 'admin/dashboard.html';
+          if (headerBrandLogo) headerBrandLogo.href = 'admin/dashboard.html';
+
+        } else {
+          // Student / Regular User Role
+          if (capsuleBtn) {
+            capsuleBtn.href = 'student/profile.html';
+            capsuleBtn.title = 'Xem trang thông tin cá nhân học viên';
+          }
+          if (roleEl) roleEl.textContent = 'Thành viên / Đã xác thực';
+          if (instMenuSection) instMenuSection.style.display = 'none';
+
+          if (menuHomeLink) menuHomeLink.href = 'student/home.html';
+          if (menuHomeTitle) menuHomeTitle.textContent = 'Trang chủ học viên';
+          if (menuOrdersLink) menuOrdersLink.href = 'student/profile.html#orders';
+          if (menuProfileLink) menuProfileLink.href = 'student/profile.html';
+          if (menuSecurityLink) menuSecurityLink.href = 'student/profile.html#security';
+
+          if (navHomeLink) navHomeLink.href = 'student/home.html';
+          if (navAboutLink) navAboutLink.href = 'student/home.html#about';
+          if (navContactLink) navContactLink.href = 'student/home.html#footer';
+          if (headerBrandLogo) headerBrandLogo.href = 'student/home.html';
+        }
+
+        // 4. Update Cart Badge Count
+        try {
+          const cart = JSON.parse(localStorage.getItem('lhd_cart') || '[]');
+          const badge = document.getElementById('cartBadge');
+          if (badge) {
+            if (Array.isArray(cart) && cart.length > 0) {
+              badge.textContent = cart.length;
+              badge.style.display = 'inline-flex';
+            } else {
+              badge.style.display = 'none';
+            }
+          }
+        } catch (e) { }
+      };
+
+      // Dropdown handlers
+      window.closeAllDropdowns = function () {
+        const m = document.getElementById('menuDropdown');
+        const b = document.getElementById('bellDropdown');
+        if (m) m.classList.remove('show');
+        if (b) b.classList.remove('show');
+      };
+
+      window.toggleMegaMenu = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const m = document.getElementById('menuDropdown');
+        const b = document.getElementById('bellDropdown');
+        if (b) b.classList.remove('show');
+        if (m) m.classList.toggle('show');
+      };
+
+      window.toggleBellDropdown = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const m = document.getElementById('menuDropdown');
+        const b = document.getElementById('bellDropdown');
+        if (m) m.classList.remove('show');
+        if (b) b.classList.toggle('show');
+      };
+
+      // Global click: close dropdowns when clicking outside
+      document.addEventListener('click', function (e) {
+        const isDropdown = e.target.closest('.nav-dropdown');
+        const isTriggerBtn = e.target.closest('.nav-circle-btn') || e.target.closest('#headerMenuBtn') || e.target.closest('#headerBellBtn');
+
+        if (!isDropdown && !isTriggerBtn) {
+          window.closeAllDropdowns();
+          return;
+        }
+
+        if (isDropdown && isDropdown.id === 'menuDropdown') {
+          const item = e.target.closest('.student-menu-item, .menu-user-banner, .btn-menu-logout, a, button');
+          if (item) {
+            window.closeAllDropdowns();
+          }
+        }
+
+        if (isDropdown && isDropdown.id === 'bellDropdown') {
+          const notifItem = e.target.closest('.bell-notif-item, a');
+          const isActionBtn = e.target.closest('#btnMarkAllRead, #btnClearAllNotifs, .btn-delete-notif');
+          if (notifItem && !isActionBtn) {
+            window.closeAllDropdowns();
+          }
+        }
+      });
+
+      // Notification handlers
+      function getNotifications() {
+        try { return JSON.parse(localStorage.getItem('lhd_notifications') || '[]'); } catch (e) { return []; }
+      }
+
+      function renderNotifications() {
+        const notifs = getNotifications();
+        const badge = document.getElementById('headerBellBadge');
+        const notifList = document.getElementById('bellNotificationList');
+        const unreadCount = notifs.filter(function (n) { return n.unread; }).length;
+
+        if (badge) {
+          if (unreadCount > 0) {
+            badge.textContent = unreadCount;
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.textContent = '0';
+            badge.style.display = 'none';
+          }
+        }
+
+        if (notifList) {
+          if (notifs.length === 0) {
+            notifList.innerHTML = '<div class="bell-empty-state" style="text-align: center; padding: 1.6rem 1rem; color: #94a3b8; font-size: 0.85rem;"><i class="fa-regular fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 8px; display: block; color: #cbd5e1;"></i><span>Hiện tại bạn không có thông báo mới</span></div>';
+          } else {
+            notifList.innerHTML = notifs.map(function (n) {
+              const bg = n.unread ? '#f0fdf4' : '#f8fafc';
+              const border = n.unread ? '#bbf7d0' : '#f1f5f9';
+              const titleColor = n.unread ? '#15803d' : '#0f172a';
+              const targetLink = n.link || 'cart.html';
+              const badgeHtml = n.unread ? '<span style="font-size: 0.65rem; background: #22c55e; color: #ffffff; padding: 1px 6px; border-radius: 999px; font-weight: 700;">Mới</span>' : '<span style="font-size: 0.72rem; color: #94a3b8;">' + (n.time || '') + '</span>';
+              const timeHtml = n.unread ? '<div style="font-size: 0.72rem; color: #16a34a; margin-top: 4px; font-weight: 600;">' + (n.time || 'Vừa xong') + '</div>' : '';
+              return '<div class="bell-notif-item" onclick="window.location.href=\'' + targetLink + '\'" style="padding: 0.65rem 0.85rem; border-radius: 12px; background: ' + bg + '; border: 1px solid ' + border + '; margin-bottom: 6px; cursor: pointer; transition: all 0.15s ease;"><div style="font-weight: 700; font-size: 0.85rem; color: ' + titleColor + '; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;"><span>' + n.title + '</span>' + badgeHtml + '</div><div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">' + n.message + '</div>' + timeHtml + '</div>';
+            }).join('');
+          }
+        }
+      }
+
+      window.markAllNotificationsRead = function () {
+        const notifs = getNotifications();
+        notifs.forEach(function (n) { n.unread = false; });
+        localStorage.setItem('lhd_notifications', JSON.stringify(notifs));
+        renderNotifications();
+      };
+
+      window.clearAllNotifications = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        localStorage.setItem('lhd_notifications', '[]');
+        renderNotifications();
+      };
+
+      function handleGlobalLogout() {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_info');
+        localStorage.removeItem('currentUser');
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+      }
+
+      // Initial execution
+      window.addEventListener('DOMContentLoaded', function () {
+        window.syncUniversalUserUI();
+        renderNotifications();
+
+        const btnLogout = document.getElementById('btnLogoutUser');
+        if (btnLogout) btnLogout.addEventListener('click', handleGlobalLogout);
+      });
+    })();
+  </script>
+</body>
+
+</html>

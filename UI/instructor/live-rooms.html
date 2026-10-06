@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lớp Học Trực Tuyến (Live Meet Studio) | LHD Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #0b63e5;
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --accent-purple: #7c3aed;
+      --accent-pink: #ec4899;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --shadow-sm: 0 4px 16px rgba(11, 99, 229, 0.04);
+      --shadow-md: 0 10px 30px rgba(11, 99, 229, 0.08);
+      --shadow-glow: 0 12px 32px rgba(124, 58, 237, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+    }
+
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    .bg-blob-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #c084fc 0%, #f472b6 100%);
+      top: -120px;
+      right: -80px;
+    }
+    .bg-blob-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, #67e8f9 0%, #a855f7 100%);
+      bottom: -100px;
+      left: -100px;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-left-group, .nav-user-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 2px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.15);
+    }
+
+    .bell-badge, .cart-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .user-capsule:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown.show { display: flex; }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      object-fit: cover !important;
+    }
+
+    .menu-banner-meta { flex: 1 !important; min-width: 0 !important; }
+    .menu-banner-name { font-size: 0.92rem !important; font-weight: 800 !important; color: #ffffff !important; }
+    .menu-banner-sub { font-size: 0.72rem !important; color: #cbd5e1 !important; }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center;
+      font-size: 0.8rem !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.84rem !important;
+      cursor: pointer !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+    }
+
+    /* LAYOUT */
+    .app-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75rem;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.5rem 0.75rem 1.1rem;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-grad);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+
+    .sidebar-brand-title { font-size: 0.95rem; font-weight: 800; color: #0f172a; }
+    .sidebar-brand-sub { font-size: 0.72rem; color: var(--text-sub); }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 0.6rem;
+      padding-left: 0.8rem;
+    }
+
+    .sidebar-card .nav-group-title:not(:first-child) {
+      border-top: 1px solid #f1f5f9;
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(11, 99, 229, 0.07);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+      background: var(--primary-grad);
+      color: white;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.28);
+    }
+
+    .badge-count {
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.06);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .sidebar-link.active .badge-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* HERO LIVE RADAR CARD */
+    .live-hero-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #31104b 100%);
+      border-radius: 28px;
+      padding: 2.2rem 2.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .live-hero-glow {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ec4899 0%, #8b5cf6 60%, transparent 80%);
+      filter: blur(35px);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .live-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1.5px solid rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+
+    .live-pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 12px #ef4444;
+      animation: livePulse 1.4s infinite;
+    }
+
+    @keyframes livePulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 20px #ef4444; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .live-hero-title {
+      font-size: 1.65rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+
+    .live-hero-desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      max-width: 680px;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .live-hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .live-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .live-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-live-primary {
+      background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.8rem;
+      border-radius: 9999px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-live-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(239, 68, 68, 0.55);
+    }
+
+    .btn-live-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.85rem 1.5rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-live-secondary:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
+    }
+
+    /* TOP TOOLBAR */
+    .section-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 5px;
+      border-radius: 16px;
+      border: 1.5px solid #e2e8f0;
+    }
+
+    .filter-tab-btn {
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-tab-btn:hover {
+      color: #0b63e5;
+    }
+
+    .filter-tab-btn.active {
+      background: var(--primary-grad);
+      color: white;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.25);
+    }
+
+    .btn-create-live {
+      background: var(--primary-grad);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-glow);
+      transition: all 0.2s ease;
+    }
+
+    .btn-create-live:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(124, 58, 237, 0.35);
+    }
+
+    /* LIVE ROOMS GRID */
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .room-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1.5px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .room-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .room-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .room-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .badge-today { background: #dbeafe; color: #1e40af; }
+    .badge-upcoming { background: #fef3c7; color: #92400e; }
+    .badge-ended { background: #f1f5f9; color: #64748b; }
+
+    .room-course-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #7c3aed;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .room-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+
+    .room-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 1.25rem;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 14px;
+      font-size: 0.84rem;
+      color: #475569;
+    }
+
+    .room-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .room-info-item i {
+      width: 16px;
+      color: #0b63e5;
+    }
+
+    .room-students-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .student-avatars-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .student-mini-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-left: -8px;
+      object-fit: cover;
+    }
+    .student-mini-avatar:first-child { margin-left: 0; }
+
+    .student-more-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #475569;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: -8px;
+      border: 2px solid white;
+    }
+
+    .room-card-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 1rem;
+    }
+
+    .btn-room-action {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-room-start {
+      background: var(--primary-grad);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+    }
+    .btn-room-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-room-outline {
+      background: white;
+      border: 1.5px solid #cbd5e1;
+      color: #475569;
+    }
+    .btn-room-outline:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+    }
+
+    /* RECORDINGS SECTION */
+    .section-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-head-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .recordings-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .recordings-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+
+    .recordings-table td {
+      padding: 1rem;
+      font-size: 0.88rem;
+      color: #1e293b;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active { display: flex; animation: fadeIn 0.25s ease; }
+
+    .modal-card {
+      background: white;
+      border-radius: 28px;
+      max-width: 580px;
+      width: 100%;
+      padding: 2.2rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .modal-close-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: #94a3b8;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover { color: #ef4444; }
+
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { display: block; font-size: 0.86rem; font-weight: 700; color: #1e293b; margin-bottom: 0.4rem; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.8rem 1.1rem;
+      border-radius: 12px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    /* LIVE SIMULATOR MODAL (FULLSCREEN EXPERIENCE) */
+    .live-sim-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #090d16;
+      z-index: 2500;
+      display: none;
+      flex-direction: column;
+      color: white;
+    }
+
+    .live-sim-modal.active { display: flex; }
+
+    .live-sim-header {
+      height: 60px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    .live-sim-body {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .live-sim-stage {
+      flex: 1;
+      background: #030712;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 1.5rem;
+    }
+
+    .live-video-box {
+      width: 100%;
+      max-width: 900px;
+      height: 520px;
+      background: #1e293b;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .live-instructor-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-sim-sidebar {
+      width: 340px;
+      background: #111827;
+      border-left: 1px solid #1f2937;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .live-chat-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chat-bubble {
+      background: #1f2937;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+    }
+
+    .chat-sender {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #60a5fa;
+      margin-bottom: 2px;
+    }
+
+    .live-sim-controls {
+      height: 74px;
+      background: #111827;
+      border-top: 1px solid #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .control-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #1f2937;
+      border: 1.5px solid #374151;
+      color: white;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: #374151;
+      transform: scale(1.08);
+    }
+
+    .control-btn.active {
+      background: #ef4444;
+      border-color: #ef4444;
+    }
+
+    .btn-leave-live {
+      background: #dc2626;
+      border: none;
+      padding: 0 1.5rem;
+      height: 44px;
+      border-radius: 9999px;
+      color: white;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .app-layout { flex-direction: column; padding: 1.25rem; }
+      .sidebar { width: 100%; }
+      .rooms-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="home.html">Trang chủ</a></li>
+        <li><a href="../courses.html">Khóa học</a></li>
+        <li><a href="home.html#about">Giới thiệu</a></li>
+        <li><a href="home.html#footer">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-actions-user" id="navActionsUser">
+        <!-- Thông báo & Giỏ hàng -->
+        <div class="nav-user-left-group">
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="headerBellBtn" onclick="toggleBellDropdown(event)" title="Thông báo hệ thống">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="headerBellBadge" style="display: none;">0</span>
+            </button>
+
+            <div class="nav-dropdown" id="bellDropdown" style="min-width: 340px; max-width: 380px; left: 0; right: auto; padding: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; margin-bottom: 8px;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Thông báo mới</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" onclick="markAllNotificationsRead()" style="background: none; border: none; color: #0b63e5; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Đã đọc</button>
+                  <span style="color: #cbd5e1; font-size: 0.75rem;">•</span>
+                  <button type="button" onclick="clearAllNotifications(event)" style="background: none; border: none; color: #ef4444; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Xóa tất cả</button>
+                </div>
+              </div>
+              <div id="bellNotificationList" style="max-height: 360px; overflow-y: auto;"></div>
+            </div>
+          </div>
+
+          <a href="../cart.html" class="nav-circle-btn btn-cart" title="Giỏ hàng">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+          </a>
+        </div>
+
+        <div class="nav-user-divider"></div>
+
+        <!-- Tài khoản & Menu -->
+        <div class="nav-user-right-group">
+          <a href="profile.html" class="user-capsule" id="userCapsuleBtn" title="Xem trang thông tin cá nhân">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+            <span class="user-capsule-name" id="headerUserName">Giảng viên</span>
+          </a>
+
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)" title="Menu quản lý">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-dropdown student-mega-dropdown" id="menuDropdown" style="right: 0; left: auto;">
+              <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+                <div class="menu-banner-meta">
+                  <div class="menu-banner-name" id="menuBannerName">Giảng viên Pro</div>
+                  <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
+                </div>
+              </div>
+
+              <div class="menu-group-heading" style="color: #9333ea; font-weight: 800;">Dành Cho Giảng Viên</div>
+              <a href="dashboard.html" class="student-menu-item" style="color: #7c3aed; font-weight: 800; background: rgba(124, 58, 237, 0.08); border-radius: 10px;">
+                <div class="menu-item-icon" style="background: var(--primary-grad); color: white;"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <span>Kênh Giảng Viên (Dashboard)</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Quản lý Học tập</div>
+              <a href="home.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+                <span>Trang chủ</span>
+              </a>
+              <a href="../my-courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <span>Khóa học của tôi</span>
+              </a>
+              <a href="../certificates.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-award"></i></div>
+                <span>Chứng chỉ</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Cài đặt & Hỗ trợ</div>
+              <a href="profile.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <span>Hồ sơ cá nhân</span>
+              </a>
+              <div style="padding-top: 6px;">
+                <button type="button" class="btn-menu-logout" id="btnLogoutUser" onclick="handleInstructorLogout()">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-brand-mini">
+          <div class="sidebar-brand-icon">
+            <i class="fa-solid fa-video"></i>
+          </div>
+          <div>
+            <div class="sidebar-brand-title">Live Studio</div>
+            <div class="sidebar-brand-sub">Quản lý phòng học trực tuyến</div>
+          </div>
+        </div>
+
+        <div class="nav-group-title">Quản Trị Giảng Dạy</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-chart-pie"></i> Tổng quan</span>
+            </a>
+          </li>
+          <li>
+            <a href="../courses.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-book-bookmark"></i> Khóa học của tôi</span>
+            </a>
+          </li>
+          <li>
+            <a href="course-builder.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-square-plus"></i> Soạn khóa học</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Học Liệu & Đánh Giá</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="live-rooms.html" class="sidebar-link active">
+              <span class="sidebar-link-left"><i class="fa-solid fa-video"></i> Lớp học Live Meet</span>
+              <span class="badge-count" style="background: #ef4444; color: white;">Trực tiếp</span>
+            </a>
+          </li>
+          <li>
+            <a href="qa.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-comments"></i> Hỏi đáp Q&amp;A</span>
+              <span class="badge-count">3 mới</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Tài Chính & Cá Nhân</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="earnings.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-wallet"></i> Thu nhập & Doanh số</span>
+            </a>
+          </li>
+          <li>
+            <a href="profile.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-user-gear"></i> Hồ sơ giảng viên</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="handleInstructorLogout()" class="sidebar-link" style="color: #ef4444">
+              <span class="sidebar-link-left"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- HERO LIVE RADAR CARD -->
+      <div class="live-hero-card">
+        <div class="live-hero-glow"></div>
+        <div class="live-status-pill">
+          <div class="live-pulse-dot"></div>
+          <span>SẮP BẮT ĐẦU • CÒN 14 PHÚT NỮA</span>
+        </div>
+        <h1 class="live-hero-title">IELTS 7.5+ Intensive Speaking Club: Mock Test 1-1 with Examiner</h1>
+        <p class="live-hero-desc">Lớp học trực tiếp chuyên sâu hôm nay dành cho 25 học viên lớp K26. Giảng viên sẽ tổ chức phản xạ Speaking Part 3 và sửa lỗi phát âm trực tiếp.</p>
+        
+        <div class="live-hero-meta">
+          <div class="live-meta-item"><i class="fa-solid fa-clock" style="color: #60a5fa;"></i> Hôm nay: 19:30 - 21:30 (120 phút)</div>
+          <div class="live-meta-item"><i class="fa-solid fa-users" style="color: #a7f3d0;"></i> Đã đăng ký: 24/25 học viên</div>
+          <div class="live-meta-item"><i class="fa-solid fa-key" style="color: #fde047;"></i> Mã phòng: <strong style="color: white; margin-left: 4px;">LHD-IELTS-8941</strong></div>
+        </div>
+
+        <div class="live-hero-actions">
+          <button type="button" class="btn-live-primary" onclick="launchLiveSimulator('IELTS 7.5+ Intensive Speaking Club')">
+            <i class="fa-solid fa-video"></i>
+            <span>Vào phòng giảng dạy ngay</span>
+          </button>
+          <button type="button" class="btn-live-secondary" onclick="copyRoomLink('https://meet.lhd.edu.vn/room/LHD-IELTS-8941')">
+            <i class="fa-solid fa-link"></i>
+            <span>Sao chép liên kết phòng</span>
+          </button>
+          <button type="button" class="btn-live-secondary" onclick="sendReminderEmail('IELTS 7.5+ Intensive Speaking Club')">
+            <i class="fa-regular fa-paper-plane"></i>
+            <span>Gửi nhắc nhở cho học viên</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTER & ACTIONS TOOLBAR -->
+      <div class="section-toolbar">
+        <div class="filter-tabs">
+          <button type="button" class="filter-tab-btn active" onclick="filterLiveRooms('all', this)">Tất cả (4)</button>
+          <button type="button" class="filter-tab-btn" onclick="filterLiveRooms('today', this)">Hôm nay (1)</button>
+          <button type="button" class="filter-tab-btn" onclick="filterLiveRooms('upcoming', this)">Sắp diễn ra (2)</button>
+          <button type="button" class="filter-tab-btn" onclick="filterLiveRooms('ended', this)">Đã kết thúc (1)</button>
+        </div>
+
+        <button type="button" class="btn-create-live" onclick="openScheduleModal()">
+          <i class="fa-solid fa-calendar-plus"></i>
+          <span>Lên lịch lớp học mới</span>
+        </button>
+      </div>
+
+      <!-- ROOMS GRID -->
+      <div class="rooms-grid" id="roomsGrid">
+        <!-- Room 1 -->
+        <div class="room-card" data-category="today">
+          <div>
+            <div class="room-card-header">
+              <span class="room-badge badge-today"><i class="fa-solid fa-circle-play" style="color: #2563eb;"></i> Hôm nay • 19:30</span>
+              <span style="font-size: 0.78rem; font-weight: 800; color: #10b981;">LHD WebRTC Live</span>
+            </div>
+            <div class="room-course-tag">Tiếng Anh IELTS</div>
+            <h3 class="room-title">Luyện Phản Xạ Speaking Part 2 &amp; 3 Cấp Tốc</h3>
+            <div class="room-info-list">
+              <div class="room-info-item"><i class="fa-regular fa-clock"></i> 19:30 - 21:30 (Thứ 2)</div>
+              <div class="room-info-item"><i class="fa-solid fa-shield-halved"></i> Bảo mật: Mật khẩu riêng tư</div>
+              <div class="room-info-item"><i class="fa-solid fa-microphone"></i> Hỗ trợ: Micro &amp; Camera 2 chiều</div>
+            </div>
+            <div class="room-students-row">
+              <div class="student-avatars-group">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <div class="student-more-badge">+21</div>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">24 Học viên</span>
+            </div>
+          </div>
+          <div class="room-card-footer">
+            <button type="button" class="btn-room-action btn-room-start" onclick="launchLiveSimulator('Luyện Phản Xạ Speaking Part 2 & 3')">
+              <i class="fa-solid fa-door-open"></i> Vào lớp
+            </button>
+            <button type="button" class="btn-room-action btn-room-outline" onclick="copyRoomLink('https://meet.lhd.edu.vn/room/LHD-IELTS-8941')">
+              <i class="fa-regular fa-copy"></i> Link
+            </button>
+          </div>
+        </div>
+
+        <!-- Room 2 -->
+        <div class="room-card" data-category="upcoming">
+          <div>
+            <div class="room-card-header">
+              <span class="room-badge badge-upcoming"><i class="fa-regular fa-calendar"></i> Ngày mai • 20:00</span>
+              <span style="font-size: 0.78rem; font-weight: 800; color: #2563eb;">Google Meet Pro</span>
+            </div>
+            <div class="room-course-tag" style="color: #0b63e5;">Tiếng Nhật JLPT</div>
+            <h3 class="room-title">Giải Đề Thi Thử JLPT N3: Đọc Hiểu &amp; Ngữ Pháp Dokkai</h3>
+            <div class="room-info-list">
+              <div class="room-info-item"><i class="fa-regular fa-clock"></i> 20:00 - 22:00 (Thứ 3)</div>
+              <div class="room-info-item"><i class="fa-solid fa-file-pdf"></i> Có tài liệu đề thi PDF gửi kèm</div>
+            </div>
+            <div class="room-students-row">
+              <div class="student-avatars-group">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <div class="student-more-badge">+28</div>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">30 Học viên</span>
+            </div>
+          </div>
+          <div class="room-card-footer">
+            <button type="button" class="btn-room-action btn-room-outline" onclick="sendReminderEmail('Giải Đề Thi Thử JLPT N3')">
+              <i class="fa-regular fa-paper-plane"></i> Gửi nhắc hẹn
+            </button>
+            <button type="button" class="btn-room-action btn-room-outline" onclick="copyRoomLink('https://meet.lhd.edu.vn/room/LHD-JLPT-N3')">
+              <i class="fa-regular fa-copy"></i> Link
+            </button>
+          </div>
+        </div>
+
+        <!-- Room 3 -->
+        <div class="room-card" data-category="upcoming">
+          <div>
+            <div class="room-card-header">
+              <span class="room-badge badge-upcoming"><i class="fa-regular fa-calendar"></i> 08/10 • 19:30</span>
+              <span style="font-size: 0.78rem; font-weight: 800; color: #ec4899;">Zoom Classroom</span>
+            </div>
+            <div class="room-course-tag" style="color: #ec4899;">Tiếng Trung HSK</div>
+            <h3 class="room-title">HSK 4: Luyện Nghe Phản Xạ &amp; Hội Thoại Thương Mại</h3>
+            <div class="room-info-list">
+              <div class="room-info-item"><i class="fa-regular fa-clock"></i> 19:30 - 21:00 (Thứ 5)</div>
+              <div class="room-info-item"><i class="fa-solid fa-headphones"></i> File nghe audio chuẩn Đài Bắc</div>
+            </div>
+            <div class="room-students-row">
+              <div class="student-avatars-group">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&auto=format&fit=crop&q=80" class="student-mini-avatar" alt="User">
+                <div class="student-more-badge">+16</div>
+              </div>
+              <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">18 Học viên</span>
+            </div>
+          </div>
+          <div class="room-card-footer">
+            <button type="button" class="btn-room-action btn-room-outline" onclick="sendReminderEmail('HSK 4: Luyện Nghe Phản Xạ')">
+              <i class="fa-regular fa-paper-plane"></i> Gửi nhắc hẹn
+            </button>
+            <button type="button" class="btn-room-action btn-room-outline" onclick="copyRoomLink('https://meet.lhd.edu.vn/room/LHD-HSK4-LIVE')">
+              <i class="fa-regular fa-copy"></i> Link
+            </button>
+          </div>
+        </div>
+
+        <!-- Room 4 -->
+        <div class="room-card" data-category="ended">
+          <div>
+            <div class="room-card-header">
+              <span class="room-badge badge-ended"><i class="fa-solid fa-check"></i> Đã hoàn thành</span>
+              <span style="font-size: 0.78rem; font-weight: 800; color: #64748b;">Bản ghi có sẵn</span>
+            </div>
+            <div class="room-course-tag" style="color: #64748b;">Tiếng Hàn TOPIK</div>
+            <h3 class="room-title">Chiến Thuật Làm Bài Viết TOPIK II Câu 53 Biểu Đồ</h3>
+            <div class="room-info-list">
+              <div class="room-info-item"><i class="fa-regular fa-clock"></i> Đã diễn ra: 03/10 (120 phút)</div>
+              <div class="room-info-item"><i class="fa-solid fa-circle-play"></i> Thời lượng bản ghi: 1h 58m</div>
+            </div>
+            <div class="room-students-row">
+              <span style="font-size: 0.8rem; font-weight: 700; color: #10b981;"><i class="fa-solid fa-users"></i> 22/22 học viên tham dự</span>
+              <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">Đánh giá: 5.0 ⭐</span>
+            </div>
+          </div>
+          <div class="room-card-footer">
+            <button type="button" class="btn-room-action btn-room-outline" style="color: #7c3aed; border-color: #e9d5ff;" onclick="showToast('Đang phát bản ghi lớp học...')">
+              <i class="fa-solid fa-play"></i> Xem bản ghi
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECORDED SESSIONS ARCHIVE TABLE -->
+      <div class="section-card">
+        <div class="section-head-title">
+          <i class="fa-solid fa-film" style="color: #7c3aed;"></i>
+          <span>Kho Bản Ghi &amp; Tài Liệu Lớp Học Trực Tuyến</span>
+        </div>
+        <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 1rem;">Hệ thống tự động đồng bộ video chất lượng 1080p và tài liệu chat sau mỗi buổi học Live Meet.</p>
+
+        <div style="overflow-x: auto;">
+          <table class="recordings-table">
+            <thead>
+              <tr>
+                <th>Tên buổi học &amp; Khóa học</th>
+                <th>Ngày diễn ra</th>
+                <th>Thời lượng</th>
+                <th>Lượt xem lại</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong style="color: #0f172a;">IELTS Speaking Part 1 Warm-up Strategy</strong>
+                  <div style="font-size: 0.75rem; color: #64748b;">Khóa IELTS 7.5+ Chuyên Sâu</div>
+                </td>
+                <td>01/10/2026</td>
+                <td>1h 45m</td>
+                <td><strong style="color: #0b63e5;">48 lượt</strong></td>
+                <td>
+                  <button type="button" class="btn-action-icon" style="color: #0b63e5;" title="Xem video" onclick="showToast('Đang mở video bản ghi...')"><i class="fa-solid fa-play"></i></button>
+                  <button type="button" class="btn-action-icon" style="color: #7c3aed;" title="Tải xuống" onclick="showToast('Đang tạo liên kết tải xuống...')"><i class="fa-solid fa-download"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong style="color: #0f172a;">JLPT N3 Ngữ Pháp Dễ Nhầm Lẫn Trong Đề Thi</strong>
+                  <div style="font-size: 0.75rem; color: #64748b;">Khóa Tiếng Nhật JLPT Cấp Tốc</div>
+                </td>
+                <td>28/09/2026</td>
+                <td>2h 05m</td>
+                <td><strong style="color: #0b63e5;">62 lượt</strong></td>
+                <td>
+                  <button type="button" class="btn-action-icon" style="color: #0b63e5;" title="Xem video" onclick="showToast('Đang mở video bản ghi...')"><i class="fa-solid fa-play"></i></button>
+                  <button type="button" class="btn-action-icon" style="color: #7c3aed;" title="Tải xuống" onclick="showToast('Đang tạo liên kết tải xuống...')"><i class="fa-solid fa-download"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- SCHEDULE MODAL -->
+  <div class="modal-overlay" id="scheduleModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 class="modal-title"><i class="fa-solid fa-calendar-plus" style="color: #0b63e5;"></i> Lên Lịch Phòng Live Mới</h3>
+        <button type="button" class="modal-close-btn" onclick="closeScheduleModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form onsubmit="saveSchedule(event)">
+        <div class="form-group">
+          <label class="form-label">Chủ đề buổi học trực tuyến</label>
+          <input type="text" class="form-input" id="scheduleTopic" required placeholder="Ví dụ: Luyện đề Mock Test IELTS Speaking Part 3" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Thuộc khóa học</label>
+          <select class="form-select" id="scheduleCourse" required>
+            <option value="ielts" selected>Luyện Thi IELTS 7.5+ Cấp Tốc</option>
+            <option value="jlpt">Luyện Thi JLPT N3 Cấp Tốc</option>
+            <option value="hsk">Tiếng Trung HSK 4 Giao Tiếp</option>
+            <option value="topik">Tiếng Hàn TOPIK II Viết</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">Ngày học</label>
+            <input type="date" class="form-input" id="scheduleDate" required value="2026-10-08" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Giờ bắt đầu</label>
+            <input type="time" class="form-input" id="scheduleTime" required value="19:30" />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">Nền tảng phòng</label>
+            <select class="form-select" id="schedulePlatform">
+              <option value="lhd">LHD WebRTC Live Studio</option>
+              <option value="meet">Google Meet</option>
+              <option value="zoom">Zoom Classroom</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Thời lượng (Phút)</label>
+            <input type="number" class="form-input" id="scheduleDuration" value="90" min="30" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-room-action btn-room-outline" style="max-width: 120px;" onclick="closeScheduleModal()">Hủy</button>
+          <button type="submit" class="btn-room-action btn-room-start" style="max-width: 180px;">Tạo &amp; Gửi Thông Báo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- LIVE STUDIO SIMULATOR (VIRTUAL MEET) -->
+  <div class="live-sim-modal" id="liveSimModal">
+    <div class="live-sim-header">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="live-pulse-dot"></div>
+        <strong id="simLiveTitle" style="font-size: 1.05rem;">IELTS 7.5+ Intensive Speaking Club</strong>
+        <span style="background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem;">HD 1080p</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; font-size: 0.88rem;">
+        <span><i class="fa-solid fa-users" style="color: #60a5fa;"></i> 24 Đang xem</span>
+        <span><i class="fa-solid fa-clock" style="color: #fca5a5;"></i> 00:24:18</span>
+      </div>
+    </div>
+
+    <div class="live-sim-body">
+      <div class="live-sim-stage">
+        <div class="live-video-box">
+          <div class="live-instructor-badge">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=50&auto=format&fit=crop&q=80" style="width: 24px; height: 24px; border-radius: 50%;" alt="Avt">
+            <span>Giảng Viên (Host) • Đang chia sẻ màn hình</span>
+          </div>
+          <div style="text-align: center; color: #94a3b8;">
+            <i class="fa-solid fa-chalkboard-user" style="font-size: 4rem; color: #3b82f6; margin-bottom: 1rem; display: block;"></i>
+            <h2 style="color: white; font-size: 1.35rem; margin-bottom: 6px;">Lớp Học Đang Diễn Ra Trực Tiếp</h2>
+            <p style="font-size: 0.9rem;">Học viên đang kết nối micro và bảng tương tác.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="live-sim-sidebar">
+        <div style="padding: 1rem; border-bottom: 1px solid #1f2937; font-weight: 800; font-size: 0.92rem; display: flex; justify-content: space-between;">
+          <span>Hỏi đáp &amp; Trò chuyện trực tiếp</span>
+          <span style="color: #10b981;"><i class="fa-solid fa-circle" style="font-size: 0.6rem;"></i> Live</span>
+        </div>
+        <div class="live-chat-messages" id="liveChatList">
+          <div class="chat-bubble">
+            <div class="chat-sender">Nguyễn Văn An</div>
+            <div>Thưa cô, phần Speaking Part 2 nếu hết ý thì áp dụng công thức AREA như thế nào ạ?</div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-sender">Trần Minh Thư</div>
+            <div>Em nghe rất rõ ạ, hình ảnh nét 1080p luôn cô ơi!</div>
+          </div>
+          <div class="chat-bubble">
+            <div class="chat-sender">Lê Hoàng Long</div>
+            <div>Em đã nộp bài tập Speaking vào hệ thống rồi ạ.</div>
+          </div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid #1f2937; display: flex; gap: 8px;">
+          <input type="text" id="liveChatInput" placeholder="Nhập phản hồi cho học viên..." style="flex: 1; background: #1f2937; border: 1px solid #374151; color: white; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none;" onkeydown="if(event.key==='Enter') sendLiveChatMessage()" />
+          <button type="button" onclick="sendLiveChatMessage()" style="background: #3b82f6; border: none; color: white; padding: 0 14px; border-radius: 8px; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-sim-controls">
+      <button type="button" class="control-btn" title="Bật/Tắt Micro" onclick="this.classList.toggle('active')"><i class="fa-solid fa-microphone"></i></button>
+      <button type="button" class="control-btn" title="Bật/Tắt Camera" onclick="this.classList.toggle('active')"><i class="fa-solid fa-video"></i></button>
+      <button type="button" class="control-btn" title="Chia sẻ màn hình" onclick="showToast('Đang chia sẻ màn hình giảng dạy...')"><i class="fa-solid fa-desktop"></i></button>
+      <button type="button" class="control-btn" title="Bảng trắng tương tác" onclick="showToast('Đã mở Whiteboard!')"><i class="fa-solid fa-pen-ruler"></i></button>
+      <button type="button" class="btn-leave-live" onclick="closeLiveSimulator()">
+        <i class="fa-solid fa-phone-slash"></i>
+        <span>Kết thúc lớp</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- SCRIPTS -->
+  <script>
+    function getInstructorUser() {
+      try {
+        const stored = localStorage.getItem('currentUser') || localStorage.getItem('user_info');
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error(e);
+      }
+      return {
+        name: 'Giảng Viên Pro',
+        email: 'instructor@lhd.edu.vn',
+        role: 'instructor',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+      };
+    }
+
+    function initUserHeader() {
+      const user = getInstructorUser();
+      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar;
+      
+      const headerAvatar = document.getElementById('headerUserAvatar');
+      const headerName = document.getElementById('headerUserName');
+      const menuAvatar = document.getElementById('menuBannerAvatar');
+      const menuName = document.getElementById('menuBannerName');
+      const menuEmail = document.getElementById('menuBannerEmail');
+
+      if (headerAvatar) headerAvatar.src = avatar;
+      if (headerName) headerName.textContent = user.name || 'Giảng viên';
+      if (menuAvatar) menuAvatar.src = avatar;
+      if (menuName) menuName.textContent = user.name || 'Giảng viên Pro';
+      if (menuEmail) menuEmail.textContent = user.email || 'instructor@lhd.edu.vn';
+
+      renderNotifications();
+    }
+
+    function getNotifications() {
+      try {
+        const notifs = localStorage.getItem('instructor_notifications');
+        if (notifs) return JSON.parse(notifs);
+      } catch (e) {}
+      return [
+        { id: 1, text: 'Lớp học Live Meet sẽ bắt đầu sau 14 phút nữa', time: 'Vừa xong', read: false },
+        { id: 2, text: 'Học viên vừa tham gia đăng ký thêm vào lớp IELTS', time: '10 phút trước', read: false },
+        { id: 3, text: 'Bản ghi buổi học TOPIK II đã được xử lý xong', time: '1 giờ trước', read: true }
+      ];
+    }
+
+    function renderNotifications() {
+      const list = getNotifications();
+      const container = document.getElementById('bellNotificationList');
+      const badge = document.getElementById('headerBellBadge');
+      if (!container) return;
+
+      const unread = list.filter(n => !n.read).length;
+      if (badge) {
+        badge.textContent = unread;
+        badge.style.display = unread > 0 ? 'flex' : 'none';
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.85rem;">Không có thông báo mới</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div style="padding: 10px 12px; border-radius: 12px; margin-bottom: 6px; background: ${item.read ? '#ffffff' : '#f0fdf4'}; border: 1px solid ${item.read ? '#f1f5f9' : '#bbf7d0'}; display: flex; gap: 10px; align-items: flex-start;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: ${item.read ? '#cbd5e1' : '#10b981'}; margin-top: 6px; flex-shrink: 0;"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.84rem; font-weight: ${item.read ? '600' : '700'}; color: #1e293b;">${item.text}</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 2px;">${item.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleBellDropdown(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (m) m.classList.remove('show');
+      if (d) d.classList.toggle('show');
+    }
+
+    function toggleMegaMenu(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (d) d.classList.remove('show');
+      if (m) m.classList.toggle('show');
+    }
+
+    function markAllNotificationsRead() {
+      const list = getNotifications().map(n => ({ ...n, read: true }));
+      localStorage.setItem('instructor_notifications', JSON.stringify(list));
+      renderNotifications();
+      showToast('Đã đánh dấu tất cả thông báo là đã đọc');
+    }
+
+    function clearAllNotifications(e) {
+      e.stopPropagation();
+      localStorage.setItem('instructor_notifications', JSON.stringify([]));
+      renderNotifications();
+      showToast('Đã xóa tất cả thông báo');
+    }
+
+    function handleInstructorLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản giảng viên?')) {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user_info');
+        window.location.href = '../auth/login.html';
+      }
+    }
+
+    window.addEventListener('click', () => {
+      const b = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (b) b.classList.remove('show');
+      if (m) m.classList.remove('show');
+    });
+
+    // TOAST
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #10b981;"></i> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // COPY LINK
+    function copyRoomLink(url) {
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('Đã sao chép liên kết phòng học vào clipboard!');
+      }).catch(() => {
+        showToast('Đã sao chép liên kết: ' + url);
+      });
+    }
+
+    // EMAIL REMINDER
+    function sendReminderEmail(title) {
+      showToast('Đã gửi email nhắc nhở & thông báo push cho toàn bộ học viên lớp: ' + title);
+    }
+
+    // FILTER TABS
+    function filterLiveRooms(category, btn) {
+      document.querySelectorAll('.filter-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('#roomsGrid .room-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // SCHEDULE MODAL
+    function openScheduleModal() {
+      document.getElementById('scheduleModal').classList.add('active');
+    }
+
+    function closeScheduleModal() {
+      document.getElementById('scheduleModal').classList.remove('active');
+    }
+
+    function saveSchedule(e) {
+      e.preventDefault();
+      const topic = document.getElementById('scheduleTopic').value;
+      const date = document.getElementById('scheduleDate').value;
+      const time = document.getElementById('scheduleTime').value;
+
+      closeScheduleModal();
+      showToast(`Đã lên lịch lớp "${topic}" vào lúc ${time} ngày ${date}!`);
+    }
+
+    // LIVE SIMULATOR
+    function launchLiveSimulator(title) {
+      document.getElementById('simLiveTitle').textContent = title;
+      document.getElementById('liveSimModal').classList.add('active');
+    }
+
+    function closeLiveSimulator() {
+      if (confirm('Bạn có chắc muốn kết thúc buổi giảng dạy trực tuyến? Hệ thống sẽ tự động lưu bản ghi.')) {
+        document.getElementById('liveSimModal').classList.remove('active');
+        showToast('Đã kết thúc lớp học trực tiếp. Bản ghi đang được xử lý!');
+      }
+    }
+
+    function sendLiveChatMessage() {
+      const input = document.getElementById('liveChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const list = document.getElementById('liveChatList');
+      const msg = document.createElement('div');
+      msg.className = 'chat-bubble';
+      msg.style.background = '#1e3a8a';
+      msg.innerHTML = `<div class="chat-sender" style="color: #93c5fd;">Bạn (Giảng viên)</div><div>${text}</div>`;
+      list.appendChild(msg);
+      input.value = '';
+      list.scrollTop = list.scrollHeight;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initUserHeader();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,2906 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chứng Chỉ & Chứng Nhận Hoàn Thành | LHD – Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --accent-grad: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+      --gold-grad: linear-gradient(135deg, #bf953f 0%, #fcf6ba 30%, #b38728 60%, #fbf5b7 100%);
+      --gold-dark: #b45309;
+      --primary-color: #0b63e5;
+      --purple-color: #8b5cf6;
+      --pink-color: #ec4899;
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-subtle: rgba(226, 232, 240, 0.85);
+    }
+
+    html {
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
+      scroll-behavior: smooth;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: clip;
+      position: relative;
+    }
+
+    /* Ambient background glowing orbs */
+    @keyframes floatOrb {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(30px, 40px) scale(1.08);
+      }
+    }
+
+    /* ==========================================================================
+       UNIFIED SYNCHRONIZED HEADER & NAVIGATION (0px Shift)
+       ========================================================================== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 3.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: linear-gradient(135deg, rgba(11, 99, 229, 0.05), rgba(236, 72, 153, 0.08));
+    }
+
+    .nav-links a.nav-item-active {
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%) !important;
+      color: #ffffff !important;
+      padding: 8px 20px;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-links a.nav-item-active:hover {
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+    }
+
+    .nav-click-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transform: scale(0);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-left-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 2px;
+    }
+
+    .nav-user-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .bell-badge,
+    .cart-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+      animation: pulseBadge 2s infinite;
+    }
+
+    @keyframes pulseBadge {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.15);
+      }
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .user-capsule:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown.show {
+      display: flex;
+    }
+
+    @keyframes dropdownFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+      scrollbar-width: thin !important;
+      scrollbar-color: #cbd5e1 transparent !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+      min-height: 66px !important;
+      box-sizing: border-box !important;
+      transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+    }
+
+    .menu-user-banner:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.35) !important;
+    }
+
+    .menu-user-banner-glow {
+      position: absolute !important;
+      top: -25px !important;
+      right: -25px !important;
+      width: 80px !important;
+      height: 80px !important;
+      border-radius: 50% !important;
+      background: #8b5cf6 !important;
+      filter: blur(22px) !important;
+      opacity: 0.55 !important;
+      pointer-events: none !important;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+      object-fit: cover !important;
+      background: #ffffff !important;
+      flex-shrink: 0 !important;
+    }
+
+    .menu-banner-meta {
+      flex: 1 !important;
+      min-width: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
+      justify-content: center !important;
+    }
+
+    .menu-banner-name {
+      font-size: 0.92rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.72rem !important;
+      color: #cbd5e1 !important;
+      margin: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-verified {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 0.68rem !important;
+      color: #38bdf8 !important;
+      font-weight: 700 !important;
+      margin-top: 2px !important;
+    }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+      margin-top: 1px !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+      margin-bottom: 1px !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.8rem !important;
+      flex-shrink: 0 !important;
+      transition: all 0.15s ease !important;
+    }
+
+    .student-menu-item:hover .menu-item-icon {
+      background: #0b63e5 !important;
+      color: #ffffff !important;
+    }
+
+    .menu-item-title {
+      font-size: 0.84rem !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+    }
+
+    .student-menu-item:hover .menu-item-title {
+      color: #0b63e5 !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.82rem !important;
+      cursor: pointer !important;
+      transition: all 0.15s ease !important;
+      margin-top: 0.25rem !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      color: #b91c1c !important;
+    }
+
+    /* ==========================================================================
+       PAGE CONTAINER & HERO SECTION (REFINED & NEAT)
+       ========================================================================== */
+    .cert-page-wrapper {
+      max-width: 1240px;
+      margin: 2.2rem auto 4.5rem;
+      padding: 0 4%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cert-hero-banner {
+      background: linear-gradient(135deg, #091e42 0%, #15193b 35%, #1e1346 70%, #301047 100%);
+      border-radius: 28px;
+      padding: 2.8rem 3rem;
+      color: #ffffff;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      animation: heroSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes heroSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cert-hero-glow {
+      position: absolute;
+      top: -80px;
+      right: -60px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: #ec4899;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      animation: pulseGlow 8s infinite alternate ease-in-out;
+    }
+
+    .cert-hero-glow-2 {
+      position: absolute;
+      bottom: -80px;
+      left: 8%;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: #0b63e5;
+      filter: blur(75px);
+      opacity: 0.45;
+      pointer-events: none;
+      animation: pulseGlow 10s infinite alternate-reverse ease-in-out;
+    }
+
+    .cert-hero-glow-3 {
+      position: absolute;
+      top: 30%;
+      right: 25%;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      filter: blur(60px);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        transform: scale(0.9);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(1.15);
+        opacity: 0.5;
+      }
+    }
+
+    .cert-hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .cert-hero-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .cert-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #93c5fd;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .cert-hero-badge i {
+      color: #38bdf8;
+    }
+
+    .cert-hero-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.6px;
+      line-height: 1.25;
+      margin-bottom: 0.85rem;
+    }
+
+    .cert-title-gradient {
+      background: linear-gradient(135deg, #ffffff 20%, #bfdbfe 60%, #e9d5ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cert-hero-sub {
+      font-size: 0.96rem;
+      color: #cbd5e1;
+      max-width: 620px;
+      line-height: 1.65;
+    }
+
+    .cert-hero-stats {
+      display: flex;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 145px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .hero-stat-card:hover {
+      transform: translateY(-3px) scale(1.02);
+      background: rgba(255, 255, 255, 0.13);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-stat-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .hero-stat-body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stat-val {
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: #fef08a;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-stat-label {
+      font-size: 0.74rem;
+      color: #94a3b8;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 3px;
+    }
+
+    /* ==========================================================================
+       CONTROLS BAR (FILTERS & SEARCH)
+       ========================================================================== */
+    .cert-controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      background: #ffffff;
+      padding: 0.9rem 1.25rem;
+      border-radius: 20px;
+      border: 1.5px solid #eef2f6;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.03);
+    }
+
+    .cert-filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 9px 20px;
+      border-radius: 9999px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-pill:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .filter-pill.active {
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 100%);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 6px 16px rgba(11, 99, 229, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .cert-search-box {
+      position: relative;
+      min-width: 290px;
+      flex: 0 1 340px;
+    }
+
+    .cert-search-box input {
+      width: 100%;
+      padding: 10px 18px 10px 42px;
+      border-radius: 9999px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1e293b;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .cert-search-box input:focus {
+      background: #ffffff;
+      border-color: #0b63e5;
+      box-shadow: 0 0 0 4px rgba(11, 99, 229, 0.12);
+    }
+
+    .cert-search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .cert-search-box input:focus + i {
+      color: #0b63e5;
+    }
+
+    /* ==========================================================================
+       CERTIFICATES GRID & MODERN CARDS WITH RICH EFFECTS
+       ========================================================================== */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 1.85rem;
+    }
+
+    .cert-card-modern {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1.5px solid #eef2f6;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: cardEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cert-card-modern:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 22px 50px rgba(11, 99, 229, 0.12);
+      border-color: #cbd5e1;
+    }
+
+    /* Shiny Sheen Sweep Effect on Hover */
+    .cert-card-modern::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: rotate(30deg);
+      pointer-events: none;
+      opacity: 0;
+      transition: none;
+    }
+
+    .cert-card-modern:hover::after {
+      animation: shineSweep 0.85s ease-in-out;
+    }
+
+    @keyframes shineSweep {
+      0% {
+        left: -60%;
+        opacity: 0.8;
+      }
+      100% {
+        left: 140%;
+        opacity: 0;
+      }
+    }
+
+    .cert-card-accent-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--primary-grad);
+    }
+
+    .cert-card-accent-bar.gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 45%, #d97706 100%);
+    }
+
+    .cert-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.2rem;
+      padding-top: 4px;
+      gap: 10px;
+    }
+
+    .cert-badge-serial {
+      font-size: 0.76rem;
+      font-weight: 800;
+      background: #f1f5f9;
+      color: #334155;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .cert-grade-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: #ecfdf5;
+      color: #059669;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      border: 1px solid #a7f3d0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .cert-grade-tag.top-rank {
+      background: #fffbeb;
+      color: #b45309;
+      border-color: #fde68a;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+    }
+
+    .cert-title-h3 {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.45;
+      margin-bottom: 0.6rem;
+      min-height: 52px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cert-lang-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 8px;
+      margin-bottom: 1.1rem;
+    }
+
+    .cert-lang-pill.ja {
+      background: #fff1f2;
+      color: #e11d48;
+      border: 1px solid #fecdd3;
+    }
+
+    .cert-lang-pill.en {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+
+    .cert-meta-list {
+      list-style: none;
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      background: #f8fafc;
+      padding: 0.9rem 1.1rem;
+      border-radius: 14px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .cert-meta-item {
+      font-size: 0.85rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cert-meta-item i {
+      color: #0b63e5;
+      width: 18px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulseDot 1.8s infinite;
+      margin-right: 2px;
+    }
+
+    @keyframes pulseDot {
+      0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+
+    .cert-actions-row {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 10px;
+      padding-top: 1.1rem;
+      border-top: 1.5px solid #f1f5f9;
+    }
+
+    .btn-cert-primary {
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--primary-grad);
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.22);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+    }
+
+    .btn-cert-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(139, 92, 246, 0.4);
+    }
+
+    .btn-cert-outline {
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: #ffffff;
+      color: #334155;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border: 1.5px solid #e2e8f0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-cert-outline:hover {
+      background: #f8fafc;
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       LUXURY CERTIFICATE PREVIEW MODAL
+       ========================================================================== */
+    .cert-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1.5rem;
+    }
+
+    .cert-modal-overlay.show {
+      display: flex;
+    }
+
+    .cert-modal-window {
+      background: #ffffff;
+      border-radius: 28px;
+      max-width: 880px;
+      width: 100%;
+      max-height: 94vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+      position: relative;
+      animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+    }
+
+    @keyframes modalSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .cert-modal-header {
+      padding: 1.1rem 1.75rem;
+      background: #f8fafc;
+      border-bottom: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top-left-radius: 28px;
+      border-top-right-radius: 28px;
+    }
+
+    .cert-modal-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-close-modal {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-close-modal:hover {
+      background: #fee2e2;
+      color: #dc2626;
+      border-color: #fca5a5;
+      transform: rotate(90deg);
+    }
+
+    /* High-Resolution Certificate Paper Layout */
+    .cert-paper {
+      padding: 3rem 3.5rem;
+      background: #ffffff;
+      position: relative;
+      color: #1e293b;
+      margin: 1.5rem;
+      border: 8px double #b38728;
+      outline: 1.5px solid rgba(179, 135, 40, 0.35);
+      outline-offset: 5px;
+      border-radius: 6px;
+      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      background-image: radial-gradient(#fafafa 15%, transparent 16%), radial-gradient(#fafafa 15%, transparent 16%);
+      background-size: 60px 60px;
+      background-position: 0 0, 30px 30px;
+    }
+
+    .cert-paper-bg-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20rem;
+      color: rgba(11, 99, 229, 0.028);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .cert-paper-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.6rem;
+    }
+
+    .cert-insignia {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #854d0e;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .cert-heading-main {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cert-heading-sub {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #64748b;
+    }
+
+    .cert-recipient-block {
+      position: relative;
+      z-index: 1;
+      margin: 1.8rem 0;
+    }
+
+    .cert-presented-to {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .cert-student-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #0b63e5;
+      letter-spacing: 0.5px;
+      padding-bottom: 8px;
+      display: inline-block;
+      border-bottom: 2px solid #b38728;
+      margin-bottom: 12px;
+    }
+
+    .cert-achievement-desc {
+      font-size: 0.96rem;
+      color: #475569;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    .cert-footer-row {
+      position: relative;
+      z-index: 1;
+      margin-top: 2.2rem;
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      text-align: left;
+    }
+
+    .cert-sig-box {
+      text-align: center;
+      min-width: 170px;
+    }
+
+    .cert-sig-line {
+      width: 100%;
+      height: 1.5px;
+      background: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .cert-sig-name {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .cert-sig-title {
+      font-size: 0.72rem;
+      color: #64748b;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .cert-seal-box {
+      text-align: center;
+    }
+
+    .cert-gold-seal {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: var(--gold-grad);
+      border: 3px solid #ffffff;
+      box-shadow: 0 6px 20px rgba(180, 83, 9, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #78350f;
+      font-size: 0.66rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin: 0 auto 8px;
+      position: relative;
+    }
+
+    .cert-gold-seal i {
+      font-size: 1.4rem;
+      margin-bottom: 2px;
+    }
+
+    .cert-modal-actions {
+      padding: 1.25rem 2rem;
+      background: #f8fafc;
+      border-top: 1.5px solid #e2e8f0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      border-bottom-left-radius: 28px;
+      border-bottom-right-radius: 28px;
+    }
+
+    /* Toast Notification */
+    .toast-custom {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 14px 24px;
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      z-index: 3000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .toast-custom.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .cert-hero-banner {
+        padding: 2rem 1.75rem;
+      }
+      .cert-hero-title {
+        font-size: 1.75rem;
+      }
+      .cert-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .cert-hero-stats {
+        width: 100%;
+      }
+      .hero-stat-card {
+        flex: 1 1 100%;
+      }
+      .cert-controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .cert-search-box {
+        min-width: 100%;
+      }
+      .cert-paper {
+        padding: 1.75rem 1rem;
+        margin: 0.5rem;
+      }
+      .cert-student-name {
+        font-size: 1.75rem;
+      }
+      .cert-heading-main {
+        font-size: 1.35rem;
+      }
+      .cert-footer-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: center;
+      }
+    }
+  </style>
+  <style id="nav-guest-and-user-styles">
+    /* Header Right Actions Styling */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    /* 1. Guest Actions (Chưa đăng nhập: Nút Đăng nhập & Đăng ký) */
+    .nav-actions-guest {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .btn-guest-login {
+      padding: 0.62rem 1.45rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #7c3aed;
+      background: #ffffff;
+      border: 1.5px solid rgba(139, 92, 246, 0.4);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-guest-login:hover {
+      background: rgba(139, 92, 246, 0.08);
+      border-color: #8b5cf6;
+      transform: translateY(-1px);
+    }
+
+    .btn-guest-register {
+      padding: 0.62rem 1.45rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #ffffff;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border: none;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-guest-register:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(236, 72, 153, 0.45);
+      filter: brightness(1.05);
+    }
+
+    /* 2. User Actions (Đã đăng nhập) */
+    .nav-actions-user {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .nav-user-left-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 4px;
+    }
+
+    .nav-user-right-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+  <style id="student-banner-enhancement-style">
+    /* Ultra-compact & Sleek Student Mega Dropdown (Fits All Items + Logout on Screen) */
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+      scrollbar-width: thin !important;
+      scrollbar-color: #cbd5e1 transparent !important;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar {
+      width: 4px !important;
+    }
+
+    .student-mega-dropdown::-webkit-scrollbar-thumb {
+      background: #cbd5e1 !important;
+      border-radius: 4px !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+      min-height: 66px !important;
+      box-sizing: border-box !important;
+      transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+    }
+
+    .menu-user-banner:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.35) !important;
+    }
+
+    .menu-user-banner-glow {
+      position: absolute !important;
+      top: -25px !important;
+      right: -25px !important;
+      width: 80px !important;
+      height: 80px !important;
+      border-radius: 50% !important;
+      background: #8b5cf6 !important;
+      filter: blur(22px) !important;
+      opacity: 0.55 !important;
+      pointer-events: none !important;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+      object-fit: cover !important;
+      background: #ffffff !important;
+      flex-shrink: 0 !important;
+    }
+
+    .menu-banner-meta {
+      flex: 1 !important;
+      min-width: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
+      justify-content: center !important;
+    }
+
+    .menu-banner-name {
+      font-size: 0.92rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.72rem !important;
+      color: #cbd5e1 !important;
+      line-height: 1.2 !important;
+      margin: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-verified {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 0.68rem !important;
+      color: #38bdf8 !important;
+      font-weight: 700 !important;
+      margin-top: 2px !important;
+      width: fit-content !important;
+      line-height: 1 !important;
+    }
+
+    .menu-banner-verified i {
+      font-size: 0.68rem !important;
+    }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+      margin-top: 1px !important;
+      line-height: 1 !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+      margin-bottom: 1px !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.8rem !important;
+      flex-shrink: 0 !important;
+      transition: all 0.15s ease !important;
+    }
+
+    .student-menu-item:hover .menu-item-icon {
+      background: #0b63e5 !important;
+      color: #ffffff !important;
+    }
+
+    .menu-item-title {
+      font-size: 0.84rem !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      transition: color 0.15s ease !important;
+    }
+
+    .student-menu-item:hover .menu-item-title {
+      color: #0b63e5 !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.84rem !important;
+      cursor: pointer !important;
+      transition: all 0.18s ease !important;
+      margin-top: 2px !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.18) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script id="protected-page-auth-guard">
+    (function() {
+      const token = localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+      const uStr = localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || sessionStorage.getItem('user_info');
+      let isLogged = false;
+      if (token) isLogged = true;
+      if (uStr) {
+        try {
+          const u = JSON.parse(uStr);
+          if (u && (u.email || u.name || u.id)) isLogged = true;
+        } catch(e) {}
+      }
+      if (!isLogged) {
+        window.location.href = 'auth/login.html';
+      }
+    })();
+  </script>
+
+
+  <!-- Ambient Glowing Background -->
+  <!-- Header Navbar -->
+    <!-- Header Navbar (Tự động nhận diện Role: Giảng viên / Học viên / Admin) -->
+    <!-- Header Navbar (Tự động nhận diện Khách / Giảng viên / Học viên / Admin) -->
+  <header>
+    <div class="header-left">
+      <a href="index.html" class="brand-logo" id="headerBrandLogo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="student/home.html" id="navHomeLink">Trang chủ</a></li>
+        <li><a href="courses.html">Khóa học</a></li>
+        <li><a href="index.html#about" id="navAboutLink">Giới thiệu</a></li>
+        <li><a href="index.html#footer" id="navContactLink">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <!-- 1. Guest Actions (Chưa đăng nhập -> Hiện nút Đăng nhập & Đăng ký) -->
+      <div class="nav-actions-guest" id="navActionsGuest">
+        <a href="auth/login.html" class="btn-guest-login" id="btnNavLogin">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Đăng nhập</span>
+        </a>
+        <a href="auth/register.html" class="btn-guest-register" id="btnNavRegister">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Đăng ký</span>
+        </a>
+      </div>
+
+      <!-- 2. Logged in Actions (Đã đăng nhập -> Hiện Thông báo, Giỏ hàng, Tài khoản & Menu ☰) -->
+      <div class="nav-actions-user" id="navActionsUser" style="display: none;">
+        <!-- Nhóm 1: Thông báo & Giỏ hàng -->
+        <div class="nav-user-left-group">
+          <!-- Bell Button (with Popover) -->
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="headerBellBtn" onclick="toggleBellDropdown(event)"
+              title="Thông báo hệ thống">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="headerBellBadge" style="display: none;">0</span>
+            </button>
+
+            <!-- Bell Dropdown Popover -->
+            <div class="nav-dropdown" id="bellDropdown"
+              style="min-width: 340px; max-width: 380px; left: 0; right: auto; padding: 0.85rem;">
+              <div class="dropdown-header"
+                style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; margin-bottom: 8px;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Thông báo mới</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" id="btnMarkAllRead" onclick="markAllNotificationsRead()"
+                    style="background: none; border: none; color: #0b63e5; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Đã
+                    đọc</button>
+                  <span style="color: #cbd5e1; font-size: 0.75rem;">•</span>
+                  <button type="button" id="btnClearAllNotifs" onclick="clearAllNotifications(event)"
+                    style="background: none; border: none; color: #ef4444; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Xóa
+                    tất cả</button>
+                </div>
+              </div>
+              <div id="bellNotificationList" style="max-height: 380px; overflow-y: auto;">
+                <!-- Dynamic notifications injected by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Shopping Cart Button -->
+          <a href="cart.html" class="nav-circle-btn btn-cart" title="Giỏ hàng khóa học">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+          </a>
+        </div>
+
+        <!-- Vạch phân cách & đẩy các mục còn lại sang bên phải -->
+        <div class="nav-user-divider"></div>
+
+        <!-- Nhóm 2: Tài khoản (Phân biệt Role: Giảng viên / Học viên) & Menu ☰ -->
+        <div class="nav-user-right-group">
+          <!-- User Capsule (Tự động chuyển vào instructor/profile.html nếu là giảng viên hoặc student/profile.html nếu là học viên) -->
+          <a href="student/profile.html" class="user-capsule" id="userCapsuleBtn" title="Xem trang thông tin cá nhân">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+            <span class="user-capsule-name" id="headerUserName">Tài khoản</span>
+          </a>
+
+          <!-- Nút tròn (3 gạch ngang ☰) -->
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)"
+              title="Menu quản lý (☰)">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Mega Dropdown Menu Đồng Bộ Chuẩn Phân Biệt Role -->
+            <div class="nav-dropdown student-mega-dropdown" id="menuDropdown" style="right: 0; left: auto;">
+              <!-- 1. Khu vực Thông tin cá nhân -->
+              <div class="menu-user-banner" id="menuUserBanner" onclick="handleMenuBannerClick()">
+                <div class="menu-user-banner-glow"></div>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                  class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+                <div class="menu-banner-meta">
+                  <div class="menu-banner-name" id="menuBannerName">Người dùng</div>
+                  <div class="menu-banner-sub" id="menuBannerEmail">user@lhd.edu.vn</div>
+                  <div class="menu-banner-verified">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span id="menuBannerRole">Đã xác thực</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mục Kênh Giảng Viên (Hiển thị khi role là INSTRUCTOR hoặc ADMIN) -->
+              <div id="instructorMenuSection" style="display: none;">
+                <div class="menu-group-heading" style="color: #9333ea; font-weight: 800; letter-spacing: 0.06em;">Dành Cho Giảng Viên</div>
+                <a href="instructor/dashboard.html" class="student-menu-item"
+                  style="color: #7c3aed; font-weight: 800; background: linear-gradient(135deg, rgba(147, 51, 234, 0.08) 0%, rgba(11, 99, 229, 0.06) 100%); border: 1.5px solid #e9d5ff; box-shadow: 0 3px 10px rgba(147, 51, 234, 0.12); margin-bottom: 6px;">
+                  <div class="menu-item-icon" style="background: linear-gradient(135deg, #7c3aed 0%, #0b63e5 100%); color: #ffffff; box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                  </div>
+                  <span class="menu-item-title" style="color: #7c3aed; font-weight: 800; font-size: 0.92rem;">Kênh Giảng Viên (Dashboard)</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; color: #9333ea; margin-left: auto;"></i>
+                </a>
+                <div class="dropdown-divider"></div>
+              </div>
+
+              <!-- 2. Quản lý Học tập & Giảng dạy -->
+              <div class="menu-group-heading" id="menuStudyHeading">Quản lý Học tập</div>
+              <a href="student/home.html" class="student-menu-item" id="menuHomeLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+                <span class="menu-item-title" id="menuHomeTitle">Trang chủ học viên</span>
+              </a>
+
+              <a href="my-courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <span class="menu-item-title">Khóa học của tôi</span>
+              </a>
+
+              <a href="courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-compass"></i></div>
+                <span class="menu-item-title">Khám phá khóa học</span>
+              </a>
+
+              <a href="certificates.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-award"></i></div>
+                <span class="menu-item-title">Chứng chỉ đạt được</span>
+              </a>
+
+              <a href="student/profile.html#orders" class="student-menu-item" id="menuOrdersLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-receipt"></i></div>
+                <span class="menu-item-title">Lịch sử giao dịch</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <!-- 3. Cài đặt & Hỗ trợ -->
+              <div class="menu-group-heading">Cài đặt & Hỗ trợ</div>
+              <a href="student/profile.html" class="student-menu-item" id="menuProfileLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <span class="menu-item-title">Thông tin cá nhân</span>
+              </a>
+
+              <a href="student/profile.html#security" class="student-menu-item" id="menuSecurityLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <span class="menu-item-title">Đổi mật khẩu / Bảo mật</span>
+              </a>
+
+              <a href="javascript:void(0)" class="student-menu-item" id="btnMenuSupportLink">
+                <div class="menu-item-icon"><i class="fa-solid fa-headset"></i></div>
+                <span class="menu-item-title">Hỗ trợ & Phản hồi</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <!-- 4. Đăng xuất -->
+              <div style="padding-top: 4px;">
+                <button type="button" class="btn-menu-logout" id="btnLogoutUser">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="cert-page-wrapper">
+    <!-- Hero Banner (Properly closed & neatly aligned) -->
+    <section class="cert-hero-banner">
+      <div class="cert-hero-glow"></div>
+      <div class="cert-hero-glow-2"></div>
+      <div class="cert-hero-glow-3"></div>
+
+      <div class="cert-hero-content">
+        <div class="cert-hero-text">
+          <div class="cert-hero-badge">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Hệ thống Chứng nhận Điện tử LHD VeriCert™</span>
+          </div>
+          <h1 class="cert-hero-title">
+            <span class="cert-title-gradient">Chứng Chỉ & Chứng Nhận Hoàn Thành</span>
+          </h1>
+          <p class="cert-hero-sub">
+            Toàn bộ chứng chỉ được cấp tự động sau khi hoàn thành khóa học Live, có mã định danh QR xác thực điện tử chuẩn quốc tế CEFR & JLPT, hỗ trợ xuất file PDF độ phân giải cao và chia sẻ trực tiếp lên LinkedIn.
+          </p>
+        </div>
+
+        <div class="cert-hero-stats">
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon-wrap" style="color: #fbbf24; background: rgba(251, 191, 36, 0.15);">
+              <i class="fa-solid fa-award"></i>
+            </div>
+            <div class="hero-stat-body">
+              <div class="hero-stat-val" id="statIssuedCertCount">1</div>
+              <div class="hero-stat-label">Đã Cấp</div>
+            </div>
+          </div>
+
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon-wrap" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15);">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="hero-stat-body">
+              <div class="hero-stat-val" style="color: #38bdf8;">100%</div>
+              <div class="hero-stat-label">Tỷ lệ đạt</div>
+            </div>
+          </div>
+
+          <div class="hero-stat-card">
+            <div class="hero-stat-icon-wrap" style="color: #34d399; background: rgba(52, 211, 153, 0.15);">
+              <i class="fa-solid fa-qrcode"></i>
+            </div>
+            <div class="hero-stat-body">
+              <div class="hero-stat-val" style="color: #34d399; font-size: 1.35rem;">QR Code</div>
+              <div class="hero-stat-label">Xác thực 24/7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters & Search Bar (Clean and neatly separated outside hero) -->
+    <div class="cert-controls-bar">
+      <div class="cert-filter-pills">
+        <button type="button" class="filter-pill active" id="pillAll" onclick="filterCertificates('all', this)">
+          <i class="fa-solid fa-layer-group"></i> Tất cả chứng chỉ (0)
+        </button>
+        <button type="button" class="filter-pill" id="pillEn" onclick="filterCertificates('english', this)">
+          🇬🇧 Tiếng Anh (0)
+        </button>
+        <button type="button" class="filter-pill" id="pillJa" onclick="filterCertificates('japanese', this)">
+          🇯🇵 Tiếng Nhật (0)
+        </button>
+      </div>
+
+      <div class="cert-search-box">
+        <input type="text" id="certSearchInput" placeholder="Tìm theo tên khóa học, mã chứng chỉ..."
+          oninput="handleCertSearch(this.value)">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+
+    <!-- Certificates Grid -->
+    <div class="cert-grid" id="certificatesList">
+      <!-- Dynamic Certificates injected by JS -->
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       LUXURY CERTIFICATE PREVIEW MODAL
+       ========================================================================== -->
+  <div class="cert-modal-overlay" id="certPreviewModal" onclick="closeCertModal(event)">
+    <div class="cert-modal-window" onclick="event.stopPropagation()">
+      <div class="cert-modal-header">
+        <div class="cert-modal-title">
+          <i class="fa-solid fa-award" style="color: #0b63e5; font-size: 1.2rem;"></i>
+          <span>Bản Xem Trước Chứng Chỉ Số Hoàn Thành</span>
+        </div>
+        <button type="button" class="btn-close-modal" onclick="closeCertModal()" title="Đóng cửa sổ">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- High-Resolution Certificate Paper -->
+      <div class="cert-paper" id="printableCertArea">
+        <i class="fa-solid fa-graduation-cap cert-paper-bg-logo"></i>
+
+        <div class="cert-paper-header">
+          <div class="cert-insignia">LHD – LEARNING ACADEMY OF LANGUAGES</div>
+          <h2 class="cert-heading-main">CERTIFICATE OF ACHIEVEMENT</h2>
+          <div class="cert-heading-sub">Chứng Nhận Hoàn Thành Khóa Học Trực Tuyến Live Chuẩn Quốc Tế</div>
+        </div>
+
+        <div class="cert-recipient-block">
+          <div class="cert-presented-to">CHỨNG NHẬN ĐƯỢC TRAO CHO HỌC VIÊN</div>
+          <div class="cert-student-name" id="modalStudentName">Học Viên</div>
+          <div class="cert-achievement-desc">
+            Đã hoàn thành xuất sắc toàn bộ chương trình đào tạo trực tuyến tương tác Live tại LHD – Learning với khóa học:
+            <br>
+            <strong id="modalCourseTitle" style="font-size: 1.2rem; color: #0b63e5; display: block; margin: 10px 0;">Tên Khóa Học</strong>
+            <span id="modalGradeText"
+              style="display: inline-block; background: #fffbeb; color: #92400e; font-weight: 800; padding: 5px 14px; border-radius: 9999px; border: 1px solid #fde68a; font-size: 0.84rem;">XẾP LOẠI XUẤT SẮC</span>
+          </div>
+        </div>
+
+        <div class="cert-footer-row">
+          <div class="cert-sig-box">
+            <div
+              style="font-family: 'Playfair Display', cursive; font-size: 1.45rem; color: #0b63e5; height: 46px; display: flex; align-items: center; justify-content: center; font-style: italic;">
+              Tanaka Kenji</div>
+            <div class="cert-sig-line"></div>
+            <div class="cert-sig-name" id="modalInstructorName">Sensei Tanaka Kenji</div>
+            <div class="cert-sig-title">Giảng Viên Phụ Trách</div>
+          </div>
+
+          <div class="cert-seal-box">
+            <div class="cert-gold-seal">
+              <i class="fa-solid fa-certificate"></i>
+              <span>LHD SEAL<br>VERIFIED</span>
+            </div>
+            <div style="font-size: 0.74rem; color: #64748b; font-weight: 800;" id="modalCertSerial">
+              #CERT-2026-JPN-7144</div>
+            <div style="font-size: 0.7rem; color: #94a3b8;" id="modalCertDate">Cấp ngày: 02/10/2026</div>
+          </div>
+
+          <div class="cert-sig-box">
+            <div
+              style="font-family: 'Playfair Display', cursive; font-size: 1.45rem; color: #dc2626; height: 46px; display: flex; align-items: center; justify-content: center; font-style: italic;">
+              LHD Academic Council</div>
+            <div class="cert-sig-line"></div>
+            <div class="cert-sig-name">Ban Giám Đốc Đào Tạo</div>
+            <div class="cert-sig-title">Hội Đồng Khảo Thí LHD</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-modal-actions">
+        <button type="button" class="btn-cert-outline" onclick="copyCertLink()">
+          <i class="fa-solid fa-link"></i> Sao chép link xác thực
+        </button>
+        <button type="button" class="btn-cert-primary" onclick="triggerDownloadCert()">
+          <i class="fa-solid fa-file-arrow-down"></i> Tải chứng chỉ (PNG / PDF)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-custom" id="toastCustom">
+    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 1.25rem;"></i>
+    <span id="toastMessage">Thông báo</span>
+  </div>
+
+  <!-- JavaScript Logic & Live Dynamic Sync -->
+  <script>
+    // Ensure logged in state
+    
+
+    window.closeAllDropdowns = function () {
+      const m = document.getElementById('menuDropdown');
+      const b = document.getElementById('bellDropdown');
+      if (m) m.classList.remove('show');
+      if (b) b.classList.remove('show');
+    };
+
+    window.toggleMegaMenu = function (e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const m = document.getElementById('menuDropdown');
+      const b = document.getElementById('bellDropdown');
+      if (b) b.classList.remove('show');
+      if (m) m.classList.toggle('show');
+    };
+
+    window.toggleBellDropdown = function (e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const m = document.getElementById('menuDropdown');
+      const b = document.getElementById('bellDropdown');
+      if (m) m.classList.remove('show');
+      if (b) b.classList.toggle('show');
+    };
+
+    // Global click: close dropdowns when clicking outside OR when clicking any item inside
+    document.addEventListener('click', function (e) {
+      const isDropdown = e.target.closest('.nav-dropdown');
+      const isTriggerBtn = e.target.closest('.nav-circle-btn') || e.target.closest('#headerMenuBtn') || e.target.closest('#headerBellBtn');
+
+      // Click outside
+      if (!isDropdown && !isTriggerBtn) {
+        window.closeAllDropdowns();
+        return;
+      }
+
+      // Click on any item inside mega menu -> auto close
+      if (isDropdown && isDropdown.id === 'menuDropdown') {
+        const item = e.target.closest('.student-menu-item, .menu-user-banner, .btn-menu-logout, a, button');
+        if (item) {
+          window.closeAllDropdowns();
+        }
+      }
+
+      // Click on notification item in bell dropdown -> auto close
+      if (isDropdown && isDropdown.id === 'bellDropdown') {
+        const notifItem = e.target.closest('.bell-notif-item, a');
+        const isActionBtn = e.target.closest('#btnMarkAllRead, #btnClearAllNotifs, .btn-delete-notif');
+        if (notifItem && !isActionBtn) {
+          window.closeAllDropdowns();
+        }
+      }
+    });
+
+    function showToast(msg) {
+      const t = document.getElementById('toastCustom');
+      const tm = document.getElementById('toastMessage');
+      if (t && tm) {
+        tm.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3200);
+      }
+    }
+
+    // ====================================================================
+    // DYNAMIC CERTIFICATES SYNC & RENDERING
+    // ====================================================================
+    function getEnrolledCourses() {
+      try {
+        const raw = localStorage.getItem('lhd_enrolled_courses') || localStorage.getItem('lhd_my_courses');
+        if (raw !== null) {
+          const list = JSON.parse(raw);
+          if (Array.isArray(list)) return list;
+        }
+      } catch (e) {}
+
+      return [
+        {
+          id: 'course_pending_1',
+          title: 'Tiếng Anh IELTS Bứt Phá (Band 5.0 – 6.0)',
+          status: 'pending',
+          langCode: 'en',
+          instructor: 'Mr. David Miller • IELTS 8.5',
+          startDate: '06/10/2026',
+          progress: 0
+        },
+        {
+          id: 'course_progress_1',
+          title: 'Tiếng Anh Giao Tiếp Bản Xứ Siêu Phản Xạ',
+          status: 'progress',
+          langCode: 'en',
+          instructor: 'Cô Emily Watson • TESOL Quốc Tế',
+          startDate: '15/09/2026',
+          progress: 38
+        },
+        {
+          id: 'course_done_1',
+          title: 'Tiếng Nhật Nhập Môn JLPT N5 Cơ Bản',
+          status: 'done',
+          langCode: 'ja',
+          instructor: 'Sensei Tanaka Kenji • N1 Cao Cấp',
+          startDate: '01/06/2026',
+          progress: 100
+        }
+      ];
+    }
+
+    function getCertificatesData() {
+      const enrolled = getEnrolledCourses();
+      const doneCourses = enrolled.filter(c => c && (c.status === 'done' || (c.progress && c.progress >= 100) || (c.lessonsDone && c.totalLessons && c.lessonsDone >= c.totalLessons)));
+
+      const certs = doneCourses.map((c, idx) => {
+        const titleStr = (c.title || '').toLowerCase();
+        const isJp = (c.langCode === 'ja' || titleStr.includes('nhật') || titleStr.includes('n5') || titleStr.includes('n4') || titleStr.includes('n3') || titleStr.includes('n2') || titleStr.includes('n1') || titleStr.includes('jlpt'));
+        const category = isJp ? 'japanese' : 'english';
+
+        let hash = 0;
+        const str = String(c.id || c.title || idx);
+        for (let i = 0; i < str.length; i++) {
+          hash = ((hash << 5) - hash) + str.charCodeAt(i);
+          hash |= 0;
+        }
+        const serialNum = Math.abs(hash) % 9000 + 1000;
+        const serial = c.certSerial || ('#CERT-2026-' + (isJp ? 'JPN-' : (titleStr.includes('ielts') ? 'IELTS-' : 'ENG-')) + serialNum);
+        const date = c.completionDate || c.date || '02/10/2026';
+        const instructor = c.instructor || (isJp ? 'Sensei Tanaka Kenji • N1 Cao Cấp' : 'Thầy David Miller (IELTS 8.5)');
+
+        const isTop = (idx % 2 === 0);
+        let gradeTag = `<i class="fa-solid fa-crown" style="color: #f59e0b;"></i> Xuất Sắc • ${isJp ? 'JLPT N5 (172/180)' : (titleStr.includes('ielts') ? 'Band 7.5' : 'CEFR B2 Advanced')}`;
+        let gradeText = isJp ? 'XUẤT SẮC • JLPT N5 MASTERY (Điểm số: 172/180 Điểm Khóa Đào Tạo Live)' : (titleStr.includes('ielts') ? 'XUẤT SẮC • IELTS BAND 7.5 OVERALL (Listening 8.0, Reading 8.0, Writing 7.0, Speaking 7.5)' : 'GIỎI • CEFR B2 ADVANCED FLUENCY (Natural Speech & Accent Mastery)');
+
+        return {
+          id: c.id || ('cert_' + idx),
+          title: c.title || 'Khóa học ngôn ngữ LHD',
+          instructor: instructor,
+          date: date,
+          serial: serial,
+          category: category,
+          isJp: isJp,
+          gradeTag: gradeTag,
+          grade: gradeText,
+          isGold: isTop,
+          isTopRank: isTop
+        };
+      });
+
+      return certs;
+    }
+
+    function renderCertificates() {
+      const certs = getCertificatesData();
+      const container = document.getElementById('certificatesList');
+      const statIssued = document.getElementById('statIssuedCertCount');
+      const pillAll = document.getElementById('pillAll');
+      const pillEn = document.getElementById('pillEn');
+      const pillJa = document.getElementById('pillJa');
+
+      const enCount = certs.filter(c => c.category === 'english').length;
+      const jaCount = certs.filter(c => c.category === 'japanese').length;
+
+      if (statIssued) statIssued.textContent = certs.length;
+      if (pillAll) pillAll.innerHTML = `<i class="fa-solid fa-layer-group"></i> Tất cả chứng chỉ (${certs.length})`;
+      if (pillEn) pillEn.textContent = `🇬🇧 Tiếng Anh (${enCount})`;
+      if (pillJa) pillJa.textContent = `🇯🇵 Tiếng Nhật (${jaCount})`;
+
+      if (!container) return;
+
+      if (certs.length === 0) {
+        container.innerHTML = `
+          <div class="empty-cert-state" style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: #ffffff; border-radius: 28px; border: 1.5px solid #eef2f6; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+            <div style="width: 84px; height: 84px; border-radius: 50%; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #bbf7d0; display: inline-flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #16a34a; margin-bottom: 1.5rem; box-shadow: 0 10px 24px rgba(22, 163, 74, 0.15);">
+              <i class="fa-solid fa-award"></i>
+            </div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-bottom: 0.6rem;">Bạn chưa có chứng chỉ nào</h3>
+            <p style="color: #64748b; font-size: 0.95rem; max-width: 480px; margin: 0 auto 1.75rem auto; line-height: 1.65;">
+              Chứng chỉ hoàn thành được cấp tự động sau khi bạn hoàn tất 100% thời lượng khóa học Live và đạt tiêu chuẩn đánh giá của giảng viên.
+            </p>
+            <a href="my-courses.html" class="btn-cert-primary" style="display: inline-flex; text-decoration: none; padding: 12px 28px; font-size: 0.95rem;">
+              <i class="fa-solid fa-book-bookmark"></i>
+              <span>Vào khóa học của tôi</span>
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = certs.map((c, idx) => {
+        const safeTitle = c.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const safeInstructor = c.instructor.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const safeGrade = c.grade.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+        return `
+          <div class="cert-card-modern" style="animation-delay: ${idx * 0.08}s;" data-category="${c.category}" data-title="${c.title.toLowerCase()}" data-serial="${c.serial.toLowerCase()}">
+            <div class="cert-card-accent-bar ${c.isGold ? 'gold' : ''}"></div>
+            <div>
+              <div class="cert-card-top">
+                <span class="cert-badge-serial">
+                  <i class="fa-solid fa-barcode" style="color: #64748b;"></i>
+                  ${c.serial}
+                </span>
+                <span class="cert-grade-tag ${c.isTopRank ? 'top-rank' : ''}">${c.gradeTag}</span>
+              </div>
+
+              <h3 class="cert-title-h3" title="${c.title}">${c.title}</h3>
+
+              <div>
+                <span class="cert-lang-pill ${c.isJp ? 'ja' : 'en'}">
+                  ${c.isJp ? '🇯🇵 Khóa Học Tiếng Nhật Trực Tuyến Live' : '🇬🇧 Khóa Học Tiếng Anh Trực Tuyến Live'}
+                </span>
+              </div>
+
+              <ul class="cert-meta-list">
+                <li class="cert-meta-item">
+                  <i class="fa-solid fa-chalkboard-user"></i>
+                  <span>Giảng viên: <strong style="color: #0f172a;">${c.instructor}</strong></span>
+                </li>
+                <li class="cert-meta-item">
+                  <i class="fa-regular fa-calendar-check"></i>
+                  <span>Ngày cấp: <strong style="color: #0f172a;">${c.date}</strong></span>
+                </li>
+                <li class="cert-meta-item">
+                  <i class="fa-solid fa-shield-halved" style="color: #10b981;"></i>
+                  <span>Trạng thái: <strong style="color: #059669;"><span class="pulse-dot"></span> Đã xác thực QR Code</strong></span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="cert-actions-row">
+              <button type="button" class="btn-cert-primary"
+                onclick="openCertModal('${safeTitle}', '${safeInstructor}', '${c.date}', '${c.serial}', '${safeGrade}')">
+                <i class="fa-regular fa-eye"></i> Xem chứng chỉ
+              </button>
+              <button type="button" class="btn-cert-outline" onclick="downloadCertificate('${c.serial}')">
+                <i class="fa-solid fa-download"></i> Tải PDF / PNG
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Filter & Search Logic
+    let currentCategoryFilter = 'all';
+    window.filterCertificates = function (category, btn) {
+      currentCategoryFilter = category;
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      applyCertFilters();
+    };
+
+    window.handleCertSearch = function (val) {
+      applyCertFilters();
+    };
+
+    function applyCertFilters() {
+      const keyword = (document.getElementById('certSearchInput')?.value || '').toLowerCase().trim();
+      const cards = document.querySelectorAll('.cert-card-modern');
+
+      cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardTitle = card.getAttribute('data-title') || '';
+        const cardSerial = card.getAttribute('data-serial') || '';
+
+        const matchCat = (currentCategoryFilter === 'all') || (cardCategory === currentCategoryFilter);
+        const matchSearch = !keyword || cardTitle.includes(keyword) || cardSerial.includes(keyword);
+
+        if (matchCat && matchSearch) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Modal Preview Logic
+    let currentCertSerial = '#CERT-2026-JPN-7144';
+    window.openCertModal = function (courseTitle, instructor, date, serial, grade) {
+      currentCertSerial = serial;
+      const modal = document.getElementById('certPreviewModal');
+      const u = getCurrentUser();
+      const studentName = u ? (u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : 'Học Viên')) : 'Học Viên';
+
+      const modalStudentName = document.getElementById('modalStudentName');
+      const modalCourseTitle = document.getElementById('modalCourseTitle');
+      const modalInstructorName = document.getElementById('modalInstructorName');
+      const modalCertDate = document.getElementById('modalCertDate');
+      const modalCertSerial = document.getElementById('modalCertSerial');
+      const modalGradeText = document.getElementById('modalGradeText');
+
+      if (modalStudentName) modalStudentName.textContent = studentName;
+      if (modalCourseTitle) modalCourseTitle.textContent = courseTitle;
+      if (modalInstructorName) modalInstructorName.textContent = instructor;
+      if (modalCertDate) modalCertDate.textContent = 'Cấp ngày: ' + date;
+      if (modalCertSerial) modalCertSerial.textContent = serial;
+      if (modalGradeText) modalGradeText.textContent = grade;
+
+      if (modal) modal.classList.add('show');
+    };
+
+    window.closeCertModal = function (e) {
+      if (e && e.target !== e.currentTarget) return;
+      const modal = document.getElementById('certPreviewModal');
+      if (modal) modal.classList.remove('show');
+    };
+
+    window.downloadCertificate = function (serial) {
+      showToast('Đang tạo và tải chứng chỉ ' + serial + ' (PNG chuẩn HD)...');
+      setTimeout(() => {
+        showToast('Đã tải chứng chỉ ' + serial + ' về máy thành công!');
+      }, 1200);
+    };
+
+    window.triggerDownloadCert = function () {
+      showToast('Đang xuất chứng chỉ ' + currentCertSerial + ' chất lượng cao...');
+      setTimeout(() => {
+        showToast('Đã tải chứng chỉ ' + currentCertSerial + ' thành công!');
+        closeCertModal();
+      }, 1000);
+    };
+
+    window.copyCertLink = function () {
+      const link = 'https://lhd.edu.vn/verify?cert=' + encodeURIComponent(currentCertSerial);
+      navigator.clipboard.writeText(link).then(() => {
+        showToast('Đã sao chép link xác thực chứng chỉ vào bộ nhớ tạm!');
+      }).catch(() => {
+        showToast('Đã sao chép link xác thực: ' + link);
+      });
+    };
+
+    // User & Notification Sync
+    function getCurrentUser() {
+      try {
+        let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || localStorage.getItem('user') || sessionStorage.getItem('current_user') || 'null');
+        if (u) {
+          if (!u.name || u.name === 'Học Viên' || u.name === 'Học viên') {
+            const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+            const foundReg = regUsers.find(function (r) {
+              return (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) ||
+                (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase());
+            });
+            if (foundReg && foundReg.name) u.name = foundReg.name;
+            if (foundReg && foundReg.email && !u.email) u.email = foundReg.email;
+          }
+          return u;
+        }
+      } catch (e) { }
+      return null;
+    }
+
+    function syncUserUI() {
+      const u = getCurrentUser();
+      if (!u) return;
+      const displayName = u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : 'Học Viên');
+      const userEmail = u.email || 'student@lhd.edu.vn';
+
+      document.querySelectorAll('.user-capsule-name, .menu-banner-name, #headerUserName, #menuBannerName').forEach(el => el.textContent = displayName);
+      document.querySelectorAll('.menu-banner-sub, #menuBannerEmail').forEach(el => el.textContent = userEmail);
+
+      const savedAvatar = localStorage.getItem('lhd_user_avatar');
+      if (savedAvatar) {
+        document.querySelectorAll('.user-capsule-avatar, .menu-banner-avatar, #headerUserAvatar, #menuBannerAvatar').forEach(img => img.src = savedAvatar);
+      }
+    }
+
+    function syncCartCount() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('lhd_cart') || '[]');
+        const badge = document.getElementById('cartBadge');
+        if (badge) {
+          if (cart.length > 0) {
+            badge.textContent = cart.length;
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+      } catch (e) { }
+    }
+
+    const DEFAULT_NOTIFICATIONS = [
+      {
+        id: '1727632800001',
+        title: '🔔 Nhắc nhở buổi học trực tuyến',
+        message: 'Khóa "Tiếng Anh Giao Tiếp Bản Xứ Siêu Phản Xạ" sẽ bắt đầu lúc 19:30 tối nay trên Google Meet.',
+        time: '15 phút trước',
+        link: 'my-courses.html',
+        unread: true
+      },
+      {
+        id: '1727632800002',
+        title: '⏳ Lớp học đủ điều kiện mở lớp',
+        message: 'Khóa "Tiếng Anh IELTS Bứt Phá (Band 5.0 - 6.0)" đã đạt 27/30 HV. Dự kiến khai giảng vào 06/10/2026.',
+        time: '2 giờ trước',
+        link: 'my-courses.html',
+        unread: true
+      },
+      {
+        id: '1727632800003',
+        title: '🏆 Cấp chứng chỉ hoàn thành',
+        message: 'Chúc mừng bạn đã hoàn thành 100% khóa học "Tiếng Nhật Nhập Môn JLPT N5 Cơ Bản". Xem chứng chỉ ngay!',
+        time: '1 ngày trước',
+        link: 'certificates.html',
+        unread: false
+      }
+    ];
+
+    function getNotifications() {
+      try {
+        const raw = localStorage.getItem('lhd_notifications');
+        if (!raw) {
+          localStorage.setItem('lhd_notifications', JSON.stringify(DEFAULT_NOTIFICATIONS));
+          return DEFAULT_NOTIFICATIONS;
+        }
+        return JSON.parse(raw);
+      } catch (e) {
+        return DEFAULT_NOTIFICATIONS;
+      }
+    }
+
+    function renderNotifications() {
+      const notifs = getNotifications();
+      const badge = document.getElementById('headerBellBadge');
+      const notifList = document.getElementById('bellNotificationList');
+      const unreadCount = notifs.filter(n => n.unread).length;
+
+      if (badge) {
+        if (unreadCount > 0) {
+          badge.textContent = unreadCount;
+          badge.style.display = 'inline-flex';
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+
+      if (notifList) {
+        if (notifs.length === 0) {
+          notifList.innerHTML = '<div style="text-align: center; padding: 1.6rem; color: #94a3b8; font-size: 0.85rem;"><i class="fa-regular fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 8px; display: block; color: #cbd5e1;"></i><span>Hiện tại bạn không có thông báo mới</span></div>';
+        } else {
+          notifList.innerHTML = notifs.map(n => {
+            const bg = n.unread ? '#f0fdf4' : '#f8fafc';
+            const border = n.unread ? '#bbf7d0' : '#f1f5f9';
+            const titleColor = n.unread ? '#15803d' : '#0f172a';
+            return `<div class="bell-notif-item" onclick="window.location.href='${n.link || 'cart.html'}'" style="padding: 0.65rem 0.85rem; border-radius: 12px; background: ${bg}; border: 1px solid ${border}; margin-bottom: 6px; cursor: pointer; transition: all 0.15s ease;"><div style="font-weight: 700; font-size: 0.85rem; color: ${titleColor}; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;"><span>${n.title}</span><span style="font-size: 0.72rem; color: #94a3b8;">${n.time}</span></div><div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">${n.message}</div></div>`;
+          }).join('');
+        }
+      }
+    }
+
+    window.markAllNotificationsRead = function () {
+      const notifs = getNotifications();
+      notifs.forEach(n => n.unread = false);
+      localStorage.setItem('lhd_notifications', JSON.stringify(notifs));
+      renderNotifications();
+      showToast('Đã đánh dấu tất cả thông báo là đã đọc.');
+    };
+
+    window.clearAllNotifications = function (e) {
+      if (e) e.stopPropagation();
+      localStorage.setItem('lhd_notifications', JSON.stringify([]));
+      renderNotifications();
+      showToast('Đã xóa toàn bộ thông báo.');
+    };
+
+    // Logout
+    const btnLogout = document.getElementById('btnLogoutUser');
+    if (btnLogout) {
+      btnLogout.addEventListener('click', () => {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_info');
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('lhd_learning_logged_in');
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Ripple on nav click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', function (e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'nav-click-ripple';
+        const diameter = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = diameter + 'px';
+        ripple.style.left = (e.clientX - rect.left - diameter / 2) + 'px';
+        ripple.style.top = (e.clientY - rect.top - diameter / 2) + 'px';
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      syncUserUI();
+      syncCartCount();
+      renderNotifications();
+      renderCertificates();
+
+      const menu = document.getElementById('menuDropdown');
+      if (menu) {
+        menu.addEventListener('click', function (e) {
+          const item = e.target.closest('.student-menu-item, .menu-user-banner, .btn-menu-logout, a, button');
+          if (item) {
+            window.closeAllDropdowns();
+          }
+        });
+      }
+    });
+  </script>
+
+    <!-- ROLE-ADAPTIVE UNIVERSAL USER & DROPDOWN SYNC SCRIPT -->
+  <script id="universal-role-sync-script">
+    (function () {
+      // 1. Account Discovery
+      function getCurrentUser() {
+        try {
+          const uStr = localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || sessionStorage.getItem('user_info');
+          if (!uStr) return null;
+          let u = JSON.parse(uStr);
+          if (u && (u.email || u.name || u.username)) {
+            const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+            const foundReg = regUsers.find(function (r) {
+              return (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) ||
+                (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase());
+            });
+            if (foundReg) {
+              if (foundReg.name && (!u.name || u.name === 'Học Viên' || u.name === 'Giảng viên' || u.name === 'Học viên')) u.name = foundReg.name;
+              if (foundReg.email && !u.email) u.email = foundReg.email;
+              if (foundReg.role && !u.role) u.role = foundReg.role;
+              if (foundReg.avatarUrl && !u.avatarUrl) u.avatarUrl = foundReg.avatarUrl;
+            }
+            return u;
+          }
+        } catch (e) { }
+
+        return null;
+      }
+
+      window.handleMenuBannerClick = function () {
+        const u = getCurrentUser();
+        if (u && u.role === 'ROLE_INSTRUCTOR') {
+          window.location.href = 'instructor/profile.html';
+        } else if (u && u.role === 'ROLE_ADMIN') {
+          window.location.href = 'admin/dashboard.html';
+        } else {
+          window.location.href = 'student/profile.html';
+        }
+      };
+
+      window.syncUniversalUserUI = function () {
+        const u = getCurrentUser();
+        const guestBlock = document.getElementById('navActionsGuest');
+        const userBlock = document.getElementById('navActionsUser');
+
+        if (!u) {
+          // CHƯA ĐĂNG NHẬP -> Hiện nút Đăng nhập & Đăng ký, Ẩn khu vực tài khoản
+          if (guestBlock) guestBlock.style.display = 'flex';
+          if (userBlock) userBlock.style.display = 'none';
+
+          const navHomeLink = document.getElementById('navHomeLink');
+          const headerBrandLogo = document.getElementById('headerBrandLogo');
+          if (navHomeLink) navHomeLink.href = 'index.html';
+          if (headerBrandLogo) headerBrandLogo.href = 'index.html';
+          return;
+        }
+
+        // ĐÃ ĐĂNG NHẬP -> Ẩn nút khách, Hiện khu vực tài khoản + chuông + giỏ hàng + menu ☰
+        if (guestBlock) guestBlock.style.display = 'none';
+        if (userBlock) userBlock.style.display = 'flex';
+
+        const isInstructor = (u.role === 'ROLE_INSTRUCTOR');
+        const isAdmin = (u.role === 'ROLE_ADMIN');
+
+        const displayName = u.name || u.fullName || u.username || (u.email ? u.email.split('@')[0] : (isInstructor ? 'Giảng viên' : 'Học viên'));
+        const userEmail = u.email || (isInstructor ? 'instructor@lhd.edu.vn' : 'student@lhd.edu.vn');
+
+        // 1. Sync Text (Name, Email)
+        document.querySelectorAll('.user-capsule-name, .menu-banner-name, #headerUserName, #welcomeUserName, #menuBannerName').forEach(function (el) {
+          el.textContent = displayName;
+        });
+        document.querySelectorAll('.menu-banner-sub, #menuBannerEmail').forEach(function (el) {
+          el.textContent = userEmail;
+        });
+
+        // 2. Sync Avatar
+        const savedAvatar = localStorage.getItem('lhd_user_avatar') || u.avatarUrl;
+        if (savedAvatar && (savedAvatar.startsWith('data:image') || savedAvatar.startsWith('http') || savedAvatar.startsWith('blob'))) {
+          document.querySelectorAll('.user-capsule-avatar, .menu-banner-avatar, #headerUserAvatar, #menuBannerAvatar').forEach(function (img) {
+            img.src = savedAvatar;
+          });
+        }
+
+        // 3. Adapt Links based on Role (Instructor vs Student vs Admin)
+        const capsuleBtn = document.getElementById('userCapsuleBtn');
+        const instMenuSection = document.getElementById('instructorMenuSection');
+        const roleEl = document.getElementById('menuBannerRole');
+        const menuHomeLink = document.getElementById('menuHomeLink');
+        const menuHomeTitle = document.getElementById('menuHomeTitle');
+        const menuOrdersLink = document.getElementById('menuOrdersLink');
+        const menuProfileLink = document.getElementById('menuProfileLink');
+        const menuSecurityLink = document.getElementById('menuSecurityLink');
+        const navHomeLink = document.getElementById('navHomeLink');
+        const navAboutLink = document.getElementById('navAboutLink');
+        const navContactLink = document.getElementById('navContactLink');
+        const headerBrandLogo = document.getElementById('headerBrandLogo');
+
+        if (isInstructor) {
+          // Instructor Role
+          if (capsuleBtn) {
+            capsuleBtn.href = 'instructor/profile.html';
+            capsuleBtn.title = 'Xem trang thông tin cá nhân giảng viên';
+          }
+          if (roleEl) roleEl.textContent = 'Giảng viên / Đã xác thực';
+          if (instMenuSection) instMenuSection.style.display = 'block';
+
+          if (menuHomeLink) menuHomeLink.href = 'instructor/home.html';
+          if (menuHomeTitle) menuHomeTitle.textContent = 'Trang chủ giảng viên';
+          if (menuOrdersLink) menuOrdersLink.href = 'instructor/profile.html#orders';
+          if (menuProfileLink) menuProfileLink.href = 'instructor/profile.html';
+          if (menuSecurityLink) menuSecurityLink.href = 'instructor/profile.html#security';
+
+          if (navHomeLink) navHomeLink.href = 'instructor/home.html';
+          if (navAboutLink) navAboutLink.href = 'instructor/home.html#about';
+          if (navContactLink) navContactLink.href = 'instructor/home.html#footer';
+          if (headerBrandLogo) headerBrandLogo.href = 'instructor/home.html';
+
+        } else if (isAdmin) {
+          // Admin Role
+          if (capsuleBtn) {
+            capsuleBtn.href = 'admin/dashboard.html';
+            capsuleBtn.title = 'Cổng Quản trị viên';
+          }
+          if (roleEl) roleEl.textContent = 'Quản trị viên';
+          if (instMenuSection) instMenuSection.style.display = 'block';
+
+          if (navHomeLink) navHomeLink.href = 'admin/dashboard.html';
+          if (headerBrandLogo) headerBrandLogo.href = 'admin/dashboard.html';
+
+        } else {
+          // Student / Regular User Role
+          if (capsuleBtn) {
+            capsuleBtn.href = 'student/profile.html';
+            capsuleBtn.title = 'Xem trang thông tin cá nhân học viên';
+          }
+          if (roleEl) roleEl.textContent = 'Thành viên / Đã xác thực';
+          if (instMenuSection) instMenuSection.style.display = 'none';
+
+          if (menuHomeLink) menuHomeLink.href = 'student/home.html';
+          if (menuHomeTitle) menuHomeTitle.textContent = 'Trang chủ học viên';
+          if (menuOrdersLink) menuOrdersLink.href = 'student/profile.html#orders';
+          if (menuProfileLink) menuProfileLink.href = 'student/profile.html';
+          if (menuSecurityLink) menuSecurityLink.href = 'student/profile.html#security';
+
+          if (navHomeLink) navHomeLink.href = 'student/home.html';
+          if (navAboutLink) navAboutLink.href = 'student/home.html#about';
+          if (navContactLink) navContactLink.href = 'student/home.html#footer';
+          if (headerBrandLogo) headerBrandLogo.href = 'student/home.html';
+        }
+
+        // 4. Update Cart Badge Count
+        try {
+          const cart = JSON.parse(localStorage.getItem('lhd_cart') || '[]');
+          const badge = document.getElementById('cartBadge');
+          if (badge) {
+            if (Array.isArray(cart) && cart.length > 0) {
+              badge.textContent = cart.length;
+              badge.style.display = 'inline-flex';
+            } else {
+              badge.style.display = 'none';
+            }
+          }
+        } catch (e) { }
+      };
+
+      // Dropdown handlers
+      window.closeAllDropdowns = function () {
+        const m = document.getElementById('menuDropdown');
+        const b = document.getElementById('bellDropdown');
+        if (m) m.classList.remove('show');
+        if (b) b.classList.remove('show');
+      };
+
+      window.toggleMegaMenu = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const m = document.getElementById('menuDropdown');
+        const b = document.getElementById('bellDropdown');
+        if (b) b.classList.remove('show');
+        if (m) m.classList.toggle('show');
+      };
+
+      window.toggleBellDropdown = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        const m = document.getElementById('menuDropdown');
+        const b = document.getElementById('bellDropdown');
+        if (m) m.classList.remove('show');
+        if (b) b.classList.toggle('show');
+      };
+
+      // Global click: close dropdowns when clicking outside
+      document.addEventListener('click', function (e) {
+        const isDropdown = e.target.closest('.nav-dropdown');
+        const isTriggerBtn = e.target.closest('.nav-circle-btn') || e.target.closest('#headerMenuBtn') || e.target.closest('#headerBellBtn');
+
+        if (!isDropdown && !isTriggerBtn) {
+          window.closeAllDropdowns();
+          return;
+        }
+
+        if (isDropdown && isDropdown.id === 'menuDropdown') {
+          const item = e.target.closest('.student-menu-item, .menu-user-banner, .btn-menu-logout, a, button');
+          if (item) {
+            window.closeAllDropdowns();
+          }
+        }
+
+        if (isDropdown && isDropdown.id === 'bellDropdown') {
+          const notifItem = e.target.closest('.bell-notif-item, a');
+          const isActionBtn = e.target.closest('#btnMarkAllRead, #btnClearAllNotifs, .btn-delete-notif');
+          if (notifItem && !isActionBtn) {
+            window.closeAllDropdowns();
+          }
+        }
+      });
+
+      // Notification handlers
+      function getNotifications() {
+        try { return JSON.parse(localStorage.getItem('lhd_notifications') || '[]'); } catch (e) { return []; }
+      }
+
+      function renderNotifications() {
+        const notifs = getNotifications();
+        const badge = document.getElementById('headerBellBadge');
+        const notifList = document.getElementById('bellNotificationList');
+        const unreadCount = notifs.filter(function (n) { return n.unread; }).length;
+
+        if (badge) {
+          if (unreadCount > 0) {
+            badge.textContent = unreadCount;
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.textContent = '0';
+            badge.style.display = 'none';
+          }
+        }
+
+        if (notifList) {
+          if (notifs.length === 0) {
+            notifList.innerHTML = '<div class="bell-empty-state" style="text-align: center; padding: 1.6rem 1rem; color: #94a3b8; font-size: 0.85rem;"><i class="fa-regular fa-bell-slash" style="font-size: 1.8rem; margin-bottom: 8px; display: block; color: #cbd5e1;"></i><span>Hiện tại bạn không có thông báo mới</span></div>';
+          } else {
+            notifList.innerHTML = notifs.map(function (n) {
+              const bg = n.unread ? '#f0fdf4' : '#f8fafc';
+              const border = n.unread ? '#bbf7d0' : '#f1f5f9';
+              const titleColor = n.unread ? '#15803d' : '#0f172a';
+              const targetLink = n.link || 'cart.html';
+              const badgeHtml = n.unread ? '<span style="font-size: 0.65rem; background: #22c55e; color: #ffffff; padding: 1px 6px; border-radius: 999px; font-weight: 700;">Mới</span>' : '<span style="font-size: 0.72rem; color: #94a3b8;">' + (n.time || '') + '</span>';
+              const timeHtml = n.unread ? '<div style="font-size: 0.72rem; color: #16a34a; margin-top: 4px; font-weight: 600;">' + (n.time || 'Vừa xong') + '</div>' : '';
+              return '<div class="bell-notif-item" onclick="window.location.href=\'' + targetLink + '\'" style="padding: 0.65rem 0.85rem; border-radius: 12px; background: ' + bg + '; border: 1px solid ' + border + '; margin-bottom: 6px; cursor: pointer; transition: all 0.15s ease;"><div style="font-weight: 700; font-size: 0.85rem; color: ' + titleColor + '; margin-bottom: 3px; display: flex; align-items: center; justify-content: space-between;"><span>' + n.title + '</span>' + badgeHtml + '</div><div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">' + n.message + '</div>' + timeHtml + '</div>';
+            }).join('');
+          }
+        }
+      }
+
+      window.markAllNotificationsRead = function () {
+        const notifs = getNotifications();
+        notifs.forEach(function (n) { n.unread = false; });
+        localStorage.setItem('lhd_notifications', JSON.stringify(notifs));
+        renderNotifications();
+      };
+
+      window.clearAllNotifications = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        localStorage.setItem('lhd_notifications', '[]');
+        renderNotifications();
+      };
+
+      function handleGlobalLogout() {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user_info');
+        localStorage.removeItem('currentUser');
+        sessionStorage.clear();
+        window.location.href = 'index.html';
+      }
+
+      // Initial execution
+      window.addEventListener('DOMContentLoaded', function () {
+        window.syncUniversalUserUI();
+        renderNotifications();
+
+        const btnLogout = document.getElementById('btnLogoutUser');
+        if (btnLogout) btnLogout.addEventListener('click', handleGlobalLogout);
+      });
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soạn Khóa Học Pro (Course Builder) | LHD Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #0b63e5;
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --accent-purple: #7c3aed;
+      --accent-pink: #ec4899;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(226, 232, 240, 0.9);
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --shadow-sm: 0 4px 16px rgba(11, 99, 229, 0.04);
+      --shadow-md: 0 10px 30px rgba(11, 99, 229, 0.08);
+      --shadow-glow: 0 12px 32px rgba(124, 58, 237, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+    }
+
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    .bg-blob-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #c084fc 0%, #f472b6 100%);
+      top: -120px;
+      right: -80px;
+    }
+    .bg-blob-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, #67e8f9 0%, #a855f7 100%);
+      bottom: -100px;
+      left: -100px;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-actions-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-user-left-group, .nav-user-right-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-user-divider {
+      width: 1px;
+      height: 24px;
+      background: #e2e8f0;
+      margin: 0 2px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #0b63e5;
+      color: #0b63e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.15);
+    }
+
+    .bell-badge, .cart-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .user-capsule:hover {
+      border-color: #0b63e5;
+      box-shadow: 0 4px 12px rgba(11, 99, 229, 0.12);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #0b63e5;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 260px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown.show { display: flex; }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .student-mega-dropdown {
+      width: 320px !important;
+      max-width: 94vw !important;
+      max-height: calc(100vh - 75px) !important;
+      overflow-y: auto !important;
+      padding: 0.65rem 0.75rem !important;
+      border-radius: 20px !important;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22) !important;
+      border: 1.5px solid rgba(226, 232, 240, 0.95) !important;
+    }
+
+    .menu-user-banner {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%) !important;
+      border-radius: 14px !important;
+      padding: 0.65rem 0.85rem !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      margin-bottom: 0.35rem !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.2) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+    }
+
+    .menu-banner-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.9) !important;
+      object-fit: cover !important;
+    }
+
+    .menu-banner-meta {
+      flex: 1 !important;
+      min-width: 0 !important;
+    }
+
+    .menu-banner-name {
+      font-size: 0.92rem !important;
+      font-weight: 800 !important;
+      color: #ffffff !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.72rem !important;
+      color: #cbd5e1 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .menu-group-heading {
+      font-size: 0.66rem !important;
+      font-weight: 800 !important;
+      color: #94a3b8 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 0.35rem 0.55rem 0.15rem !important;
+    }
+
+    .student-menu-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      padding: 0.4rem 0.65rem !important;
+      border-radius: 10px !important;
+      text-decoration: none !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.84rem !important;
+      transition: all 0.15s ease !important;
+      cursor: pointer !important;
+    }
+
+    .student-menu-item:hover {
+      background: #f1f5f9 !important;
+      color: #0b63e5 !important;
+      transform: translateX(3px) !important;
+    }
+
+    .menu-item-icon {
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(11, 99, 229, 0.08) !important;
+      color: #0b63e5 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center;
+      font-size: 0.8rem !important;
+    }
+
+    .dropdown-divider {
+      height: 1px !important;
+      background: #f1f5f9 !important;
+      margin: 0.25rem 0 !important;
+    }
+
+    .btn-menu-logout {
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 0.52rem 0.8rem !important;
+      border-radius: 10px !important;
+      border: 1px solid #fee2e2 !important;
+      background: #fef2f2 !important;
+      color: #dc2626 !important;
+      font-weight: 700 !important;
+      font-size: 0.84rem !important;
+      cursor: pointer !important;
+    }
+
+    .btn-menu-logout:hover {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+    }
+
+    /* LAYOUT */
+    .app-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75rem;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .sidebar-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.5rem 0.75rem 1.1rem;
+      border-bottom: 1px solid #f1f5f9;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--primary-grad);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+    }
+
+    .sidebar-brand-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-sub);
+    }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 0.6rem;
+      padding-left: 0.8rem;
+    }
+
+    .sidebar-card .nav-group-title:not(:first-child) {
+      border-top: 1px solid #f1f5f9;
+      margin-top: 0.9rem;
+      padding-top: 0.9rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #475569;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(11, 99, 229, 0.07);
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .sidebar-link.active {
+      background: var(--primary-grad);
+      color: white;
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.28);
+    }
+
+    .badge-count {
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.06);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .sidebar-link.active .badge-count {
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
+    }
+
+    /* BUILDER MAIN */
+    .builder-main {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .builder-container {
+      max-width: 1040px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* TOP WIZARD PROGRESS */
+    .wizard-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .step-pill {
+      background: white;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .step-pill::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: all 0.25s ease;
+    }
+
+    .step-pill:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .step-pill.active {
+      border-color: var(--accent-purple);
+      background: #faf5ff;
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.14);
+    }
+
+    .step-pill.active::before {
+      background: var(--primary-grad);
+    }
+
+    .step-pill.completed {
+      border-color: #a7f3d0;
+      background: #f0fdf4;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+
+    .step-pill.active .step-num {
+      background: var(--primary-grad);
+      color: white;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+    }
+
+    .step-pill.completed .step-num {
+      background: #10b981;
+      color: white;
+    }
+
+    .step-info h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .step-info span {
+      font-size: 0.72rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* FORM PANEL */
+    .form-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 2.25rem 2.5rem;
+      box-shadow: var(--shadow-md);
+      display: none;
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .form-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-head {
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .panel-head-title h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-head-title p {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* FORM CONTROLS */
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.35rem;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-label span.req {
+      color: var(--accent-red);
+      font-weight: 800;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.85rem 1.15rem;
+      border-radius: 14px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.92rem;
+      font-weight: 600;
+      outline: none;
+      background: white;
+      transition: all 0.2s ease;
+      color: #0f172a;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    /* PRICING PREVIEW */
+    .pricing-calculator {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .pricing-calc-tag {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .pricing-calc-val {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #10b981;
+    }
+
+    /* DROPZONE UPLOAD */
+    .dropzone-box {
+      border: 2px dashed #cbd5e1;
+      border-radius: 20px;
+      padding: 2.2rem 1.5rem;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .dropzone-box:hover, .dropzone-box.is-dragging {
+      border-color: #7c3aed;
+      background: #faf5ff;
+      transform: translateY(-2px);
+    }
+
+    .dropzone-icon {
+      font-size: 2.5rem;
+      color: #7c3aed;
+      margin-bottom: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+
+    .dropzone-box:hover .dropzone-icon {
+      transform: scale(1.1);
+    }
+
+    .dropzone-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-sub {
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+
+    .thumb-preview-wrap {
+      margin-top: 1rem;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1.5px solid #e2e8f0;
+      position: relative;
+      display: none;
+      max-height: 240px;
+    }
+
+    .thumb-preview-wrap img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-preview-overlay {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
+    }
+
+    /* STEP 2: CURRICULUM ACCORDION */
+    .curriculum-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .curriculum-stats {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .section-block {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .section-block:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .drag-handle {
+      cursor: grab;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      padding: 4px;
+    }
+
+    .section-tag {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .section-input {
+      font-size: 1.05rem;
+      font-weight: 800;
+      border: 1.5px solid transparent;
+      background: transparent;
+      padding: 4px 8px;
+      border-radius: 8px;
+      outline: none;
+      width: 100%;
+      color: #0f172a;
+      transition: all 0.2s ease;
+    }
+
+    .section-input:focus {
+      background: #f8fafc;
+      border-color: #7c3aed;
+    }
+
+    .lesson-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-left: 1.75rem;
+    }
+
+    .lesson-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 0.75rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .lesson-item:hover {
+      background: white;
+      border-color: #cbd5e1;
+      transform: translateX(3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .lesson-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .lesson-icon-type {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(11, 99, 229, 0.08);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .lesson-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .lesson-duration {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-left: 8px;
+    }
+
+    .badge-preview {
+      background: #e0f2fe;
+      color: #0284c7;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+    }
+
+    .lesson-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-action-icon {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action-icon:hover {
+      color: var(--primary);
+      background: rgba(11, 99, 229, 0.08);
+    }
+
+    .btn-action-delete:hover {
+      color: #ef4444;
+      background: #fee2e2;
+    }
+
+    .btn-add-lesson {
+      margin-left: 1.75rem;
+      margin-top: 0.85rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 9999px;
+      border: 1.5px dashed #7c3aed;
+      background: rgba(124, 58, 237, 0.04);
+      color: #7c3aed;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add-lesson:hover {
+      background: rgba(124, 58, 237, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-add-section {
+      width: 100%;
+      padding: 0.95rem;
+      border-radius: 18px;
+      border: 2px dashed #cbd5e1;
+      background: white;
+      color: #475569;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add-section:hover {
+      border-color: #7c3aed;
+      color: #7c3aed;
+      background: #faf5ff;
+    }
+
+    /* STEP 3: DEMO VIDEO */
+    .demo-video-preview {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      margin: 1.25rem auto 0;
+      border-radius: 18px;
+      background: #0f172a;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .demo-video-preview[hidden], .demo-file-row[hidden] {
+      display: none;
+    }
+
+    .demo-file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding: 0.85rem 1.25rem;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+    }
+
+    .demo-file-details {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .demo-file-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(236, 72, 153, 0.1);
+      color: #ec4899;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .demo-file-size {
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+
+    /* STEP 4: REVIEW & CHECKLIST */
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .review-summary-card {
+      background: #f8fafc;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      padding: 1.5rem;
+    }
+
+    .review-course-hero {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .review-course-thumb {
+      width: 120px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+
+    .review-course-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .review-course-meta {
+      font-size: 0.82rem;
+      color: #64748b;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .checklist-card {
+      background: #f8fafc;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      padding: 1.5rem;
+    }
+
+    .checklist-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.55rem 0;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .check-item i {
+      font-size: 1.05rem;
+    }
+    .check-item.done i { color: #10b981; }
+    .check-item.warn i { color: #f59e0b; }
+
+    /* FOOTER NAVIGATION */
+    .panel-footer-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .btn-nav-step {
+      padding: 0.8rem 1.8rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-prev {
+      background: white;
+      border: 1.5px solid #cbd5e1;
+      color: #475569;
+    }
+
+    .btn-prev:hover {
+      border-color: #7c3aed;
+      color: #7c3aed;
+      transform: translateX(-3px);
+    }
+
+    .btn-next {
+      background: var(--primary-grad);
+      color: white;
+      border: none;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-next:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(124, 58, 237, 0.35);
+    }
+
+    /* CELEBRATION MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 28px;
+      max-width: 520px;
+      width: 100%;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+      position: relative;
+      animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-icon-congrats {
+      width: 76px;
+      height: 76px;
+      background: linear-gradient(135deg, #f3e8ff 0%, #fae8ff 100%);
+      color: #9333ea;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 8px 24px rgba(147, 51, 234, 0.2);
+    }
+
+    .modal-title {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.92rem;
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    /* TOAST */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast-msg {
+      background: #0f172a;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .app-layout {
+        flex-direction: column;
+        padding: 1.25rem;
+      }
+      .sidebar {
+        width: 100%;
+      }
+      .wizard-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .review-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wizard-steps {
+        grid-template-columns: 1fr;
+      }
+      .form-grid-2, .form-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .form-panel {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="home.html">Trang chủ</a></li>
+        <li><a href="../courses.html">Khóa học</a></li>
+        <li><a href="home.html#about">Giới thiệu</a></li>
+        <li><a href="home.html#footer">Liên hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div class="nav-actions-user" id="navActionsUser">
+        <!-- Thông báo & Giỏ hàng -->
+        <div class="nav-user-left-group">
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-bell" id="headerBellBtn" onclick="toggleBellDropdown(event)" title="Thông báo hệ thống">
+              <i class="fa-regular fa-bell"></i>
+              <span class="bell-badge" id="headerBellBadge" style="display: none;">0</span>
+            </button>
+
+            <div class="nav-dropdown" id="bellDropdown" style="min-width: 340px; max-width: 380px; left: 0; right: auto; padding: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9; margin-bottom: 8px;">
+                <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">Thông báo mới</div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <button type="button" onclick="markAllNotificationsRead()" style="background: none; border: none; color: #0b63e5; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Đã đọc</button>
+                  <span style="color: #cbd5e1; font-size: 0.75rem;">•</span>
+                  <button type="button" onclick="clearAllNotifications(event)" style="background: none; border: none; color: #ef4444; font-size: 0.76rem; font-weight: 700; cursor: pointer;">Xóa tất cả</button>
+                </div>
+              </div>
+              <div id="bellNotificationList" style="max-height: 360px; overflow-y: auto;"></div>
+            </div>
+          </div>
+
+          <a href="../cart.html" class="nav-circle-btn btn-cart" title="Giỏ hàng">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-badge" id="cartBadge" style="display: none;">0</span>
+          </a>
+        </div>
+
+        <div class="nav-user-divider"></div>
+
+        <!-- Tài khoản & Menu -->
+        <div class="nav-user-right-group">
+          <a href="profile.html" class="user-capsule" id="userCapsuleBtn" title="Xem trang thông tin cá nhân">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+            <span class="user-capsule-name" id="headerUserName">Giảng viên</span>
+          </a>
+
+          <div style="position: relative;">
+            <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)" title="Menu quản lý">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="nav-dropdown student-mega-dropdown" id="menuDropdown" style="right: 0; left: auto;">
+              <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+                <div class="menu-banner-meta">
+                  <div class="menu-banner-name" id="menuBannerName">Giảng viên Pro</div>
+                  <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
+                </div>
+              </div>
+
+              <div class="menu-group-heading" style="color: #9333ea; font-weight: 800;">Dành Cho Giảng Viên</div>
+              <a href="dashboard.html" class="student-menu-item" style="color: #7c3aed; font-weight: 800; background: rgba(124, 58, 237, 0.08); border-radius: 10px;">
+                <div class="menu-item-icon" style="background: var(--primary-grad); color: white;"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <span>Kênh Giảng Viên (Dashboard)</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Quản lý Học tập</div>
+              <a href="home.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+                <span>Trang chủ</span>
+              </a>
+              <a href="../my-courses.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+                <span>Khóa học của tôi</span>
+              </a>
+              <a href="../certificates.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-award"></i></div>
+                <span>Chứng chỉ</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <div class="menu-group-heading">Cài đặt & Hỗ trợ</div>
+              <a href="profile.html" class="student-menu-item">
+                <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+                <span>Hồ sơ cá nhân</span>
+              </a>
+              <div style="padding-top: 6px;">
+                <button type="button" class="btn-menu-logout" id="btnLogoutUser" onclick="handleInstructorLogout()">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Đăng xuất</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- APP LAYOUT -->
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-brand-mini">
+          <div class="sidebar-brand-icon">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <div>
+            <div class="sidebar-brand-title">Course Studio</div>
+            <div class="sidebar-brand-sub">Soạn & Xuất bản khóa học</div>
+          </div>
+        </div>
+
+        <div class="nav-group-title">Quản Trị Giảng Dạy</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-chart-pie"></i> Tổng quan</span>
+            </a>
+          </li>
+          <li>
+            <a href="../courses.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-book-bookmark"></i> Khóa học của tôi</span>
+            </a>
+          </li>
+          <li>
+            <a href="course-builder.html" class="sidebar-link active">
+              <span class="sidebar-link-left"><i class="fa-solid fa-square-plus"></i> Soạn khóa học</span>
+              <span class="badge-count">Mới</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Học Liệu & Đánh Giá</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="live-rooms.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-video"></i> Lớp học Live Meet</span>
+            </a>
+          </li>
+          <li>
+            <a href="qa.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-comments"></i> Hỏi đáp Q&amp;A</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-group-title">Tài Chính & Cá Nhân</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="earnings.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-wallet"></i> Thu nhập & Doanh số</span>
+            </a>
+          </li>
+          <li>
+            <a href="profile.html" class="sidebar-link">
+              <span class="sidebar-link-left"><i class="fa-solid fa-user-gear"></i> Hồ sơ giảng viên</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="handleInstructorLogout()" class="sidebar-link" style="color: #ef4444">
+              <span class="sidebar-link-left"><i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- BUILDER MAIN CONTENT -->
+    <main class="builder-main">
+      <div class="builder-container">
+        <!-- 4-STEP WIZARD PILLS -->
+        <div class="wizard-steps">
+          <div class="step-pill active" id="stepPill1" onclick="switchStep(1)">
+            <div class="step-num">1</div>
+            <div class="step-info">
+              <h4>Thông Tin Chung</h4>
+              <span>Tên, ngôn ngữ & giá bán</span>
+            </div>
+          </div>
+
+          <div class="step-pill" id="stepPill2" onclick="switchStep(2)">
+            <div class="step-num">2</div>
+            <div class="step-info">
+              <h4>Chương Trình Học</h4>
+              <span>Cấu trúc chương & bài</span>
+            </div>
+          </div>
+
+          <div class="step-pill" id="stepPill3" onclick="switchStep(3)">
+            <div class="step-num">3</div>
+            <div class="step-info">
+              <h4>Video Demo</h4>
+              <span>Trailer giới thiệu</span>
+            </div>
+          </div>
+
+          <div class="step-pill" id="stepPill4" onclick="switchStep(4)">
+            <div class="step-num">4</div>
+            <div class="step-info">
+              <h4>Nộp Cho Admin</h4>
+              <span>Xem lại & xuất bản</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 1: GENERAL INFORMATION -->
+        <div class="form-panel active" id="panelStep1">
+          <div class="panel-head">
+            <div class="panel-head-title">
+              <h2><i class="fa-solid fa-circle-info" style="color: #0b63e5;"></i> Bước 1: Thông Tin Cơ Bản & Định Giá Khóa Học</h2>
+              <p>Thiết lập tiêu đề, trình độ, lịch học và mức học phí tối ưu cho học viên.</p>
+            </div>
+            <div class="step-badge"><i class="fa-solid fa-pen-nib"></i> Bước 1 / 4</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="courseTitle">Tiêu đề khóa học <span class="req">*</span></label>
+            <input type="text" class="form-input" id="courseTitle" required placeholder="Ví dụ: Luyện Thi IELTS 7.5+ Chuyên Sâu Cấp Tốc (Listening & Speaking Mastery)" value="Luyện Thi IELTS 7.5+ Cấp Tốc: Kỹ Năng Speaking & Writing Siêu Đỉnh" />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="courseLanguage">Ngôn ngữ đào tạo <span class="req">*</span></label>
+              <select class="form-select" id="courseLanguage" required>
+                <option value="" disabled>Chọn ngôn ngữ</option>
+                <option value="en" selected>🇬🇧 Tiếng Anh (English)</option>
+                <option value="ja">🇯🇵 Tiếng Nhật (Japanese - JLPT)</option>
+                <option value="zh">🇨🇳 Tiếng Trung (Chinese - HSK)</option>
+                <option value="ko">🇰🇷 Tiếng Hàn (Korean - TOPIK)</option>
+                <option value="it">💻 Lập trình & CNTT (Tech / Coding)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="courseLevel">Trình độ mục tiêu <span class="req">*</span></label>
+              <select class="form-select" id="courseLevel" required>
+                <option value="" disabled>Chọn trình độ</option>
+                <option value="beginner">Cơ bản cho người mới bắt đầu (Beginner / N5 / HSK1-2)</option>
+                <option value="intermediate" selected>Trung cấp (Intermediate - B1/B2, N3/N4, HSK3-4)</option>
+                <option value="advanced">Nâng cao chuyên sâu (Advanced - C1/C2, N2/N1, HSK5-6)</option>
+                <option value="all">Mọi trình độ (All levels)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="courseBasePrice">Giá niêm yết gốc (VNĐ) <span class="req">*</span></label>
+              <input type="number" class="form-input" id="courseBasePrice" min="0" required placeholder="Ví dụ: 1500000" value="1800000" oninput="updatePricingCalc()" />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="courseSalePrice">Giá khuyến mãi ưu đãi (VNĐ)</label>
+              <input type="number" class="form-input" id="courseSalePrice" min="0" placeholder="Ví dụ: 990000" value="1290000" oninput="updatePricingCalc()" />
+            </div>
+          </div>
+
+          <div class="pricing-calculator" id="pricingCalculator">
+            <div class="pricing-calc-tag"><i class="fa-solid fa-tag"></i> Mức giảm ưu đãi cho học viên:</div>
+            <div class="pricing-calc-val" id="pricingCalcText">Tiết kiệm 28% (510.000 đ)</div>
+          </div>
+
+          <div class="form-grid-3" style="margin-top: 1.25rem;">
+            <div class="form-group">
+              <label class="form-label" for="courseWeekday">Lịch học trong tuần</label>
+              <input type="text" class="form-input" id="courseWeekday" placeholder="Thứ 2 - 4 - 6" value="Thứ 2 - Thứ 4 - Thứ 6" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="courseStartTime">Giờ bắt đầu <span class="req">*</span></label>
+              <input type="time" class="form-input" id="courseStartTime" value="19:30" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="courseEndTime">Giờ kết thúc <span class="req">*</span></label>
+              <input type="time" class="form-input" id="courseEndTime" value="21:30" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="courseMaxStudents">Sĩ số tối đa (Học viên)</label>
+              <input type="number" class="form-input" id="courseMaxStudents" min="1" placeholder="25" value="25" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="courseTotalSessions">Tổng số buổi đào tạo</label>
+              <input type="number" class="form-input" id="courseTotalSessions" min="1" placeholder="24" value="24" />
+            </div>
+          </div>
+
+          <!-- DROPZONE THUMBNAIL -->
+          <div class="form-group">
+            <label class="form-label">Ảnh bìa khóa học (Thumbnail 1280x720px) <span class="req">*</span></label>
+            <div class="dropzone-box" id="thumbDropzone" onclick="document.getElementById('thumbUpload').click()">
+              <input type="file" id="thumbUpload" style="display: none" accept="image/*" onchange="previewThumbnail(this)" />
+              <div class="dropzone-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <div class="dropzone-title">Kéo thả ảnh bìa hoặc nhấp để tải lên</div>
+              <div class="dropzone-sub">Định dạng JPG, PNG, WEBP (tỷ lệ chuẩn 16:9, tối đa 5MB)</div>
+            </div>
+
+            <div class="thumb-preview-wrap" id="thumbPreviewWrap" style="display: block;">
+              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80" id="thumbPreviewImg" alt="Thumbnail Preview" />
+              <div class="thumb-preview-overlay">
+                <button type="button" class="btn-nav-step btn-prev" style="padding: 6px 12px; font-size: 0.78rem;" onclick="document.getElementById('thumbUpload').click()"><i class="fa-solid fa-arrows-rotate"></i> Đổi ảnh</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="courseDesc">Mô tả tổng quan khóa học</label>
+            <textarea class="form-textarea" id="courseDesc" placeholder="Giới thiệu mục tiêu khóa học, phương pháp giảng dạy, bài tập tương tác và cam kết chuẩn đầu ra...">Khóa học thiết kế chuyên sâu dành cho học viên muốn bứt phá band điểm IELTS Speaking & Writing trong vòng 8 tuần. Khung chương trình thực chiến, chữa bài 1-1 và rèn phản xạ tư duy mạch lạc theo chuẩn Band Descriptor.</textarea>
+          </div>
+
+          <div class="panel-footer-nav">
+            <div></div>
+            <button type="button" class="btn-nav-step btn-next" onclick="switchStep(2)">
+              <span>Tiếp tục sang Chương trình học</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: CURRICULUM BUILDER -->
+        <div class="form-panel" id="panelStep2">
+          <div class="panel-head">
+            <div class="panel-head-title">
+              <h2><i class="fa-solid fa-layer-group" style="color: #7c3aed;"></i> Bước 2: Xây Dựng Cấu Trúc Chương Mục & Bài Giảng</h2>
+              <p>Phân chia khóa học thành các chương mạch lạc, bổ sung bài học và thiết lập quyền xem thử miễn phí.</p>
+            </div>
+            <div class="step-badge"><i class="fa-solid fa-folder-tree"></i> Bước 2 / 4</div>
+          </div>
+
+          <div class="curriculum-toolbar">
+            <div class="curriculum-stats" id="curriculumStatsText">
+              <i class="fa-solid fa-list-check" style="color: #7c3aed;"></i> Tổng cộng: <strong>3 Chương</strong> • <strong>8 Bài học</strong>
+            </div>
+            <button type="button" class="btn-nav-step btn-next" style="padding: 6px 16px; font-size: 0.82rem;" onclick="addSectionPrompt()">
+              <i class="fa-solid fa-plus"></i> Thêm chương mới
+            </button>
+          </div>
+
+          <!-- DYNAMIC CURRICULUM LIST -->
+          <div id="curriculumList">
+            <!-- Section 1 -->
+            <div class="section-block" data-section-id="sec_1">
+              <div class="section-head">
+                <div class="section-title-wrap">
+                  <i class="fa-solid fa-grip-vertical drag-handle"></i>
+                  <span class="section-tag">Chương 1</span>
+                  <input type="text" class="section-input" value="Tổng Quan Chiến Thuật Bứt Phá IELTS Speaking Part 1 & 2" />
+                </div>
+                <div class="lesson-actions">
+                  <button type="button" class="btn-action-icon btn-action-delete" title="Xóa chương" onclick="deleteSection(this)"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+              </div>
+
+              <div class="lesson-list">
+                <div class="lesson-item">
+                  <div class="lesson-left">
+                    <div class="lesson-icon-type"><i class="fa-solid fa-play"></i></div>
+                    <span class="lesson-title">Bài 1: Giới thiệu tiêu chí chấm điểm Fluency & Pronunciation</span>
+                    <span class="lesson-duration">15 phút</span>
+                    <span class="badge-preview">Học thử miễn phí</span>
+                  </div>
+                  <div class="lesson-actions">
+                    <button type="button" class="btn-action-icon" title="Chỉnh sửa"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+                  </div>
+                </div>
+
+                <div class="lesson-item">
+                  <div class="lesson-left">
+                    <div class="lesson-icon-type"><i class="fa-solid fa-video"></i></div>
+                    <span class="lesson-title">Bài 2: Phương pháp mở rộng câu trả lời theo công thức AREA</span>
+                    <span class="lesson-duration">25 phút</span>
+                  </div>
+                  <div class="lesson-actions">
+                    <button type="button" class="btn-action-icon" title="Chỉnh sửa"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+                  </div>
+                </div>
+
+                <div class="lesson-item">
+                  <div class="lesson-left">
+                    <div class="lesson-icon-type"><i class="fa-solid fa-file-lines"></i></div>
+                    <span class="lesson-title">Bài 3: Thực hành và chấm điểm mẫu bài Speaking Part 2</span>
+                    <span class="lesson-duration">30 phút</span>
+                  </div>
+                  <div class="lesson-actions">
+                    <button type="button" class="btn-action-icon" title="Chỉnh sửa"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn-add-lesson" onclick="addLessonPrompt(this)">
+                <i class="fa-solid fa-plus"></i> Thêm bài học mới vào chương 1
+              </button>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="section-block" data-section-id="sec_2">
+              <div class="section-head">
+                <div class="section-title-wrap">
+                  <i class="fa-solid fa-grip-vertical drag-handle"></i>
+                  <span class="section-tag">Chương 2</span>
+                  <input type="text" class="section-input" value="Kỹ Thuật Viết Writing Task 1 & Phân Tích Biểu Đồ" />
+                </div>
+                <div class="lesson-actions">
+                  <button type="button" class="btn-action-icon btn-action-delete" title="Xóa chương" onclick="deleteSection(this)"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+              </div>
+
+              <div class="lesson-list">
+                <div class="lesson-item">
+                  <div class="lesson-left">
+                    <div class="lesson-icon-type"><i class="fa-solid fa-play"></i></div>
+                    <span class="lesson-title">Bài 1: Cấu trúc 4 đoạn chuẩn Task 1 & Ngôn ngữ miêu tả xu hướng</span>
+                    <span class="lesson-duration">20 phút</span>
+                  </div>
+                  <div class="lesson-actions">
+                    <button type="button" class="btn-action-icon" title="Chỉnh sửa"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+                  </div>
+                </div>
+
+                <div class="lesson-item">
+                  <div class="lesson-left">
+                    <div class="lesson-icon-type"><i class="fa-solid fa-video"></i></div>
+                    <span class="lesson-title">Bài 2: Làm chủ Bar Chart, Line Graph & Pie Chart phức tạp</span>
+                    <span class="lesson-duration">35 phút</span>
+                  </div>
+                  <div class="lesson-actions">
+                    <button type="button" class="btn-action-icon" title="Chỉnh sửa"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn-add-lesson" onclick="addLessonPrompt(this)">
+                <i class="fa-solid fa-plus"></i> Thêm bài học mới vào chương 2
+              </button>
+            </div>
+          </div>
+
+          <button type="button" class="btn-add-section" onclick="addSectionPrompt()">
+            <i class="fa-solid fa-folder-plus"></i> Thêm Chương Học Mới
+          </button>
+
+          <div class="panel-footer-nav">
+            <button type="button" class="btn-nav-step btn-prev" onclick="switchStep(1)">
+              <i class="fa-solid fa-arrow-left"></i> Quay lại Bước 1
+            </button>
+            <button type="button" class="btn-nav-step btn-next" onclick="switchStep(3)">
+              <span>Tiếp tục tải Video Demo</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: DEMO VIDEO -->
+        <div class="form-panel" id="panelStep3">
+          <div class="panel-head">
+            <div class="panel-head-title">
+              <h2><i class="fa-solid fa-clapperboard" style="color: #ec4899;"></i> Bước 3: Tải Video Trailer & Xem Thử (Demo)</h2>
+              <p>Video giới thiệu hấp dẫn sẽ giúp gia tăng tỷ lệ chuyển đổi đăng ký của học viên lên đến 300%.</p>
+            </div>
+            <div class="step-badge"><i class="fa-solid fa-video"></i> Bước 3 / 4</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="demoVideoUpload">Video trailer giới thiệu khóa học</label>
+            <label class="dropzone-box" id="demoVideoDropzone" for="demoVideoUpload" tabindex="0">
+              <input type="file" id="demoVideoUpload" accept="video/*" hidden onchange="handleDemoVideoSelection(this.files[0])" />
+              <div class="dropzone-icon" style="color: #ec4899">
+                <i class="fa-solid fa-file-video"></i>
+              </div>
+              <div class="dropzone-title">Kéo thả video trailer hoặc nhấp để chọn tệp</div>
+              <div class="dropzone-sub">Hỗ trợ định dạng MP4, WEBM, MOV (Độ phân giải Full HD 1080p, tối đa 200MB)</div>
+            </label>
+
+            <!-- Video Player -->
+            <video class="demo-video-preview" id="demoVideoPreview" controls playsinline src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
+
+            <div class="demo-file-row" id="demoVideoFileRow">
+              <div class="demo-file-details">
+                <div class="demo-file-icon"><i class="fa-solid fa-film"></i></div>
+                <div>
+                  <div class="lesson-title" id="demoVideoName">IELTS_Speaking_Mastery_Trailer_2026.mp4</div>
+                  <div class="demo-file-size" id="demoVideoSize">1080p • 24.8 MB • Đã sẵn sàng</div>
+                </div>
+              </div>
+              <button type="button" class="btn-action-icon btn-action-delete" title="Gỡ video" onclick="clearDemoVideo()">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel-footer-nav">
+            <button type="button" class="btn-nav-step btn-prev" onclick="switchStep(2)">
+              <i class="fa-solid fa-arrow-left"></i> Quay lại Bước 2
+            </button>
+            <button type="button" class="btn-nav-step btn-next" onclick="switchStep(4)">
+              <span>Tiếp tục kiểm tra & Nộp Admin</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 4: REVIEW & SUBMIT -->
+        <div class="form-panel" id="panelStep4">
+          <div class="panel-head">
+            <div class="panel-head-title">
+              <h2><i class="fa-solid fa-paper-plane" style="color: #10b981;"></i> Bước 4: Kiểm Tra & Nộp Khóa Học Cho Ban Quản Trị</h2>
+              <p>Kiểm tra danh sách tiêu chuẩn chất lượng trước khi gửi admin duyệt hoặc lưu bản nháp.</p>
+            </div>
+            <div class="step-badge"><i class="fa-solid fa-circle-check"></i> Bước 4 / 4</div>
+          </div>
+
+          <div class="review-grid">
+            <!-- Review Summary -->
+            <div class="review-summary-card">
+              <h3 style="font-size: 1rem; font-weight: 800; margin-bottom: 1rem; color: #0f172a;">
+                <i class="fa-solid fa-eye" style="color: #0b63e5;"></i> Xem trước thẻ khóa học
+              </h3>
+              
+              <div class="review-course-hero">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80" id="reviewThumbImg" class="review-course-thumb" alt="Thumb" />
+                <div>
+                  <div class="review-course-title" id="reviewCourseTitle">Luyện Thi IELTS 7.5+ Cấp Tốc: Kỹ Năng Speaking & Writing Siêu Đỉnh</div>
+                  <div class="review-course-meta">
+                    <span><i class="fa-solid fa-globe" style="color: #0b63e5;"></i> Tiếng Anh (English)</span>
+                    <span><i class="fa-solid fa-signal" style="color: #7c3aed;"></i> Trung cấp</span>
+                    <span><i class="fa-solid fa-calendar-days" style="color: #ec4899;"></i> Thứ 2 - 4 - 6</span>
+                  </div>
+                  <div style="margin-top: 8px; display: flex; align-items: baseline; gap: 8px;">
+                    <span style="font-size: 1.15rem; font-weight: 900; color: #0b63e5;" id="reviewSalePrice">1.290.000 đ</span>
+                    <span style="font-size: 0.85rem; color: #94a3b8; text-decoration: line-through;" id="reviewBasePrice">1.800.000 đ</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+                <div style="padding: 10px; background: white; border-radius: 12px; border: 1px solid #e2e8f0;">
+                  <span style="color: #64748b;">Tổng chương:</span> <strong id="reviewTotalSec">2 Chương</strong>
+                </div>
+                <div style="padding: 10px; background: white; border-radius: 12px; border: 1px solid #e2e8f0;">
+                  <span style="color: #64748b;">Tổng bài học:</span> <strong id="reviewTotalLes">5 Bài học</strong>
+                </div>
+                <div style="padding: 10px; background: white; border-radius: 12px; border: 1px solid #e2e8f0;">
+                  <span style="color: #64748b;">Thời lượng học:</span> <strong>19:30 - 21:30</strong>
+                </div>
+                <div style="padding: 10px; background: white; border-radius: 12px; border: 1px solid #e2e8f0;">
+                  <span style="color: #64748b;">Trạng thái:</span> <strong style="color: #f59e0b;">Sẵn sàng nộp</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quality Checklist -->
+            <div class="checklist-card">
+              <div class="checklist-title">
+                <i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> Tiêu chí kiểm duyệt
+              </div>
+              <div class="check-item done"><i class="fa-solid fa-circle-check"></i> Tiêu đề và mô tả khóa học chi tiết</div>
+              <div class="check-item done"><i class="fa-solid fa-circle-check"></i> Ảnh thumbnail đạt chuẩn 16:9 sắc nét</div>
+              <div class="check-item done"><i class="fa-solid fa-circle-check"></i> Đầy đủ bài giảng và bài học thử miễn phí</div>
+              <div class="check-item done"><i class="fa-solid fa-circle-check"></i> Video demo giới thiệu đã được tải lên</div>
+              <div class="check-item done"><i class="fa-solid fa-circle-check"></i> Mức giá hợp lệ và có chính sách bảo lưu</div>
+            </div>
+          </div>
+
+          <div class="panel-footer-nav">
+            <button type="button" class="btn-nav-step btn-prev" onclick="switchStep(3)">
+              <i class="fa-solid fa-arrow-left"></i> Quay lại Bước 3
+            </button>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button type="button" class="btn-nav-step btn-prev" onclick="saveDraft()">
+                <i class="fa-regular fa-floppy-disk"></i> Lưu bản nháp
+              </button>
+              <button type="button" class="btn-nav-step btn-next" onclick="submitToAdmin()">
+                <i class="fa-solid fa-paper-plane"></i> Gửi duyệt cho Admin
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- CELEBRATION MODAL -->
+  <div class="modal-overlay" id="congratsModal">
+    <div class="modal-card">
+      <div class="modal-icon-congrats">
+        <i class="fa-solid fa-award"></i>
+      </div>
+      <h3 class="modal-title">Gửi Khóa Học Thành Công! 🎉</h3>
+      <p class="modal-desc">
+        Khóa học của bạn đã được chuyển vào hàng đợi kiểm duyệt của Ban Quản Trị LHD Learning. Chúng tôi sẽ phản hồi và kích hoạt khóa học trong vòng <strong>12-24 giờ làm việc</strong>.
+      </p>
+      <div style="background: #f8fafc; border-radius: 16px; padding: 12px; margin-bottom: 1.5rem; font-size: 0.85rem; color: #475569;">
+        Mã hồ sơ: <strong style="color: #7c3aed;">#CRS-2026-8941</strong> • Trạng thái: <span style="color: #f59e0b; font-weight: 800;">Đang chờ duyệt</span>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button type="button" class="btn-nav-step btn-prev" onclick="closeModal()">Đóng cửa sổ</button>
+        <button type="button" class="btn-nav-step btn-next" onclick="window.location.href='dashboard.html'">Về Trang Quản Trị</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- INLINE SCRIPTS -->
+  <script>
+    let demoVideoObjectUrl = null;
+
+    // NOTIFICATIONS & USER AUTH
+    function getInstructorUser() {
+      try {
+        const stored = localStorage.getItem('currentUser') || localStorage.getItem('user_info');
+        if (stored) return JSON.parse(stored);
+      } catch (e) {
+        console.error(e);
+      }
+      return {
+        name: 'Giảng Viên Pro',
+        email: 'instructor@lhd.edu.vn',
+        role: 'instructor',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
+      };
+    }
+
+    function initUserHeader() {
+      const user = getInstructorUser();
+      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar;
+      
+      const headerAvatar = document.getElementById('headerUserAvatar');
+      const headerName = document.getElementById('headerUserName');
+      const menuAvatar = document.getElementById('menuBannerAvatar');
+      const menuName = document.getElementById('menuBannerName');
+      const menuEmail = document.getElementById('menuBannerEmail');
+
+      if (headerAvatar) headerAvatar.src = avatar;
+      if (headerName) headerName.textContent = user.name || 'Giảng viên';
+      if (menuAvatar) menuAvatar.src = avatar;
+      if (menuName) menuName.textContent = user.name || 'Giảng viên Pro';
+      if (menuEmail) menuEmail.textContent = user.email || 'instructor@lhd.edu.vn';
+
+      renderNotifications();
+    }
+
+    function getNotifications() {
+      try {
+        const notifs = localStorage.getItem('instructor_notifications');
+        if (notifs) return JSON.parse(notifs);
+      } catch (e) {}
+      return [
+        { id: 1, text: 'Học viên Nguyễn Văn A vừa đặt câu hỏi trong khóa IELTS', time: '5 phút trước', read: false },
+        { id: 2, text: 'Lớp học Live Meet sẽ bắt đầu sau 30 phút nữa', time: '25 phút trước', read: false },
+        { id: 3, text: 'Doanh thu tháng này của bạn đã cán mốc 32.850.000 đ', time: '2 giờ trước', read: true }
+      ];
+    }
+
+    function renderNotifications() {
+      const list = getNotifications();
+      const container = document.getElementById('bellNotificationList');
+      const badge = document.getElementById('headerBellBadge');
+      if (!container) return;
+
+      const unread = list.filter(n => !n.read).length;
+      if (badge) {
+        badge.textContent = unread;
+        badge.style.display = unread > 0 ? 'flex' : 'none';
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #94a3b8; font-size: 0.85rem;">Không có thông báo mới</div>';
+        return;
+      }
+
+      container.innerHTML = list.map(item => `
+        <div style="padding: 10px 12px; border-radius: 12px; margin-bottom: 6px; background: ${item.read ? '#ffffff' : '#f0fdf4'}; border: 1px solid ${item.read ? '#f1f5f9' : '#bbf7d0'}; display: flex; gap: 10px; align-items: flex-start;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: ${item.read ? '#cbd5e1' : '#10b981'}; margin-top: 6px; flex-shrink: 0;"></div>
+          <div style="flex: 1;">
+            <div style="font-size: 0.84rem; font-weight: ${item.read ? '600' : '700'}; color: #1e293b;">${item.text}</div>
+            <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 2px;">${item.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleBellDropdown(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (m) m.classList.remove('show');
+      if (d) d.classList.toggle('show');
+    }
+
+    function toggleMegaMenu(e) {
+      e.stopPropagation();
+      const d = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (d) d.classList.remove('show');
+      if (m) m.classList.toggle('show');
+    }
+
+    function markAllNotificationsRead() {
+      const list = getNotifications().map(n => ({ ...n, read: true }));
+      localStorage.setItem('instructor_notifications', JSON.stringify(list));
+      renderNotifications();
+      showToast('Đã đánh dấu tất cả thông báo là đã đọc');
+    }
+
+    function clearAllNotifications(e) {
+      e.stopPropagation();
+      localStorage.setItem('instructor_notifications', JSON.stringify([]));
+      renderNotifications();
+      showToast('Đã xóa tất cả thông báo');
+    }
+
+    function handleInstructorLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi tài khoản giảng viên?')) {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('user_info');
+        window.location.href = '../auth/login.html';
+      }
+    }
+
+    window.addEventListener('click', () => {
+      const b = document.getElementById('bellDropdown');
+      const m = document.getElementById('menuDropdown');
+      if (b) b.classList.remove('show');
+      if (m) m.classList.remove('show');
+    });
+
+    // TOAST
+    function showToast(msg, icon = 'fa-solid fa-circle-check') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.innerHTML = `<i class="${icon}" style="color: #10b981;"></i> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // PRICING CALCULATION
+    function updatePricingCalc() {
+      const base = parseFloat(document.getElementById('courseBasePrice').value) || 0;
+      const sale = parseFloat(document.getElementById('courseSalePrice').value) || 0;
+      const textEl = document.getElementById('pricingCalcText');
+
+      if (base > 0 && sale > 0 && sale < base) {
+        const diff = base - sale;
+        const pct = Math.round((diff / base) * 100);
+        textEl.textContent = `Tiết kiệm ${pct}% (${diff.toLocaleString('vi-VN')} đ)`;
+        textEl.style.color = '#10b981';
+      } else if (sale >= base && base > 0) {
+        textEl.textContent = 'Giá khuyến mãi đang bằng hoặc cao hơn giá gốc';
+        textEl.style.color = '#ef4444';
+      } else {
+        textEl.textContent = 'Chưa thiết lập ưu đãi';
+        textEl.style.color = '#64748b';
+      }
+    }
+
+    // THUMBNAIL PREVIEW
+    function previewThumbnail(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('thumbPreviewImg').src = e.target.result;
+          document.getElementById('reviewThumbImg').src = e.target.result;
+          document.getElementById('thumbPreviewWrap').style.display = 'block';
+          showToast('Đã tải ảnh thumbnail thành công!');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // WIZARD NAVIGATION
+    function validateStep1() {
+      const title = document.getElementById('courseTitle').value.trim();
+      const basePrice = document.getElementById('courseBasePrice').value;
+      if (!title) {
+        alert('Vui lòng nhập tiêu đề khóa học.');
+        document.getElementById('courseTitle').focus();
+        return false;
+      }
+      if (!basePrice || parseFloat(basePrice) <= 0) {
+        alert('Vui lòng nhập giá niêm yết hợp lệ.');
+        document.getElementById('courseBasePrice').focus();
+        return false;
+      }
+      return true;
+    }
+
+    function switchStep(stepNum) {
+      if (stepNum > 1 && !validateStep1()) return;
+
+      for (let i = 1; i <= 4; i++) {
+        const pill = document.getElementById(`stepPill${i}`);
+        const panel = document.getElementById(`panelStep${i}`);
+        if (pill) {
+          pill.classList.toggle('active', i === stepNum);
+          if (i < stepNum) pill.classList.add('completed');
+          else pill.classList.remove('completed');
+        }
+        if (panel) panel.classList.toggle('active', i === stepNum);
+      }
+
+      if (stepNum === 4) {
+        syncStep4Review();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function syncStep4Review() {
+      const title = document.getElementById('courseTitle').value;
+      const basePrice = parseFloat(document.getElementById('courseBasePrice').value) || 0;
+      const salePrice = parseFloat(document.getElementById('courseSalePrice').value) || 0;
+
+      document.getElementById('reviewCourseTitle').textContent = title;
+      document.getElementById('reviewBasePrice').textContent = basePrice.toLocaleString('vi-VN') + ' đ';
+      document.getElementById('reviewSalePrice').textContent = (salePrice > 0 ? salePrice : basePrice).toLocaleString('vi-VN') + ' đ';
+
+      const secCount = document.querySelectorAll('#curriculumList .section-block').length;
+      const lesCount = document.querySelectorAll('#curriculumList .lesson-item').length;
+      document.getElementById('reviewTotalSec').textContent = secCount + ' Chương';
+      document.getElementById('reviewTotalLes').textContent = lesCount + ' Bài học';
+    }
+
+    // CURRICULUM MANAGEMENT
+    function addSectionPrompt() {
+      const title = prompt('Nhập tên chương học mới:', 'Chương mới: Luyện Đề & Tổng Ôn Chuyên Sâu');
+      if (!title) return;
+
+      const list = document.getElementById('curriculumList');
+      const index = list.children.length + 1;
+      const sec = document.createElement('div');
+      sec.className = 'section-block';
+      sec.innerHTML = `
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <i class="fa-solid fa-grip-vertical drag-handle"></i>
+            <span class="section-tag">Chương ${index}</span>
+            <input type="text" class="section-input" value="${title}" />
+          </div>
+          <div class="lesson-actions">
+            <button type="button" class="btn-action-icon btn-action-delete" title="Xóa chương" onclick="deleteSection(this)"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        </div>
+        <div class="lesson-list">
+          <div class="lesson-item">
+            <div class="lesson-left">
+              <div class="lesson-icon-type"><i class="fa-solid fa-play"></i></div>
+              <span class="lesson-title">Bài 1: Khởi động chương học và tài liệu lý thuyết</span>
+              <span class="lesson-duration">15 phút</span>
+            </div>
+            <div class="lesson-actions">
+              <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn-add-lesson" onclick="addLessonPrompt(this)">
+          <i class="fa-solid fa-plus"></i> Thêm bài học mới vào chương ${index}
+        </button>
+      `;
+      list.appendChild(sec);
+      updateCurriculumStats();
+      showToast('Đã thêm chương học mới!');
+    }
+
+    function addLessonPrompt(btn) {
+      const title = prompt('Nhập tiêu đề bài học mới:', 'Bài học mới: Chiến thuật làm bài nâng cao');
+      if (!title) return;
+
+      const lessonList = btn.closest('.section-block').querySelector('.lesson-list');
+      const item = document.createElement('div');
+      item.className = 'lesson-item';
+      item.innerHTML = `
+        <div class="lesson-left">
+          <div class="lesson-icon-type"><i class="fa-solid fa-video"></i></div>
+          <span class="lesson-title">${title}</span>
+          <span class="lesson-duration">20 phút</span>
+        </div>
+        <div class="lesson-actions">
+          <button type="button" class="btn-action-icon" title="Chỉnh sửa"><i class="fa-solid fa-pen"></i></button>
+          <button type="button" class="btn-action-icon btn-action-delete" title="Xóa bài" onclick="deleteLesson(this)"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+      `;
+      lessonList.appendChild(item);
+      updateCurriculumStats();
+      showToast('Đã thêm bài học!');
+    }
+
+    function deleteSection(btn) {
+      if (confirm('Bạn có chắc muốn xóa toàn bộ chương học này?')) {
+        btn.closest('.section-block').remove();
+        updateCurriculumStats();
+        showToast('Đã xóa chương học!');
+      }
+    }
+
+    function deleteLesson(btn) {
+      btn.closest('.lesson-item').remove();
+      updateCurriculumStats();
+      showToast('Đã xóa bài học!');
+    }
+
+    function updateCurriculumStats() {
+      const secs = document.querySelectorAll('#curriculumList .section-block').length;
+      const lessons = document.querySelectorAll('#curriculumList .lesson-item').length;
+      const el = document.getElementById('curriculumStatsText');
+      if (el) el.innerHTML = `<i class="fa-solid fa-list-check" style="color: #7c3aed;"></i> Tổng cộng: <strong>${secs} Chương</strong> • <strong>${lessons} Bài học</strong>`;
+    }
+
+    // DEMO VIDEO HANDLER
+    function handleDemoVideoSelection(file) {
+      if (!file) return;
+      if (!file.type.startsWith('video/')) {
+        alert('Vui lòng chọn tệp video hợp lệ.');
+        return;
+      }
+      if (demoVideoObjectUrl) URL.revokeObjectURL(demoVideoObjectUrl);
+      demoVideoObjectUrl = URL.createObjectURL(file);
+      const preview = document.getElementById('demoVideoPreview');
+      preview.src = demoVideoObjectUrl;
+      preview.hidden = false;
+      document.getElementById('demoVideoName').textContent = file.name;
+      document.getElementById('demoVideoSize').textContent = (file.size / (1024 * 1024)).toFixed(1) + ' MB • Đã sẵn sàng';
+      document.getElementById('demoVideoFileRow').hidden = false;
+      showToast('Đã tải video trailer demo thành công!');
+    }
+
+    function clearDemoVideo() {
+      if (confirm('Gỡ video trailer đã chọn?')) {
+        const preview = document.getElementById('demoVideoPreview');
+        preview.src = '';
+        preview.hidden = true;
+        document.getElementById('demoVideoFileRow').hidden = true;
+        document.getElementById('demoVideoUpload').value = '';
+        showToast('Đã gỡ video trailer');
+      }
+    }
+
+    // SUBMIT & DRAFT
+    function saveDraft() {
+      const title = document.getElementById('courseTitle').value;
+      localStorage.setItem('instructor_course_draft', JSON.stringify({
+        title,
+        savedAt: new Date().toISOString()
+      }));
+      showToast('Đã lưu bản nháp khóa học vào hệ thống!');
+    }
+
+    function submitToAdmin() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 120,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+      document.getElementById('congratsModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('congratsModal').classList.remove('active');
+    }
+
+    // INIT
+    document.addEventListener('DOMContentLoaded', () => {
+      initUserHeader();
+      updatePricingCalc();
+    });
+  </script>
+</body>
+</html>

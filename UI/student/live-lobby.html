@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giao Diện Chờ Phòng Học Live | LHD – Learning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #0b63e5;
+      --purple-color: #8b5cf6;
+      --pink-color: #ec4899;
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --bg-lobby: #525a66;
+      --card-bg: #ffffff;
+      --text-dark: #111827;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-lobby);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* Top Left Back Button */
+    .top-bar-nav {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 50;
+    }
+
+    .btn-lobby-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-lobby-back:hover {
+      background: rgba(0, 0, 0, 0.6);
+      transform: translateX(-3px);
+      color: #ffffff;
+    }
+
+    /* Main Container Card */
+    .lobby-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      padding: 2.2rem;
+      gap: 2.5rem;
+      position: relative;
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Left Column: Camera / Media Preview */
+    .preview-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .video-preview-viewport {
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #334155 0%, #1e293b 50%, #0f172a 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5), 0 10px 25px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .video-preview-viewport video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      transform: scaleX(-1);
+    }
+
+    .avatar-preview-wrap {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: #fde047;
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    .avatar-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Camera Off Overlay Blur */
+    .cam-backdrop-blur {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(14, 165, 233, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%);
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    /* Bottom Control Bar on Preview */
+    .preview-control-bar {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 10;
+    }
+
+    .preview-ctrl-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid rgba(229, 231, 235, 0.8);
+      color: #1f2937;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .preview-ctrl-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .preview-ctrl-btn.off {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #dc2626;
+    }
+
+    .preview-ctrl-btn.active {
+      background: #ffffff;
+      color: #111827;
+    }
+
+    /* Nickname info row below preview */
+    .nickname-info-row {
+      margin-top: 1.1rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .nickname-highlight {
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .btn-edit-nickname {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s;
+    }
+
+    .btn-edit-nickname:hover {
+      color: var(--purple-color);
+      text-decoration: underline;
+    }
+
+    /* Right Column: Room Details & Actions */
+    .details-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .room-title-h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .room-tag-pill {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 10px;
+      background: var(--primary-grad);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 1.6rem;
+      letter-spacing: 0.2px;
+      box-shadow: 0 4px 14px rgba(11, 99, 229, 0.25);
+    }
+
+    /* Attendees Row */
+    .attendees-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 2.2rem;
+    }
+
+    .avatar-stack-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-stack-item {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      object-fit: cover;
+      margin-left: -10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .avatar-stack-item:first-child {
+      margin-left: 0;
+    }
+
+    .avatar-stack-initial {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--primary-grad);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border: 2px solid #ffffff;
+      margin-left: -10px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .attendees-txt {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Action Buttons Row */
+    .lobby-action-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-join-lobby-main {
+      padding: 0.85rem 2.6rem;
+      border-radius: 9999px;
+      background: var(--primary-grad);
+      color: #ffffff;
+      border: none;
+      font-weight: 800;
+      font-size: 1.02rem;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(11, 99, 229, 0.35);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-join-lobby-main:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(139, 92, 246, 0.45);
+    }
+
+    .btn-copy-lobby-link {
+      padding: 0.85rem 1.6rem;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #1f2937;
+      border: 1.5px solid #d1d5db;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-copy-lobby-link:hover {
+      background: #f9fafb;
+      border-color: #9ca3af;
+      transform: translateY(-1px);
+    }
+
+    /* Modal Styling for Settings & Virtual Background */
+    .lobby-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .lobby-modal-backdrop.show {
+      display: flex;
+    }
+
+    .lobby-modal-box {
+      background: #ffffff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 480px;
+      padding: 1.8rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      animation: popIn 0.2s ease forwards;
+    }
+
+    .lobby-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .lobby-modal-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .lobby-modal-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    /* Toast */
+    .toast-lobby {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: #111827;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .toast-lobby.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 820px) {
+      .lobby-card {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 1.8rem;
+      }
+
+      .top-bar-nav {
+        top: 1rem;
+        left: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top Left Back Button -->
+  <div class="top-bar-nav">
+    <button type="button" class="btn-lobby-back" onclick="handleGoBack()">
+      <i class="fa-solid fa-arrow-left"></i>
+      <span>Quay lại</span>
+    </button>
+  </div>
+
+  <!-- Main Lobby Card (Matching Image 2) -->
+  <div class="lobby-card">
+
+    <!-- Left Column: Camera Preview & Controls -->
+    <div class="preview-column">
+      <div class="video-preview-viewport" id="previewViewport">
+        <div class="cam-backdrop-blur" id="camBackdropBlur"></div>
+        <video id="liveWebcamPreview" autoplay playsinline muted></video>
+
+        <div class="avatar-preview-wrap" id="avatarPreviewWrap">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23fef3c7'/><circle cx='50' cy='46' r='28' fill='%231e293b'/><polygon points='30,30 22,10 40,24' fill='%231e293b'/><polygon points='70,30 78,10 60,24' fill='%231e293b'/><ellipse cx='42' cy='44' rx='6' ry='8' fill='%23f59e0b'/><ellipse cx='58' cy='44' rx='6' ry='8' fill='%23f59e0b'/><circle cx='43' cy='44' r='3' fill='%230f172a'/><circle cx='57' cy='44' r='3' fill='%230f172a'/><polygon points='50,52 46,56 54,56' fill='%23ea580c'/><path d='M36 78 L50 64 L64 78 Z' fill='%23ffffff'/><path d='M47 64 L53 64 L52 82 L48 82 Z' fill='%23b91c1c'/><path d='M30 82 L70 82 L65 100 L35 100 Z' fill='%230f172a'/></svg>"
+            class="avatar-preview-img" id="lobbyAvatarImg" alt="User Avatar">
+        </div>
+
+        <!-- 4 Media Buttons on Preview -->
+        <div class="preview-control-bar">
+          <button type="button" class="preview-ctrl-btn off" id="btnToggleMic" onclick="toggleMic()"
+            title="Bật/Tắt Micro">
+            <i class="fa-solid fa-microphone-slash" id="micIcon"></i>
+          </button>
+          <button type="button" class="preview-ctrl-btn off" id="btnToggleCam" onclick="toggleCam()"
+            title="Bật/Tắt Camera">
+            <i class="fa-solid fa-video-slash" id="camIcon"></i>
+          </button>
+          <button type="button" class="preview-ctrl-btn active" onclick="openVirtualBgModal()"
+            title="Hiệu ứng nền & Bộ lọc">
+            <i class="fa-solid fa-image"></i>
+          </button>
+          <button type="button" class="preview-ctrl-btn active" onclick="openSettingsModal()"
+            title="Cài đặt âm thanh & hình ảnh">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="nickname-info-row">
+        <span>Tham gia với biệt danh:</span>
+        <span class="nickname-highlight" id="lobbyNicknameDisplay">talooc</span>
+        <span style="color: #cbd5e1;">|</span>
+        <button type="button" class="btn-edit-nickname" onclick="openEditNicknameModal()">
+          <i class="fa-solid fa-pen"></i>
+          <span>Sửa Tên</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Column: Room Details & Actions -->
+    <div class="details-column">
+      <div class="room-tags-wrapper" style="display: flex; align-items: center; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 0.85rem;">
+        <span class="room-tag-pill" id="lobbyRoomCategory">Ngoại Ngữ & Giao Tiếp</span>
+        <span class="room-badge-live" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 5px 14px; border-radius: 9999px; font-weight: 800; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 5px;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+          <span>Phòng Đang Mở</span>
+        </span>
+      </div>
+
+      <h2 class="room-title-h2" id="lobbyRoomTitle">Tiếng Anh Giao Tiếp Bản Xứ Siêu Phản Xạ</h2>
+      <div class="room-lesson-sub" id="lobbyLessonSub" style="font-size: 0.95rem; font-weight: 700; color: #4b5563; margin-top: -0.4rem; margin-bottom: 1.4rem;">
+        Buổi 15: Thuyết trình & Đàm phán trực tiếp
+      </div>
+
+      <!-- Instructor Info Card -->
+      <div class="instructor-mini-card" id="lobbyInstructorCard" style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 10px 18px; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 1.8rem;">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" id="lobbyInstructorAvatar" class="instructor-avatar-round" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ec4899;" alt="Giảng viên">
+        <div style="text-align: left;">
+          <div style="font-size: 0.88rem; font-weight: 800; color: #0f172a;" id="lobbyInstructorName">Cô Emily Watson</div>
+          <div style="font-size: 0.74rem; color: #64748b;" id="lobbyInstructorRole">Giảng viên chính • TESOL Quốc Tế</div>
+        </div>
+      </div>
+
+      <div class="attendees-row">
+        <div class="avatar-stack-group" id="lobbyAvatarStack">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="avatar-stack-item" alt="Emily">
+          <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80" class="avatar-stack-item" alt="Duc">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80" class="avatar-stack-item" alt="Mai">
+          <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80" class="avatar-stack-item" alt="Nam">
+          <div class="avatar-stack-initial" id="lobbyStackInitial">+24</div>
+        </div>
+        <span class="attendees-txt" id="lobbyAttendeesCount">28 người đang trong phòng</span>
+      </div>
+
+      <div class="lobby-action-buttons-group">
+        <button type="button" class="btn-join-lobby-main" onclick="joinLiveRoom()">
+          <span>Tham gia ngay</span>
+        </button>
+        <button type="button" class="btn-copy-lobby-link" onclick="copyMeetingLink()">
+          <i class="fa-regular fa-copy"></i>
+          <span>Sao chép liên kết</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal Edit Nickname -->
+  <div class="lobby-modal-backdrop" id="modalEditNick">
+    <div class="lobby-modal-box">
+      <div class="lobby-modal-header">
+        <div class="lobby-modal-title">Thay đổi tên hiển thị</div>
+        <button type="button" class="lobby-modal-close" onclick="closeModal('modalEditNick')">&times;</button>
+      </div>
+      <div style="margin-bottom: 1.2rem;">
+        <label style="display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 6px; color: #374151;">Biệt danh trong phòng học:</label>
+        <input type="text" id="inputNickname" class="form-input"
+          style="width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid #d1d5db; font-size: 0.95rem; outline: none;"
+          placeholder="Nhập tên của bạn...">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button type="button" onclick="closeModal('modalEditNick')"
+          style="padding: 8px 16px; border-radius: 9999px; border: 1px solid #d1d5db; background: #fff; cursor: pointer; font-weight: 700;">Hủy</button>
+        <button type="button" onclick="saveNickname()"
+          style="padding: 8px 20px; border-radius: 9999px; border: none; background: var(--primary-grad); color: #fff; cursor: pointer; font-weight: 800;">Lưu tên</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Virtual Background -->
+  <div class="lobby-modal-backdrop" id="modalVirtualBg">
+    <div class="lobby-modal-box">
+      <div class="lobby-modal-header">
+        <div class="lobby-modal-title">Hiệu ứng & Nền ảo</div>
+        <button type="button" class="lobby-modal-close" onclick="closeModal('modalVirtualBg')">&times;</button>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem;">
+        <div onclick="setVirtualBg('none')" style="cursor: pointer; border: 2px solid #0b63e5; border-radius: 12px; padding: 10px; text-align: center; background: rgba(11, 99, 229, 0.08);">
+          <i class="fa-solid fa-ban" style="font-size: 1.5rem; color: #0b63e5; margin-bottom: 4px;"></i>
+          <div style="font-size: 0.76rem; font-weight: 700;">Mặc định</div>
+        </div>
+        <div onclick="setVirtualBg('blur')" style="cursor: pointer; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 10px; text-align: center;">
+          <i class="fa-solid fa-water" style="font-size: 1.5rem; color: #0b63e5; margin-bottom: 4px;"></i>
+          <div style="font-size: 0.76rem; font-weight: 700;">Làm mờ nhẹ</div>
+        </div>
+        <div onclick="setVirtualBg('classroom')" style="cursor: pointer; border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 10px; text-align: center;">
+          <i class="fa-solid fa-school" style="font-size: 1.5rem; color: #10b981; margin-bottom: 4px;"></i>
+          <div style="font-size: 0.76rem; font-weight: 700;">Lớp học LHD</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" onclick="closeModal('modalVirtualBg')"
+          style="padding: 8px 20px; border-radius: 9999px; border: none; background: var(--primary-grad); color: #fff; cursor: pointer; font-weight: 800;">Đã chọn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Settings -->
+  <div class="lobby-modal-backdrop" id="modalSettings">
+    <div class="lobby-modal-box">
+      <div class="lobby-modal-header">
+        <div class="lobby-modal-title"><i class="fa-solid fa-sliders"></i> Cài đặt thiết bị</div>
+        <button type="button" class="lobby-modal-close" onclick="closeModal('modalSettings')">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.5rem;">
+        <div>
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #4b5563; margin-bottom: 4px;">Microphone</label>
+          <select style="width: 100%; padding: 8px 12px; border-radius: 10px; border: 1.5px solid #d1d5db; font-size: 0.88rem; outline: none;">
+            <option>Default - Realtek High Definition Audio</option>
+            <option>USB Headset Microphone HD</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #4b5563; margin-bottom: 4px;">Camera / Webcam</label>
+          <select style="width: 100%; padding: 8px 12px; border-radius: 10px; border: 1.5px solid #d1d5db; font-size: 0.88rem; outline: none;">
+            <option>Integrated Camera (720p HD)</option>
+            <option>Logitech C920 Pro Full HD</option>
+          </select>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; color: #4b5563; margin-bottom: 4px;">Loa / Tai nghe</label>
+          <select style="width: 100%; padding: 8px 12px; border-radius: 10px; border: 1.5px solid #d1d5db; font-size: 0.88rem; outline: none;">
+            <option>Default - Speakers / Headphones</option>
+          </select>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" onclick="closeModal('modalSettings')"
+          style="padding: 8px 20px; border-radius: 9999px; border: none; background: var(--primary-grad); color: #fff; cursor: pointer; font-weight: 800;">Xong</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-lobby" id="lobbyToast">
+    <i class="fa-solid fa-circle-check" style="color: #4ade80;"></i>
+    <span id="lobbyToastText">Đã sao chép liên kết phòng học!</span>
+  </div>
+
+  <script>
+    // State variables
+    let isMicOn = false;
+    let isCamOn = false;
+    let mediaStream = null;
+    let currentNickname = 'talooc';
+
+    function getCurrentUser() {
+      try {
+        const raw = localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || localStorage.getItem('current_user') || localStorage.getItem('lhd_user');
+        if (raw) return JSON.parse(raw);
+      } catch (e) { }
+      return null;
+    }
+
+    const COURSES_REGISTRY = {
+      'course_progress_1': {
+        id: 'course_progress_1',
+        title: 'Tiếng Anh Giao Tiếp Bản Xứ Siêu Phản Xạ',
+        category: 'Ngoại Ngữ & Giao Tiếp',
+        lessonTitle: 'Buổi 15: Thuyết trình & Đàm phán trực tiếp',
+        instructor: 'Cô Emily Watson',
+        role: 'Giảng viên chính • TESOL Quốc Tế',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+        enrolledCount: 28,
+        avatars: [
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80'
+        ]
+      },
+      'course_pending_1': {
+        id: 'course_pending_1',
+        title: 'Tiếng Trung Thương Mại Giao Tiếp Chuyên Nghiệp',
+        category: 'Ngoại Ngữ & Thương Mại',
+        lessonTitle: 'Buổi 01: Nhập môn & Giao tiếp Thương mại Quốc tế',
+        instructor: 'ThS. Trương Vĩ Hào',
+        role: 'Giảng viên cao cấp • HSK 6',
+        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+        enrolledCount: 27,
+        avatars: [
+          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80'
+        ]
+      },
+      'course_done_1': {
+        id: 'course_done_1',
+        title: 'Tiếng Nhật Nhập Môn JLPT N5 Cơ Bản',
+        category: 'Ngoại Ngữ & Giao Tiếp',
+        lessonTitle: 'Buổi 36: Tổng kết & Lễ trao chứng chỉ JLPT N5',
+        instructor: 'Sensei Tanaka Kenji',
+        role: 'Chuyên gia ngôn ngữ • N1 Cao Cấp',
+        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+        enrolledCount: 30,
+        avatars: [
+          'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80',
+          'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&auto=format&fit=crop&q=80'
+        ]
+      }
+    };
+
+    // Parse URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get('courseId') || 'course_progress_1';
+    const lessonId = urlParams.get('lessonId') || 'lesson_15';
+
+    // Initialize user and course details
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Nickname from storage / account
+      const user = getCurrentUser();
+      if (user) {
+        currentNickname = user.name || user.fullName || user.username || (user.email ? user.email.split('@')[0] : 'talooc');
+      }
+
+      const savedNick = localStorage.getItem('lhd_lobby_nickname');
+      if (savedNick) currentNickname = savedNick;
+
+      updateNicknameUI();
+
+      // 2. Load and Synchronize Course Information & Attendees
+      let courseData = COURSES_REGISTRY[courseId] || COURSES_REGISTRY['course_progress_1'];
+      try {
+        let enrolled = [];
+        const raw = localStorage.getItem('lhd_enrolled_courses') || localStorage.getItem('lhd_my_courses');
+        if (raw) enrolled = JSON.parse(raw);
+        const storedCourse = enrolled.find(c => c.id === courseId || c.title === courseId);
+        if (storedCourse) {
+          courseData = Object.assign({}, courseData, {
+            title: storedCourse.title || courseData.title,
+            instructor: (storedCourse.instructor ? storedCourse.instructor.split('•')[0].trim() : courseData.instructor),
+            role: (storedCourse.instructor && storedCourse.instructor.includes('•') ? storedCourse.instructor.split('•')[1].trim() : courseData.role),
+            enrolledCount: storedCourse.enrolledCount || courseData.enrolledCount,
+            lessonTitle: storedCourse.nextLesson || courseData.lessonTitle
+          });
+        }
+      } catch (e) { }
+
+      // Update Room UI
+      const titleEl = document.getElementById('lobbyRoomTitle');
+      const catEl = document.getElementById('lobbyRoomCategory');
+      const subEl = document.getElementById('lobbyLessonSub');
+      const instNameEl = document.getElementById('lobbyInstructorName');
+      const instRoleEl = document.getElementById('lobbyInstructorRole');
+      const instAvatarEl = document.getElementById('lobbyInstructorAvatar');
+      const countEl = document.getElementById('lobbyAttendeesCount');
+      const initialEl = document.getElementById('lobbyStackInitial');
+
+      if (titleEl) titleEl.textContent = courseData.title;
+      if (catEl) catEl.textContent = courseData.category;
+      if (subEl) subEl.textContent = courseData.lessonTitle;
+      if (instNameEl) instNameEl.textContent = courseData.instructor;
+      if (instRoleEl) instRoleEl.textContent = courseData.role;
+      if (instAvatarEl && courseData.avatar) instAvatarEl.src = courseData.avatar;
+      if (countEl) countEl.textContent = `${courseData.enrolledCount} người đang trong phòng`;
+      if (initialEl) initialEl.textContent = `+${Math.max(1, courseData.enrolledCount - 4)}`;
+
+      // 3. Check custom user avatar
+      const customAvatar = localStorage.getItem('lhd_user_avatar');
+      if (customAvatar) {
+        const img = document.getElementById('lobbyAvatarImg');
+        if (img) img.src = customAvatar;
+      }
+    });
+
+    function updateNicknameUI() {
+      const el = document.getElementById('lobbyNicknameDisplay');
+      if (el) el.textContent = currentNickname;
+    }
+
+    // Toggle Mic
+    function toggleMic() {
+      isMicOn = !isMicOn;
+      const btn = document.getElementById('btnToggleMic');
+      const icon = document.getElementById('micIcon');
+      if (isMicOn) {
+        btn.classList.remove('off');
+        btn.classList.add('active');
+        icon.className = 'fa-solid fa-microphone';
+        showToast('Microphone: ĐÃ BẬT');
+      } else {
+        btn.classList.remove('active');
+        btn.classList.add('off');
+        icon.className = 'fa-solid fa-microphone-slash';
+        showToast('Microphone: ĐÃ TẮT');
+      }
+    }
+
+    // Toggle Camera
+    async function toggleCam() {
+      isCamOn = !isCamOn;
+      const btn = document.getElementById('btnToggleCam');
+      const icon = document.getElementById('camIcon');
+      const video = document.getElementById('liveWebcamPreview');
+      const avatarWrap = document.getElementById('avatarPreviewWrap');
+      const blurBackdrop = document.getElementById('camBackdropBlur');
+
+      if (isCamOn) {
+        btn.classList.remove('off');
+        btn.classList.add('active');
+        icon.className = 'fa-solid fa-video';
+
+        try {
+          mediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          video.srcObject = mediaStream;
+          video.style.display = 'block';
+          avatarWrap.style.display = 'none';
+          blurBackdrop.style.display = 'none';
+          showToast('Camera: ĐÃ BẬT');
+        } catch (err) {
+          console.log('Webcam permission denied or not available:', err);
+          video.style.display = 'none';
+          avatarWrap.style.display = 'flex';
+          blurBackdrop.style.display = 'block';
+          showToast('Không tìm thấy webcam (Chế độ mô phỏng)');
+        }
+      } else {
+        btn.classList.remove('active');
+        btn.classList.add('off');
+        icon.className = 'fa-solid fa-video-slash';
+        if (mediaStream) {
+          mediaStream.getTracks().forEach(track => track.stop());
+          mediaStream = null;
+        }
+        video.style.display = 'none';
+        avatarWrap.style.display = 'flex';
+        blurBackdrop.style.display = 'block';
+        showToast('Camera: ĐÃ TẮT');
+      }
+    }
+
+    // Modal helpers
+    function openModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.add('show');
+    }
+
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      if (m) m.classList.remove('show');
+    }
+
+    function openEditNicknameModal() {
+      const input = document.getElementById('inputNickname');
+      if (input) input.value = currentNickname;
+      openModal('modalEditNick');
+    }
+
+    function saveNickname() {
+      const input = document.getElementById('inputNickname');
+      if (input && input.value.trim()) {
+        currentNickname = input.value.trim();
+        localStorage.setItem('lhd_lobby_nickname', currentNickname);
+        updateNicknameUI();
+        closeModal('modalEditNick');
+        showToast('Đã đổi biệt danh: ' + currentNickname);
+      }
+    }
+
+    function openVirtualBgModal() {
+      openModal('modalVirtualBg');
+    }
+
+    function setVirtualBg(type) {
+      showToast('Đã áp dụng hiệu ứng nền: ' + type);
+      closeModal('modalVirtualBg');
+    }
+
+    function openSettingsModal() {
+      openModal('modalSettings');
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('lobbyToast');
+      const msg = document.getElementById('lobbyToastText');
+      if (toast && msg) {
+        msg.textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2800);
+      }
+    }
+
+    function copyMeetingLink() {
+      const dummyLink = window.location.origin + '/student/live-lobby.html?courseId=' + encodeURIComponent(courseId);
+      navigator.clipboard.writeText(dummyLink).then(() => {
+        showToast('Đã sao chép liên kết phòng học vào bộ nhớ tạm!');
+      }).catch(() => {
+        showToast('Đã sao chép liên kết phòng học!');
+      });
+    }
+
+    function handleGoBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = '../learn.html?id=' + encodeURIComponent(courseId);
+      }
+    }
+
+    function joinLiveRoom() {
+      // Save state before joining
+      localStorage.setItem('lhd_mic_state', isMicOn ? 'on' : 'off');
+      localStorage.setItem('lhd_cam_state', isCamOn ? 'on' : 'off');
+      showToast('Đang kết nối vào phòng học trực tuyến...');
+      setTimeout(() => {
+        window.location.href = 'live-room.html?courseId=' + encodeURIComponent(courseId) + '&lessonId=' + encodeURIComponent(lessonId);
+      }, 600);
+    }
+  </script>
+
+</body>
+
+</html>
