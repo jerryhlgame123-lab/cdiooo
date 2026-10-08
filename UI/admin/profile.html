@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <script>
+    window.location.replace('../instructor/profile.html');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ Sơ Quản Trị Viên | LHD – Learning</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --admin-grad: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #7c3aed 100%);
+      --primary-color: #0b63e5;
+      --admin-color: #4338ca;
+      --purple-color: #7c3aed;
+      --pink-color: #ec4899;
+      --bg-page: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --border-subtle: rgba(226, 232, 240, 0.85);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    html {
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: clip;
+      position: relative;
+    }
+
+    /* Ambient background glows */
+    .ambient-glow {
+      position: fixed;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+      filter: blur(90px);
+    }
+
+    .ambient-1 {
+      top: -100px;
+      right: -50px;
+      background: linear-gradient(135deg, #4338ca, #ec4899);
+    }
+
+    .ambient-2 {
+      bottom: 10%;
+      left: -100px;
+      background: linear-gradient(135deg, #0b63e5, #7c3aed);
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a:hover {
+      color: #4338ca;
+      background: rgba(67, 56, 202, 0.08);
+    }
+
+    .nav-pill-channel {
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.35);
+    }
+
+    .nav-pill-sub {
+      background: rgba(124, 58, 237, 0.08);
+      color: #7c3aed !important;
+      font-weight: 700;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #4338ca;
+      color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .btn-menu {
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #4338ca;
+    }
+
+    .bell-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #ffffff;
+      border: 1.5px solid #4338ca;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(67, 56, 202, 0.15);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #4338ca;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #4338ca;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 300px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+    }
+
+    .nav-dropdown.show {
+      display: flex;
+    }
+
+    .menu-user-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, rgba(67, 56, 202, 0.1), rgba(124, 58, 237, 0.08));
+      border-radius: 14px;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+
+    .menu-banner-avatar-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #4338ca;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .menu-banner-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .menu-banner-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .menu-role-pill {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      background: #e0e7ff;
+      color: #4338ca;
+      border-radius: 9999px;
+      margin-top: 4px;
+    }
+
+    .menu-group-heading {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.5rem 0.6rem 0.2rem;
+    }
+
+    .student-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.18s ease;
+    }
+
+    .student-menu-item:hover {
+      background: #f8fafc;
+      color: #4338ca;
+      transform: translateX(4px);
+    }
+
+    .menu-item-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(67, 56, 202, 0.08);
+      color: #4338ca;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #eef2f6;
+      margin: 6px 0;
+    }
+
+    .btn-menu-logout {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #e11d48;
+      background: #fff1f2;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    /* Main Container */
+    .profile-container {
+      max-width: 1280px;
+      margin: 2rem auto 4rem;
+      padding: 0 4%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Profile Header Hero Card */
+    .profile-hero {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%);
+      border-radius: 28px;
+      padding: 2.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.2);
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .profile-hero-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-avatar-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3.5px solid #818cf8;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .profile-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-name-title {
+      font-size: 1.65rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.25);
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      color: #c7d2fe;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .profile-meta-sub {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      margin-top: 6px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .profile-hero-actions {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 2;
+      flex-wrap: wrap;
+    }
+
+    .btn-channel-jump {
+      padding: 10px 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-jump-admin {
+      background: #4338ca;
+      color: white;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.4);
+    }
+
+    .btn-jump-admin:hover {
+      transform: translateY(-2px);
+      background: #3730a3;
+    }
+
+    .btn-jump-instructor {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .btn-jump-instructor:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
+    }
+
+    /* Tabs Bar */
+    .profile-tabs {
+      display: flex;
+      gap: 8px;
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 20px;
+      border: 1.5px solid #eef2f6;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+      overflow-x: auto;
+    }
+
+    .profile-tab-btn {
+      padding: 10px 20px;
+      border-radius: 14px;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .profile-tab-btn:hover {
+      color: #4338ca;
+      background: #f8fafc;
+    }
+
+    .profile-tab-btn.active {
+      background: #4338ca;
+      color: white;
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.25);
+    }
+
+    /* Tab Content Cards */
+    .tab-pane {
+      display: none;
+      animation: fadeInTab 0.3s ease;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeInTab {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-box {
+      background: var(--card-bg);
+      border: 1.5px solid #eef2f6;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-box-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1.5px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-box-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .form-input {
+      padding: 12px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      font-size: 0.92rem;
+      background: #ffffff;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: #4338ca;
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.12);
+    }
+
+    .form-input:disabled {
+      background: #f8fafc;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .btn-save-profile {
+      padding: 12px 28px;
+      border-radius: 14px;
+      background: #4338ca;
+      color: white;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn-save-profile:hover {
+      background: #3730a3;
+      transform: translateY(-2px);
+    }
+
+    /* Audit Log Item */
+    .audit-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .audit-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border: 1px solid #eef2f6;
+      border-radius: 16px;
+    }
+
+    .audit-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .audit-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .audit-title {
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: #0f172a;
+    }
+
+    .audit-time {
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 3000;
+    }
+
+    .toast-msg {
+      padding: 12px 20px;
+      background: #1e1b4b;
+      color: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-left: 4px solid #4ade80;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient-glow ambient-1"></div>
+  <div class="ambient-glow ambient-2"></div>
+
+  <!-- Header Navbar -->
+  <header>
+    <div class="header-left">
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="home.html"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+        <li><a href="../courses.html"><i class="fa-solid fa-book-open"></i> Khóa học</a></li>
+        <li><a href="dashboard.html" class="nav-pill-channel"><i class="fa-solid fa-shield-halved"></i> Kênh quản
+            trị</a></li>
+        <li><a href="../instructor/dashboard.html" class="nav-pill-sub"><i class="fa-solid fa-chalkboard-user"></i>
+            Kênh giảng viên</a></li>
+        <li><a href="../certificates.html"><i class="fa-solid fa-award"></i> Chứng chỉ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn" id="headerBellBtn" onclick="toggleBellDropdown(event)"
+          title="Thông báo quản trị">
+          <i class="fa-regular fa-bell"></i>
+          <span class="bell-badge">3</span>
+        </button>
+
+        <div class="nav-dropdown" id="bellDropdown" style="width: 320px;">
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a; margin-bottom: 8px;">Thông báo quản trị
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div
+              style="padding: 8px; background: #e0e7ff; border-radius: 10px; font-size: 0.8rem; color: #1e1b4b; display: flex; gap: 8px;">
+              <i class="fa-solid fa-book-bookmark" style="color: #4338ca; margin-top: 2px;"></i>
+              <div><strong>Khóa học mới:</strong> Khóa "IELTS Speaking 8.0" vừa được gửi chờ duyệt.</div>
+            </div>
+            <div
+              style="padding: 8px; background: #fef3c7; border-radius: 10px; font-size: 0.8rem; color: #78350f; display: flex; gap: 8px;">
+              <i class="fa-solid fa-certificate" style="color: #d97706; margin-top: 2px;"></i>
+              <div><strong>Chứng chỉ giảng viên:</strong> Cô Tanaka Yuka vừa gửi hồ sơ chứng chỉ JLPT N1.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Capsule -->
+      <a href="profile.html" class="user-capsule" id="userCapsuleBtn">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+        <span class="user-capsule-name" id="headerUserName">Admin LHD</span>
+      </a>
+
+      <!-- 3-Bars Hamburger Menu (☰) -->
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-dropdown" id="menuDropdown">
+          <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+            <div class="menu-banner-avatar-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+            </div>
+            <div>
+              <div class="menu-banner-name" id="menuBannerName">Quản trị viên Hệ thống</div>
+              <div class="menu-banner-sub" id="menuBannerEmail">admin@lhd.edu.vn</div>
+              <span class="menu-role-pill"><i class="fa-solid fa-shield-halved"></i> Super Admin</span>
+            </div>
+          </div>
+
+          <!-- KÊNH QUẢN TRỊ Ở ĐẦU TIÊN -->
+          <div class="menu-group-heading" style="color: #4338ca;"><i class="fa-solid fa-shield-halved"></i> Dành Cho
+            Quản Trị Viên</div>
+          <a href="dashboard.html" class="student-menu-item"
+            style="color: #4338ca; font-weight: 800; background: rgba(67, 56, 202, 0.08);">
+            <div class="menu-item-icon" style="background: #4338ca; color: white;"><i
+                class="fa-solid fa-gauge-high"></i></div>
+            <span>Kênh Quản Trị (Dashboard)</span>
+          </a>
+          <a href="courses-approval.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-spell-check"></i></div>
+            <span>Phê duyệt khóa học</span>
+          </a>
+          <a href="certificates-approval.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-certificate"></i></div>
+            <span>Duyệt chứng chỉ GV</span>
+          </a>
+          <a href="users.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <span>Quản lý người dùng</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <!-- KÊNH GIẢNG VIÊN Ở KẾ TIẾP -->
+          <div class="menu-group-heading" style="color: #7c3aed;"><i class="fa-solid fa-chalkboard-user"></i> Dành Cho
+            Giảng Viên</div>
+          <a href="../instructor/dashboard.html" class="student-menu-item">
+            <div class="menu-item-icon" style="background: rgba(124, 58, 237, 0.1); color: #7c3aed;"><i
+                class="fa-solid fa-chalkboard-user"></i></div>
+            <span>Kênh Giảng Viên (Dashboard)</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <div class="menu-group-heading">Quản Lý & Học Tập</div>
+          <a href="home.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+            <span>Trang chủ quản trị</span>
+          </a>
+          <a href="../my-courses.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+            <span>Khóa học đã đăng ký</span>
+          </a>
+          <a href="profile.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <span>Hồ sơ & Phân quyền Admin</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <button type="button" class="btn-menu-logout" onclick="handleLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Đăng xuất khỏi hệ thống</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Profile Page Content -->
+  <main class="profile-container">
+    <!-- Profile Hero Card -->
+    <section class="profile-hero">
+      <div class="profile-hero-left">
+        <div class="profile-avatar-wrap">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+            class="profile-avatar-img" id="mainAdminAvatar" alt="Avatar">
+        </div>
+        <div>
+          <div class="profile-name-title">
+            <span id="mainAdminName">Quản trị viên Hệ thống</span>
+            <span class="profile-role-badge"><i class="fa-solid fa-shield-halved"></i> Super Admin</span>
+          </div>
+          <div class="profile-meta-sub">
+            <span><i class="fa-solid fa-envelope"></i> <span id="mainAdminEmail">admin@lhd.edu.vn</span></span>
+            <span><i class="fa-solid fa-lock"></i> Bảo mật 2 lớp: <strong>Đã bật</strong></span>
+            <span><i class="fa-solid fa-server"></i> Quyền: <strong>Toàn quyền quản trị</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-hero-actions">
+        <a href="dashboard.html" class="btn-channel-jump btn-jump-admin">
+          <i class="fa-solid fa-gauge-high"></i> Vào Kênh Quản Trị
+        </a>
+        <a href="../instructor/dashboard.html" class="btn-channel-jump btn-jump-instructor">
+          <i class="fa-solid fa-chalkboard-user"></i> Kênh Giảng Viên
+        </a>
+      </div>
+    </section>
+
+    <!-- Profile Tabs -->
+    <div class="profile-tabs">
+      <button type="button" class="profile-tab-btn active" onclick="switchTab('tabInfo', this)">
+        <i class="fa-solid fa-id-card"></i> Thông Tin Quản Trị
+      </button>
+      <button type="button" class="profile-tab-btn" onclick="switchTab('tabSecurity', this)">
+        <i class="fa-solid fa-shield-halved"></i> Bảo Mật & 2FA
+      </button>
+      <button type="button" class="profile-tab-btn" onclick="switchTab('tabAudit', this)">
+        <i class="fa-solid fa-clock-rotate-left"></i> Nhật Ký Điều Hành
+      </button>
+      <button type="button" class="profile-tab-btn" onclick="switchTab('tabConfig', this)">
+        <i class="fa-solid fa-sliders"></i> Cấu Hình Nền Tảng
+      </button>
+    </div>
+
+    <!-- TAB 1: THÔNG TIN QUẢN TRỊ -->
+    <div class="tab-pane active" id="tabInfo">
+      <div class="card-box">
+        <div class="card-box-header">
+          <h2 class="card-box-title"><i class="fa-solid fa-user-shield" style="color: #4338ca;"></i> Hồ Sơ Quản Trị
+            Viên Tối Cao</h2>
+        </div>
+
+        <form id="adminProfileForm" onsubmit="handleSaveProfile(event)">
+          <div class="form-grid-2" style="margin-bottom: 1.5rem;">
+            <div class="form-group">
+              <label class="form-label">Tên hiển thị Quản trị viên</label>
+              <input type="text" class="form-input" id="inputAdminName" value="Quản trị viên Hệ thống" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email tài khoản</label>
+              <input type="email" class="form-input" id="inputAdminEmail" value="admin@lhd.edu.vn" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Số điện thoại điều hành</label>
+              <input type="tel" class="form-input" id="inputAdminPhone" value="0988 777 666">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phòng ban phụ trách</label>
+              <input type="text" class="form-input" value="Ban Giám Đốc Công Nghệ & Vận Hành Sàn" disabled>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label class="form-label">Ghi chú quản trị viên</label>
+            <textarea class="form-input" style="height: 90px; resize: vertical;"
+              placeholder="Ghi chú về phân công điều hành...">Phụ trách thẩm định chất lượng các khóa học IELTS, JLPT, HSK và cấp quyền hoạt động cho giảng viên quốc tế trên nền tảng LHD – Learning.</textarea>
+          </div>
+
+          <button type="submit" class="btn-save-profile">
+            <i class="fa-solid fa-floppy-disk"></i> Lưu Thay Đổi Hồ Sơ
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB 2: BẢO MẬT & 2FA -->
+    <div class="tab-pane" id="tabSecurity">
+      <div class="card-box">
+        <div class="card-box-header">
+          <h2 class="card-box-title"><i class="fa-solid fa-lock" style="color: #4338ca;"></i> Cài Đặt Mật Khẩu & Xác
+            Thực 2 Lớp</h2>
+        </div>
+
+        <div class="form-grid-2" style="margin-bottom: 1.5rem;">
+          <div class="form-group">
+            <label class="form-label">Mật khẩu hiện tại</label>
+            <input type="password" class="form-input" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mật khẩu mới (Tối thiểu 8 ký tự)</label>
+            <input type="password" class="form-input" placeholder="••••••••">
+          </div>
+        </div>
+
+        <div
+          style="padding: 1.25rem; background: #e0e7ff; border-radius: 16px; border: 1.5px solid #c7d2fe; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-weight: 800; font-size: 1rem; color: #1e1b4b; margin-bottom: 2px;">Xác thực 2 yếu tố (2FA
+              Authenticator)</div>
+            <div style="font-size: 0.82rem; color: #3730a3;">Bảo vệ tài khoản quản trị khi đăng nhập từ thiết bị lạ bằng
+              Google Authenticator.</div>
+          </div>
+          <span
+            style="background: #4ade80; color: #064e3b; font-weight: 800; padding: 6px 14px; border-radius: 9999px; font-size: 0.8rem;"><i
+              class="fa-solid fa-check"></i> Đang kích hoạt</span>
+        </div>
+
+        <button type="button" class="btn-save-profile" onclick="showToast('Đã cập nhật cài đặt bảo mật!')">
+          <i class="fa-solid fa-shield-check"></i> Cập Nhật Bảo Mật
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 3: NHẬT KÝ ĐIỀU HÀNH -->
+    <div class="tab-pane" id="tabAudit">
+      <div class="card-box">
+        <div class="card-box-header">
+          <h2 class="card-box-title"><i class="fa-solid fa-clock-rotate-left" style="color: #4338ca;"></i> Lịch Sử Thao
+            Tác Quản Trị Gần Đây</h2>
+        </div>
+
+        <div class="audit-list">
+          <div class="audit-item">
+            <div class="audit-left">
+              <div class="audit-icon" style="background: #dcfce7; color: #15803d;"><i
+                  class="fa-solid fa-spell-check"></i></div>
+              <div>
+                <div class="audit-title">Phê duyệt khóa học: "Tiếng Anh Giao Tiếp Doanh Nghiệp"</div>
+                <div class="audit-time">Hôm nay lúc 14:20 • Giảng viên: David Smith • Tỷ lệ hoa hồng: 80%</div>
+              </div>
+            </div>
+            <span class="profile-role-badge" style="background: #dcfce7; color: #15803d; border-color: #86efac;">Thành
+              công</span>
+          </div>
+
+          <div class="audit-item">
+            <div class="audit-left">
+              <div class="audit-icon" style="background: #fef3c7; color: #b45309;"><i
+                  class="fa-solid fa-certificate"></i></div>
+              <div>
+                <div class="audit-title">Thẩm định chứng chỉ: TESOL 120H (ID: INT-8891)</div>
+                <div class="audit-time">Hôm qua lúc 16:45 • Giảng viên: Nguyễn Thu Trang • Cấp huy hiệu Verified</div>
+              </div>
+            </div>
+            <span class="profile-role-badge" style="background: #dcfce7; color: #15803d; border-color: #86efac;">Thành
+              công</span>
+          </div>
+
+          <div class="audit-item">
+            <div class="audit-left">
+              <div class="audit-icon" style="background: #e0e7ff; color: #4338ca;"><i class="fa-solid fa-tags"></i>
+              </div>
+              <div>
+                <div class="audit-title">Phát hành mã Voucher: "LHDCHAOHE2026" (-20%)</div>
+                <div class="audit-time">05/10/2026 lúc 09:15 • Áp dụng toàn sàn cho 500 lượt đăng ký đầu tiên</div>
+              </div>
+            </div>
+            <span class="profile-role-badge" style="background: #e0e7ff; color: #4338ca; border-color: #a5b4fc;">Đã
+              phát hành</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: CẤU HÌNH NỀN TẢNG -->
+    <div class="tab-pane" id="tabConfig">
+      <div class="card-box">
+        <div class="card-box-header">
+          <h2 class="card-box-title"><i class="fa-solid fa-sliders" style="color: #4338ca;"></i> Thiết Lập Vận Hành
+            Toàn Sàn</h2>
+        </div>
+
+        <div class="form-grid-2" style="margin-bottom: 1.5rem;">
+          <div class="form-group">
+            <label class="form-label">Tỷ lệ chia sẻ hoa hồng Giảng viên mặc định (%)</label>
+            <input type="number" class="form-input" value="80" min="50" max="95">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mức rút tiền tối thiểu cho Giảng viên (VNĐ)</label>
+            <input type="text" class="form-input" value="500.000 ₫">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Thời hạn duyệt chứng chỉ tối đa</label>
+            <input type="text" class="form-input" value="24 Giờ làm việc">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cổng truyền phát Live Class</label>
+            <input type="text" class="form-input" value="Google Meet HD Enterprise (Kết nối sẵn sàng)" disabled>
+          </div>
+        </div>
+
+        <button type="button" class="btn-save-profile" onclick="showToast('Đã lưu cấu hình nền tảng thành công!')">
+          <i class="fa-solid fa-check"></i> Áp Dụng Cấu Hình
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    function getAdminUser() {
+      try {
+        let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+        if (u && (u.email || u.name)) return u;
+      } catch (e) { }
+      return {
+        name: 'Quản trị viên Hệ thống',
+        email: 'admin@lhd.edu.vn',
+        role: 'ROLE_ADMIN'
+      };
+    }
+
+    function initProfile() {
+      const u = getAdminUser();
+      const name = u.name || u.fullName || u.username || 'Admin LHD';
+      const email = u.email || 'admin@lhd.edu.vn';
+      const avatar = localStorage.getItem('lhd_user_avatar') || u.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80';
+
+      document.getElementById('headerUserName').textContent = name;
+      document.getElementById('headerUserAvatar').src = avatar;
+      document.getElementById('menuBannerAvatar').src = avatar;
+      document.getElementById('menuBannerName').textContent = name;
+      document.getElementById('menuBannerEmail').textContent = email;
+
+      document.getElementById('mainAdminName').textContent = name;
+      document.getElementById('mainAdminEmail').textContent = email;
+      document.getElementById('mainAdminAvatar').src = avatar;
+
+      document.getElementById('inputAdminName').value = name;
+      document.getElementById('inputAdminEmail').value = email;
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.profile-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (btn) btn.classList.add('active');
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add('active');
+    }
+
+    function toggleMegaMenu(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('menuDropdown');
+      const bell = document.getElementById('bellDropdown');
+      if (bell) bell.classList.remove('show');
+      if (menu) menu.classList.toggle('show');
+    }
+
+    function toggleBellDropdown(e) {
+      if (e) e.stopPropagation();
+      const bell = document.getElementById('bellDropdown');
+      const menu = document.getElementById('menuDropdown');
+      if (menu) menu.classList.remove('show');
+      if (bell) bell.classList.toggle('show');
+    }
+
+    window.addEventListener('click', function (e) {
+      const menu = document.getElementById('menuDropdown');
+      const bell = document.getElementById('bellDropdown');
+      if (menu && !menu.contains(e.target) && !e.target.closest('#headerMenuBtn')) {
+        menu.classList.remove('show');
+      }
+      if (bell && !bell.contains(e.target) && !e.target.closest('#headerBellBtn')) {
+        bell.classList.remove('show');
+      }
+    });
+
+    function showToast(msg) {
+      const c = document.getElementById('toastContainer');
+      if (!c) return;
+      const t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #4ade80; font-size: 1.1rem;"></i> <span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 3000);
+    }
+
+    function handleSaveProfile(e) {
+      e.preventDefault();
+      const newName = document.getElementById('inputAdminName').value.trim();
+      const newEmail = document.getElementById('inputAdminEmail').value.trim();
+
+      let u = getAdminUser();
+      u.name = newName;
+      u.email = newEmail;
+      localStorage.setItem('currentUser', JSON.stringify(u));
+
+      initProfile();
+      showToast('Đã lưu thông tin hồ sơ Quản trị viên thành công!');
+    }
+
+    function handleLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi cổng Quản trị viên?')) {
+        localStorage.removeItem('currentUser');
+        sessionStorage.clear();
+        window.location.href = '../index.html';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initProfile);
+  </script>
+</body>
+
+</html>

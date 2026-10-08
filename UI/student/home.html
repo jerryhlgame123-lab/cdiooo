@@ -1963,9 +1963,23 @@
                 </div>
               </div>
 
+              <!-- Mục Kênh Quản Trị (Hiển thị khi role là ADMIN - ĐỨNG ĐẦU TIÊN) -->
+              <div id="adminMenuSection" style="display: none;">
+                <div class="menu-group-heading" style="color: #4338ca;"><i class="fa-solid fa-shield-halved"></i> Dành Cho Quản Trị Viên</div>
+                <a href="../admin/dashboard.html" class="student-menu-item"
+                  style="color: #4338ca; font-weight: 800; background: rgba(67, 56, 202, 0.08); border: 1.5px solid #c7d2fe; box-shadow: 0 3px 10px rgba(67, 56, 202, 0.12); margin-bottom: 6px;">
+                  <div class="menu-item-icon" style="background: #4338ca; color: #ffffff;">
+                    <i class="fa-solid fa-gauge-high"></i>
+                  </div>
+                  <span class="menu-item-title" style="color: #4338ca; font-weight: 800; font-size: 0.92rem;">Kênh Quản Trị (Dashboard)</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; color: #4338ca; margin-left: auto;"></i>
+                </a>
+                <div class="dropdown-divider"></div>
+              </div>
+
               <!-- Mục Kênh Giảng Viên (Hiển thị khi role là INSTRUCTOR hoặc ADMIN) -->
               <div id="instructorMenuSection" style="display: none;">
-                <div class="menu-group-heading" style="color: #9333ea;">Dành Cho Giảng Viên</div>
+                <div class="menu-group-heading" style="color: #9333ea;"><i class="fa-solid fa-chalkboard-user"></i> Dành Cho Giảng Viên</div>
                 <a href="../instructor/dashboard.html" class="student-menu-item"
                   style="color: #9333ea; font-weight: 700; background: #faf5ff;">
                   <div class="menu-item-icon" style="background: #9333ea; color: #ffffff;"><i
@@ -2973,12 +2987,21 @@
         }
 
         // Cập nhật chức vụ / vai trò người dùng trong Dropdown Menu
-        const roleLabel = u.role === 'ROLE_ADMIN' ? 'Quản trị viên' : (u.role === 'ROLE_INSTRUCTOR' ? 'Giảng viên' : 'Thành viên / Đã xác thực');
+        const isAdmin = (u.role === 'ROLE_ADMIN' || u.role === 'ADMIN' || u.role === 'admin');
+        const isInstructor = (u.role === 'ROLE_INSTRUCTOR' || u.role === 'INSTRUCTOR' || u.role === 'instructor');
+
+        const roleLabel = isAdmin ? 'Quản trị viên Hệ thống' : (isInstructor ? 'Giảng viên' : 'Thành viên / Đã xác thực');
         const roleEl = document.getElementById('menuBannerRole');
         if (roleEl) roleEl.textContent = roleLabel;
 
-        // Hiển thị Mục Kênh Giảng Viên trên Menu ☰ và Navbar nếu tài khoản là Giảng viên hoặc Quản trị viên
-        const isInstructorOrAdmin = (u.role === 'ROLE_INSTRUCTOR' || u.role === 'ROLE_ADMIN');
+        // 1. Hiển thị Mục Kênh Quản Trị trên Menu ☰ (Đứng đầu tiên) nếu là Admin
+        const adminMenu = document.getElementById('adminMenuSection');
+        if (adminMenu) {
+          adminMenu.style.display = isAdmin ? 'block' : 'none';
+        }
+
+        // 2. Hiển thị Mục Kênh Giảng Viên trên Menu ☰ và Navbar nếu là Giảng viên hoặc Admin
+        const isInstructorOrAdmin = isInstructor || isAdmin;
         const instMenu = document.getElementById('instructorMenuSection');
         if (instMenu) {
           instMenu.style.display = isInstructorOrAdmin ? 'block' : 'none';
@@ -2986,6 +3009,18 @@
         const navInst = document.getElementById('navInstructorLink');
         if (navInst) {
           navInst.style.display = isInstructorOrAdmin ? 'inline-block' : 'none';
+        }
+
+        // 3. User Capsule Link
+        const capsuleBtn = document.getElementById('userCapsuleBtn');
+        if (capsuleBtn) {
+          if (isAdmin) {
+            capsuleBtn.href = '../instructor/profile.html';
+          } else if (isInstructor) {
+            capsuleBtn.href = '../instructor/profile.html';
+          } else {
+            capsuleBtn.href = 'profile.html';
+          }
         }
       }
 

@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <script>
+    window.location.replace('../instructor/home.html');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LHD – Learning | Trang Chủ Quản Trị</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --admin-grad: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #7c3aed 100%);
+      --primary-color: #0b63e5;
+      --admin-color: #4338ca;
+      --purple-color: #7c3aed;
+      --pink-color: #ec4899;
+      --bg-light: #f8fafc;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(226, 232, 240, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    html {
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      overflow-x: clip;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Ambient Blobs */
+    .ambient-glow {
+      position: fixed;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.15;
+      filter: blur(95px);
+    }
+
+    .ambient-1 {
+      top: -80px;
+      left: -80px;
+      background: linear-gradient(135deg, #4338ca, #38bdf8);
+    }
+
+    .ambient-2 {
+      top: 40%;
+      right: -80px;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+    }
+
+    .ambient-3 {
+      bottom: -100px;
+      left: 30%;
+      background: linear-gradient(135deg, #0b63e5, #c084fc);
+    }
+
+    /* Sticky Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #eef2f6;
+      padding: 0.85rem 4%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+      flex-shrink: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brand-logo:hover .brand-icon {
+      transform: rotate(-6deg) scale(1.06);
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a:hover {
+      color: #4338ca;
+      background: rgba(67, 56, 202, 0.08);
+    }
+
+    .nav-link-active {
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+    }
+
+    .nav-pill-channel {
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.35);
+    }
+
+    .nav-pill-sub {
+      background: rgba(124, 58, 237, 0.08);
+      color: #7c3aed !important;
+      font-weight: 700;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-circle-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #334155;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-circle-btn:hover {
+      border-color: #4338ca;
+      color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .btn-menu {
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #4338ca;
+    }
+
+    .bell-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+    }
+
+    .user-capsule {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 16px 4px 5px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .user-capsule:hover {
+      border-color: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .user-capsule-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #4338ca;
+      background: #e2e8f0;
+    }
+
+    .user-capsule-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      padding: 0.75rem;
+      min-width: 300px;
+      display: none;
+      flex-direction: column;
+      z-index: 1100;
+    }
+
+    .nav-dropdown.show {
+      display: flex;
+    }
+
+    .menu-user-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, rgba(67, 56, 202, 0.1), rgba(124, 58, 237, 0.08));
+      border-radius: 14px;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+
+    .menu-banner-avatar-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #4338ca;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .menu-banner-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .menu-banner-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .menu-banner-sub {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .menu-role-pill {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      background: #e0e7ff;
+      color: #4338ca;
+      border-radius: 9999px;
+      margin-top: 4px;
+    }
+
+    .menu-group-heading {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.5rem 0.6rem 0.2rem;
+    }
+
+    .student-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.18s ease;
+    }
+
+    .student-menu-item:hover {
+      background: #f8fafc;
+      color: #4338ca;
+      transform: translateX(4px);
+    }
+
+    .menu-item-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(67, 56, 202, 0.08);
+      color: #4338ca;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: #eef2f6;
+      margin: 6px 0;
+    }
+
+    .btn-menu-logout {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #e11d48;
+      background: #fff1f2;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 4%;
+    }
+
+    .admin-hero-card {
+      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 55%, #31104b 100%);
+      border-radius: 32px;
+      padding: 3rem 3.5rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+    }
+
+    .admin-hero-card::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #e0e7ff;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-main-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 1rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-main-title span {
+      background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub-desc {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      max-width: 720px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .hero-btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero-admin {
+      padding: 12px 26px;
+      background: linear-gradient(135deg, #4338ca, #7c3aed);
+      color: #ffffff;
+      border: none;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(67, 56, 202, 0.45);
+      transition: all 0.25s ease;
+    }
+
+    .btn-hero-admin:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(67, 56, 202, 0.6);
+    }
+
+    .btn-hero-glass {
+      padding: 12px 22px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-hero-glass:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
+    }
+
+    /* Highlights Section */
+    .section-container {
+      max-width: 1400px;
+      margin: 2.5rem auto;
+      padding: 0 4%;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    /* Live Monitoring Grid */
+    .live-monitor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .live-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1.5px solid #eef2f6;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .live-card:hover {
+      transform: translateY(-5px);
+      border-color: #4338ca;
+      box-shadow: 0 16px 36px rgba(67, 56, 202, 0.12);
+    }
+
+    .live-card-banner {
+      height: 160px;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .live-pulse-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #ef4444;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+    }
+
+    .live-card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .live-course-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .live-instructor-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .live-inst-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .live-inst-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .live-footer-btn {
+      margin-top: auto;
+      padding: 10px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      color: #1e1b4b;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .live-footer-btn:hover {
+      background: #4338ca;
+      color: white;
+    }
+
+    /* 4 Feature Pillars */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .pillar-card {
+      background: #ffffff;
+      border: 1.5px solid #eef2f6;
+      border-radius: 22px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s ease;
+    }
+
+    .pillar-card:hover {
+      border-color: #4338ca;
+      box-shadow: 0 12px 28px rgba(67, 56, 202, 0.08);
+      transform: translateY(-3px);
+    }
+
+    .pillar-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+    }
+
+    .pillar-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .pillar-desc {
+      font-size: 0.85rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 4% 2rem;
+      margin-top: 5rem;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient-glow ambient-1"></div>
+  <div class="ambient-glow ambient-2"></div>
+  <div class="ambient-glow ambient-3"></div>
+
+  <!-- Header Navbar -->
+  <header>
+    <div class="header-left">
+      <a href="home.html" class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">LHD – Learning</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="home.html" class="nav-link-active"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+        <li><a href="../courses.html"><i class="fa-solid fa-book-open"></i> Khóa học</a></li>
+        <li><a href="dashboard.html" class="nav-pill-channel"><i class="fa-solid fa-shield-halved"></i> Kênh quản
+            trị</a></li>
+        <li><a href="../instructor/dashboard.html" class="nav-pill-sub"><i class="fa-solid fa-chalkboard-user"></i>
+            Kênh giảng viên</a></li>
+        <li><a href="../certificates.html"><i class="fa-solid fa-award"></i> Chứng chỉ</a></li>
+      </ul>
+    </div>
+
+    <div class="header-right">
+      <!-- Notification Bell -->
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn" id="headerBellBtn" onclick="toggleBellDropdown(event)"
+          title="Thông báo quản trị">
+          <i class="fa-regular fa-bell"></i>
+          <span class="bell-badge">3</span>
+        </button>
+
+        <div class="nav-dropdown" id="bellDropdown" style="width: 320px;">
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a; margin-bottom: 8px;">Thông báo quản trị
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div
+              style="padding: 8px; background: #e0e7ff; border-radius: 10px; font-size: 0.8rem; color: #1e1b4b; display: flex; gap: 8px;">
+              <i class="fa-solid fa-book-bookmark" style="color: #4338ca; margin-top: 2px;"></i>
+              <div><strong>Khóa học mới:</strong> Khóa "IELTS Speaking 8.0" vừa được gửi chờ duyệt.</div>
+            </div>
+            <div
+              style="padding: 8px; background: #fef3c7; border-radius: 10px; font-size: 0.8rem; color: #78350f; display: flex; gap: 8px;">
+              <i class="fa-solid fa-certificate" style="color: #d97706; margin-top: 2px;"></i>
+              <div><strong>Chứng chỉ giảng viên:</strong> Cô Tanaka Yuka vừa gửi hồ sơ chứng chỉ JLPT N1.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Capsule -->
+      <a href="profile.html" class="user-capsule" id="userCapsuleBtn">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+        <span class="user-capsule-name" id="headerUserName">Admin LHD</span>
+      </a>
+
+      <!-- 3-Bars Hamburger Menu (☰) -->
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-dropdown" id="menuDropdown">
+          <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+            <div class="menu-banner-avatar-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+            </div>
+            <div>
+              <div class="menu-banner-name" id="menuBannerName">Quản trị viên Hệ thống</div>
+              <div class="menu-banner-sub" id="menuBannerEmail">admin@lhd.edu.vn</div>
+              <span class="menu-role-pill"><i class="fa-solid fa-shield-halved"></i> Super Admin</span>
+            </div>
+          </div>
+
+          <!-- KÊNH QUẢN TRỊ Ở ĐẦU TIÊN -->
+          <div class="menu-group-heading" style="color: #4338ca;"><i class="fa-solid fa-shield-halved"></i> Dành Cho
+            Quản Trị Viên</div>
+          <a href="dashboard.html" class="student-menu-item"
+            style="color: #4338ca; font-weight: 800; background: rgba(67, 56, 202, 0.08);">
+            <div class="menu-item-icon" style="background: #4338ca; color: white;"><i
+                class="fa-solid fa-gauge-high"></i></div>
+            <span>Kênh Quản Trị (Dashboard)</span>
+          </a>
+          <a href="courses-approval.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-spell-check"></i></div>
+            <span>Phê duyệt khóa học</span>
+          </a>
+          <a href="certificates-approval.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-certificate"></i></div>
+            <span>Duyệt chứng chỉ GV</span>
+          </a>
+          <a href="users.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <span>Quản lý người dùng</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <!-- KÊNH GIẢNG VIÊN Ở KẾ TIẾP -->
+          <div class="menu-group-heading" style="color: #7c3aed;"><i class="fa-solid fa-chalkboard-user"></i> Dành Cho
+            Giảng Viên</div>
+          <a href="../instructor/dashboard.html" class="student-menu-item">
+            <div class="menu-item-icon" style="background: rgba(124, 58, 237, 0.1); color: #7c3aed;"><i
+                class="fa-solid fa-chalkboard-user"></i></div>
+            <span>Kênh Giảng Viên (Dashboard)</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <!-- QUẢN LÝ HỌC TẬP & HỆ THỐNG -->
+          <div class="menu-group-heading">Quản Lý & Học Tập</div>
+          <a href="home.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+            <span>Trang chủ quản trị</span>
+          </a>
+          <a href="../my-courses.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+            <span>Khóa học đã đăng ký</span>
+          </a>
+          <a href="profile.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <span>Hồ sơ & Phân quyền Admin</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <button type="button" class="btn-menu-logout" onclick="handleLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Đăng xuất khỏi hệ thống</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section for Admin -->
+  <div class="hero-container">
+    <section class="admin-hero-card">
+      <div class="hero-badge-tag">
+        <i class="fa-solid fa-crown" style="color: #f59e0b;"></i>
+        <span>Cổng Quản Trị Trực Tuyến Toàn Quyền Super Admin</span>
+      </div>
+      <h1 class="hero-main-title">Trung Tâm Điều Hành <span>LHD – Learning</span></h1>
+      <p class="hero-sub-desc">
+        Hệ thống tích hợp toàn diện: Toàn quyền truy cập mọi tính năng học tập của Học viên, công cụ giảng dạy của Giảng
+        viên và bảng điều khiển Quản trị viên tối cao.
+      </p>
+
+      <div class="hero-btn-group">
+        <a href="dashboard.html" class="btn-hero-admin">
+          <i class="fa-solid fa-gauge-high"></i> Vào Kênh Quản Trị
+        </a>
+        <a href="courses-approval.html" class="btn-hero-glass">
+          <i class="fa-solid fa-spell-check"></i> Duyệt Khóa Học (3)
+        </a>
+        <a href="certificates-approval.html" class="btn-hero-glass">
+          <i class="fa-solid fa-certificate"></i> Duyệt Chứng Chỉ GV (2)
+        </a>
+        <a href="../instructor/dashboard.html" class="btn-hero-glass">
+          <i class="fa-solid fa-chalkboard-user"></i> Kênh Giảng Viên
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Live Monitoring Section -->
+  <div class="section-container">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title"><i class="fa-solid fa-tower-broadcast" style="color: #ef4444;"></i> Giám Sát Phòng
+          Học Live Trực Tuyến</h2>
+        <div class="section-subtitle">Theo dõi các lớp học đang diễn ra thời gian thực cùng giảng viên & học viên</div>
+      </div>
+      <a href="../courses.html" class="btn-hero-glass"
+        style="background: #ffffff; color: #4338ca; border-color: #c7d2fe; font-size: 0.85rem; padding: 8px 16px;">
+        Xem toàn bộ khóa học <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="live-monitor-grid">
+      <!-- Live Card 1 -->
+      <div class="live-card">
+        <div class="live-card-banner"
+          style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80');">
+          <span class="live-pulse-badge"><i class="fa-solid fa-circle"></i> Đang Phát Sóng</span>
+        </div>
+        <div class="live-card-body">
+          <div class="live-course-title">Tiếng Anh IELTS Bứt Phá (Band 5.0 – 6.5)</div>
+          <div class="live-instructor-meta">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+              class="live-inst-avatar" alt="Avatar">
+            <span class="live-inst-name">Cô Emily Watson (IELTS 8.5)</span>
+          </div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+            <i class="fa-solid fa-users"></i> Sĩ số: <strong>28/30 học viên</strong> • Google Meet HD
+          </div>
+          <a href="../live-class.html" class="live-footer-btn">
+            <i class="fa-solid fa-shield"></i> Giám Sát Lớp Học
+          </a>
+        </div>
+      </div>
+
+      <!-- Live Card 2 -->
+      <div class="live-card">
+        <div class="live-card-banner"
+          style="background-image: url('https://images.unsplash.com/photo-1528164344705-475426879c0d?w=600&auto=format&fit=crop&q=80');">
+          <span class="live-pulse-badge"><i class="fa-solid fa-circle"></i> Đang Phát Sóng</span>
+        </div>
+        <div class="live-card-body">
+          <div class="live-course-title">Tiếng Nhật N3 Luyện Đề Cấp Tốc Đỗ Ngay</div>
+          <div class="live-instructor-meta">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+              class="live-inst-avatar" alt="Avatar">
+            <span class="live-inst-name">Thầy Kenji Sato (JLPT N1)</span>
+          </div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+            <i class="fa-solid fa-users"></i> Sĩ số: <strong>22/25 học viên</strong> • Google Meet HD
+          </div>
+          <a href="../live-class.html" class="live-footer-btn">
+            <i class="fa-solid fa-shield"></i> Giám Sát Lớp Học
+          </a>
+        </div>
+      </div>
+
+      <!-- Live Card 3 -->
+      <div class="live-card">
+        <div class="live-card-banner"
+          style="background-image: url('https://images.unsplash.com/photo-1508873696983-2df5293cb395?w=600&auto=format&fit=crop&q=80');">
+          <span class="live-pulse-badge" style="background: #eab308;"><i class="fa-solid fa-clock"></i> Sắp Diễn Ra (19:30)</span>
+        </div>
+        <div class="live-card-body">
+          <div class="live-course-title">Tiếng Hàn Giao Tiếp Thương Mại TOPIK 4</div>
+          <div class="live-instructor-meta">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80"
+              class="live-inst-avatar" alt="Avatar">
+            <span class="live-inst-name">Cô Park Ji-won (TOPIK 6)</span>
+          </div>
+          <div style="font-size: 0.8rem; color: #64748b; margin-top: 4px;">
+            <i class="fa-solid fa-users"></i> Sĩ số: <strong>19/20 học viên</strong> • Khai giảng tối nay
+          </div>
+          <a href="../live-class.html" class="live-footer-btn">
+            <i class="fa-solid fa-eye"></i> Xem Lịch Phòng Live
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Pillars -->
+  <div class="section-container">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title"><i class="fa-solid fa-shield-halved" style="color: #4338ca;"></i> Năng Lực Quản Trị Hệ Thống</h2>
+        <div class="section-subtitle">Bộ công cụ điều hành mạnh mẽ phân tầng đa vai trò</div>
+      </div>
+    </div>
+
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background: #e0e7ff; color: #4338ca;">
+          <i class="fa-solid fa-spell-check"></i>
+        </div>
+        <div class="pillar-title">Kiểm Duyệt Khóa Học</div>
+        <div class="pillar-desc">Thẩm định chất lượng video giảng dạy, chuẩn đầu ra và cấu trúc học phí công bằng.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background: #fef3c7; color: #b45309;">
+          <i class="fa-solid fa-certificate"></i>
+        </div>
+        <div class="pillar-title">Duyệt Chứng Chỉ Giảng Viên</div>
+        <div class="pillar-desc">Xác minh bằng cấp quốc tế TESOL, IELTS, HSK, JLPT để đảm bảo uy tín giảng dạy.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background: #e0f2fe; color: #0284c7;">
+          <i class="fa-solid fa-users-gear"></i>
+        </div>
+        <div class="pillar-title">Phân Quyền Linh Hoạt</div>
+        <div class="pillar-desc">Dễ dàng luân chuyển giữa vai trò Quản trị viên, Giảng viên và Học viên tức thì.</div>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon" style="background: #fce7f3; color: #db2777;">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <div class="pillar-title">Báo Cáo Doanh Thu Sàn</div>
+        <div class="pillar-desc">Theo dõi dòng tiền, chiết khấu hoa hồng và xuất báo cáo đối soát tài chính minh bạch.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div style="font-weight: 800; font-size: 1.1rem; color: white; margin-bottom: 4px;">LHD – Learning Platform
+        </div>
+        <div style="font-size: 0.85rem;">Cổng Quản Trị Hệ Thống & Đào Tạo Ngoại Ngữ Trực Tuyến Đa Năng</div>
+      </div>
+      <div style="font-size: 0.85rem;">
+        © 2026 LHD Learning Corp. Toàn quyền quản trị được bảo lưu.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function getAdminUser() {
+      try {
+        let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+        if (u && (u.email || u.name)) return u;
+      } catch (e) { }
+      return {
+        name: 'Quản trị viên Hệ thống',
+        email: 'admin@lhd.edu.vn',
+        role: 'ROLE_ADMIN'
+      };
+    }
+
+    function initAdminHome() {
+      const u = getAdminUser();
+      const name = u.name || u.fullName || u.username || 'Admin LHD';
+      const email = u.email || 'admin@lhd.edu.vn';
+      const avatar = localStorage.getItem('lhd_user_avatar') || u.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80';
+
+      const nameEl = document.getElementById('headerUserName');
+      if (nameEl) nameEl.textContent = name;
+
+      const avatarEl = document.getElementById('headerUserAvatar');
+      if (avatarEl) avatarEl.src = avatar;
+
+      const bannerAvatarEl = document.getElementById('menuBannerAvatar');
+      if (bannerAvatarEl) bannerAvatarEl.src = avatar;
+
+      const bannerNameEl = document.getElementById('menuBannerName');
+      if (bannerNameEl) bannerNameEl.textContent = name;
+
+      const bannerEmailEl = document.getElementById('menuBannerEmail');
+      if (bannerEmailEl) bannerEmailEl.textContent = email;
+    }
+
+    function toggleMegaMenu(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('menuDropdown');
+      const bell = document.getElementById('bellDropdown');
+      if (bell) bell.classList.remove('show');
+      if (menu) menu.classList.toggle('show');
+    }
+
+    function toggleBellDropdown(e) {
+      if (e) e.stopPropagation();
+      const bell = document.getElementById('bellDropdown');
+      const menu = document.getElementById('menuDropdown');
+      if (menu) menu.classList.remove('show');
+      if (bell) bell.classList.toggle('show');
+    }
+
+    window.addEventListener('click', function (e) {
+      const menu = document.getElementById('menuDropdown');
+      const bell = document.getElementById('bellDropdown');
+      if (menu && !menu.contains(e.target) && !e.target.closest('#headerMenuBtn')) {
+        menu.classList.remove('show');
+      }
+      if (bell && !bell.contains(e.target) && !e.target.closest('#headerBellBtn')) {
+        bell.classList.remove('show');
+      }
+    });
+
+    function handleLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi cổng Quản trị viên?')) {
+        localStorage.removeItem('currentUser');
+        sessionStorage.clear();
+        window.location.href = '../index.html';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initAdminHome);
+  </script>
+</body>
+
+</html>

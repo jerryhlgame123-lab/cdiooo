@@ -1432,9 +1432,25 @@
               <div class="menu-user-banner" onclick="window.location.href='profile.html'">
                 <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
                 <div class="menu-banner-meta">
-                  <div class="menu-banner-name" id="menuBannerName">Giảng viên Pro</div>
+                  <div class="menu-banner-name" id="menuBannerName">Giảng viên</div>
                   <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
                 </div>
+              </div>
+
+              <!-- Mục Kênh Quản Trị (Hiển thị khi role là ADMIN) -->
+              <div id="adminMenuSection" style="display: none;">
+                <div class="menu-group-heading" style="color: #4338ca; font-weight: 800; letter-spacing: 0.06em;"><i class="fa-solid fa-shield-halved"></i> Dành Cho Quản Trị Viên</div>
+                <a href="../admin/dashboard.html" class="student-menu-item"
+                  style="color: #4338ca; font-weight: 800; background: linear-gradient(135deg, rgba(67, 56, 202, 0.08) 0%, rgba(124, 58, 237, 0.06) 100%); border: 1.5px solid #c7d2fe; box-shadow: 0 3px 10px rgba(67, 56, 202, 0.12); margin-bottom: 6px; border-radius: 10px;">
+                  <div class="menu-item-icon"
+                    style="background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%); color: #ffffff; box-shadow: 0 2px 8px rgba(67, 56, 202, 0.35);">
+                    <i class="fa-solid fa-gauge-high"></i>
+                  </div>
+                  <span class="menu-item-title" style="color: #4338ca; font-weight: 800; font-size: 0.92rem;">Kênh Quản Trị (Dashboard)</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square"
+                    style="font-size: 0.75rem; color: #4338ca; margin-left: auto;"></i>
+                </a>
+                <div class="dropdown-divider"></div>
               </div>
 
               <div class="menu-group-heading" style="color: #9333ea; font-weight: 800;">Dành Cho Giảng Viên</div>
@@ -1999,22 +2015,33 @@
     // NOTIFICATIONS & USER AUTH
     function getInstructorUser() {
       try {
-        const stored = localStorage.getItem('currentUser') || localStorage.getItem('user_info');
-        if (stored) return JSON.parse(stored);
+        let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+        if (u && (u.email || u.name)) {
+          const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+          const foundReg = regUsers.find(r => (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) || 
+                                             (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase()));
+          if (foundReg) {
+            if (foundReg.name) u.name = foundReg.name;
+            if (foundReg.fullName) u.fullName = foundReg.fullName;
+            if (foundReg.email && !u.email) u.email = foundReg.email;
+          }
+          return u;
+        }
       } catch (e) {
         console.error(e);
       }
       return {
-        name: 'Giảng Viên Pro',
+        name: 'Giảng viên',
         email: 'instructor@lhd.edu.vn',
-        role: 'instructor',
+        role: 'ROLE_INSTRUCTOR',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'
       };
     }
 
     function initUserHeader() {
       const user = getInstructorUser();
-      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar;
+      const displayName = user.name || user.fullName || user.username || (user.email ? user.email.split('@')[0] : 'Giảng viên');
+      const avatar = localStorage.getItem('lhd_user_avatar') || user.avatar || user.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80';
       
       const headerAvatar = document.getElementById('headerUserAvatar');
       const headerName = document.getElementById('headerUserName');
@@ -2023,10 +2050,14 @@
       const menuEmail = document.getElementById('menuBannerEmail');
 
       if (headerAvatar) headerAvatar.src = avatar;
-      if (headerName) headerName.textContent = user.name || 'Giảng viên';
+      if (headerName) headerName.textContent = displayName;
       if (menuAvatar) menuAvatar.src = avatar;
-      if (menuName) menuName.textContent = user.name || 'Giảng viên Pro';
+      if (menuName) menuName.textContent = displayName;
       if (menuEmail) menuEmail.textContent = user.email || 'instructor@lhd.edu.vn';
+
+      const isAdmin = user && user.role === 'ROLE_ADMIN';
+      const adminMenu = document.getElementById('adminMenuSection');
+      if (adminMenu) adminMenu.style.display = isAdmin ? 'block' : 'none';
 
       renderNotifications();
     }

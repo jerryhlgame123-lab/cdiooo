@@ -95,7 +95,13 @@
       border: 1.5px solid #e2e8f0; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
       padding: 0.75rem; min-width: 280px; display: none; flex-direction: column; z-index: 1100;
       animation: dropdownFadeIn 0.2s ease;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
     }
+    .nav-dropdown::-webkit-scrollbar { width: 4px; }
+    .nav-dropdown::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     .nav-dropdown.show { display: flex; }
     @keyframes dropdownFadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -124,7 +130,21 @@
 
     .dashboard-layout { display: flex; gap: 2rem; max-width: 1440px; margin: 1.75rem auto 3rem; padding: 0 4%; position: relative; z-index: 1; }
     .sidebar { width: 280px; flex-shrink: 0; }
-    .sidebar-card { background: var(--card-bg); border: 1.5px solid #eef2f6; border-radius: 24px; padding: 1.5rem 1.25rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); position: sticky; top: 90px; }
+    .sidebar-card { 
+      background: var(--card-bg); 
+      border: 1.5px solid #eef2f6; 
+      border-radius: 24px; 
+      padding: 1.5rem 1.25rem; 
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+      position: sticky; 
+      top: 90px;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    .sidebar-card::-webkit-scrollbar { width: 4px; }
+    .sidebar-card::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     .sidebar-brand-mini { display: flex; align-items: center; gap: 12px; padding-bottom: 1.25rem; margin-bottom: 1.25rem; border-bottom: 1.5px solid #f1f5f9; }
     .sidebar-brand-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #7c3aed, #ec4899); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25); }
     .sidebar-brand-title { font-weight: 800; font-size: 0.95rem; color: #0f172a; }
@@ -367,61 +387,6 @@
     </div>
 
     <div class="header-right">
-      <!-- Mega Menu Circle Button -->
-      <div style="position: relative;">
-        <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)" title="Danh mục tiện ích">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <!-- Menu Dropdown -->
-        <div class="nav-dropdown" id="menuDropdown">
-          <div class="menu-user-banner" onclick="window.location.href='profile.html'">
-            <div class="menu-banner-avatar-wrap">
-              <img src="" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
-            </div>
-            <div>
-              <div class="menu-banner-name" id="menuBannerName">giảng viên</div>
-              <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
-              <span class="menu-role-pill" id="menuBannerRole">Giảng viên / Đã xác thực</span>
-            </div>
-          </div>
-
-          <div class="dropdown-divider"></div>
-
-          <a href="dashboard.html" class="student-menu-item">
-            <i class="fa-solid fa-chart-pie" style="color: #7c3aed;"></i>
-            <span>Bảng điều khiển giảng viên</span>
-          </a>
-          <a href="course-builder.html" class="student-menu-item">
-            <i class="fa-solid fa-wand-magic-sparkles" style="color: #0b63e5;"></i>
-            <span>Tạo & Biên soạn khóa học</span>
-          </a>
-          <a href="live-rooms.html" class="student-menu-item">
-            <i class="fa-solid fa-video" style="color: #e11d48;"></i>
-            <span>Phòng học trực tuyến Live</span>
-          </a>
-          <a href="qa.html" class="student-menu-item">
-            <i class="fa-solid fa-comments" style="color: #10b981;"></i>
-            <span>Hỏi đáp học viên Q&A</span>
-          </a>
-          <a href="earnings.html" class="student-menu-item">
-            <i class="fa-solid fa-wallet" style="color: #f59e0b;"></i>
-            <span>Báo cáo doanh thu & Rút tiền</span>
-          </a>
-          <a href="profile.html" class="student-menu-item">
-            <i class="fa-solid fa-user-gear" style="color: #6366f1;"></i>
-            <span>Hồ sơ & Bằng cấp chuyên môn</span>
-          </a>
-
-          <div class="dropdown-divider"></div>
-
-          <button type="button" class="btn-menu-logout" id="btnLogoutUser">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            <span>Đăng xuất tài khoản</span>
-          </button>
-        </div>
-      </div>
-
       <!-- Bell Circle Button -->
       <div style="position: relative;">
         <button type="button" class="nav-circle-btn" id="headerBellBtn" onclick="toggleBellDropdown(event)" title="Thông báo hệ thống">
@@ -450,6 +415,102 @@
         <span class="user-capsule-name" id="headerUserName">giảng viên</span>
         <i class="fa-solid fa-chevron-down" style="font-size: 0.72rem; color: #94a3b8;"></i>
       </a>
+
+      <!-- Mega Menu Circle Button (3 gạch ☰ nằm sau avatar) -->
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)" title="Danh mục tiện ích (☰)">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- Menu Dropdown -->
+        <div class="nav-dropdown" id="menuDropdown">
+          <div class="menu-user-banner" onclick="window.location.href='profile.html'">
+            <div class="menu-banner-avatar-wrap">
+              <img src="" class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+            </div>
+            <div>
+              <div class="menu-banner-name" id="menuBannerName">giảng viên</div>
+              <div class="menu-banner-sub" id="menuBannerEmail">instructor@lhd.edu.vn</div>
+              <span class="menu-role-pill" id="menuBannerRole">Giảng viên / Đã xác thực</span>
+            </div>
+          </div>
+
+          <!-- Mục Kênh Quản Trị (Hiển thị khi role là ADMIN - ĐỨNG ĐẦU TIÊN) -->
+          <div id="adminMenuSection" style="display: none;">
+            <div class="menu-group-heading" style="color: #4338ca; font-weight: 800; letter-spacing: 0.06em; font-size: 0.72rem; text-transform: uppercase; padding: 6px 12px 2px;"><i class="fa-solid fa-shield-halved"></i> Dành Cho Quản Trị Viên</div>
+            <a href="../admin/dashboard.html" class="student-menu-item"
+              style="color: #4338ca; font-weight: 800; background: linear-gradient(135deg, rgba(67, 56, 202, 0.08) 0%, rgba(124, 58, 237, 0.06) 100%); border: 1.5px solid #c7d2fe; box-shadow: 0 3px 10px rgba(67, 56, 202, 0.12); margin-bottom: 6px; border-radius: 12px; padding: 10px 14px; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+              <i class="fa-solid fa-gauge-high" style="color: #4338ca;"></i>
+              <span style="color: #4338ca; font-weight: 800; font-size: 0.88rem;">Kênh Quản Trị (Dashboard)</span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; color: #4338ca; margin-left: auto;"></i>
+            </a>
+            <div class="dropdown-divider"></div>
+          </div>
+
+          <!-- Mục Kênh Giảng Viên -->
+          <div id="instructorMenuSection">
+            <div class="menu-group-heading" style="color: #9333ea; font-weight: 800; letter-spacing: 0.06em; font-size: 0.72rem; text-transform: uppercase; padding: 6px 12px 2px;"><i class="fa-solid fa-chalkboard-user"></i> Dành Cho Giảng Viên</div>
+            <a href="dashboard.html" class="student-menu-item"
+              style="color: #7c3aed; font-weight: 800; background: linear-gradient(135deg, rgba(147, 51, 234, 0.08) 0%, rgba(11, 99, 229, 0.06) 100%); border: 1.5px solid #e9d5ff; box-shadow: 0 3px 10px rgba(147, 51, 234, 0.12); margin-bottom: 6px; border-radius: 12px; padding: 10px 14px; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+              <i class="fa-solid fa-chalkboard-user" style="color: #7c3aed;"></i>
+              <span style="color: #7c3aed; font-weight: 800; font-size: 0.88rem;">Kênh Giảng Viên (Dashboard)</span>
+              <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.75rem; color: #9333ea; margin-left: auto;"></i>
+            </a>
+            <div class="dropdown-divider"></div>
+          </div>
+
+          <!-- Quản lý học tập & giảng dạy -->
+          <div class="menu-group-heading" style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 12px 2px;">Quản Lý Giảng Dạy & Học Tập</div>
+          <a href="home.html" class="student-menu-item">
+            <i class="fa-solid fa-house" style="color: #0b63e5;"></i>
+            <span>Trang chủ giảng viên</span>
+          </a>
+          <a href="course-builder.html" class="student-menu-item">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color: #7c3aed;"></i>
+            <span>Tạo & Biên soạn khóa học</span>
+          </a>
+          <a href="live-rooms.html" class="student-menu-item">
+            <i class="fa-solid fa-video" style="color: #e11d48;"></i>
+            <span>Phòng học trực tuyến Live</span>
+          </a>
+          <a href="qa.html" class="student-menu-item">
+            <i class="fa-solid fa-comments" style="color: #10b981;"></i>
+            <span>Hỏi đáp học viên Q&A</span>
+          </a>
+          <a href="earnings.html" class="student-menu-item">
+            <i class="fa-solid fa-wallet" style="color: #f59e0b;"></i>
+            <span>Báo cáo doanh thu & Rút tiền</span>
+          </a>
+          <a href="../courses.html" class="student-menu-item">
+            <i class="fa-solid fa-compass" style="color: #0284c7;"></i>
+            <span>Khám phá khóa học</span>
+          </a>
+          <a href="../certificates.html" class="student-menu-item">
+            <i class="fa-solid fa-award" style="color: #8b5cf6;"></i>
+            <span>Chứng chỉ hệ thống</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <!-- Cài đặt & Đăng xuất -->
+          <div class="menu-group-heading" style="font-size: 0.72rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; padding: 6px 12px 2px;">Cài Đặt & Hỗ Trợ</div>
+          <a href="profile.html" class="student-menu-item">
+            <i class="fa-solid fa-user-gear" style="color: #6366f1;"></i>
+            <span>Thông tin cá nhân & Hồ sơ</span>
+          </a>
+          <a href="profile.html#security" class="student-menu-item">
+            <i class="fa-solid fa-shield-halved" style="color: #10b981;"></i>
+            <span>Đổi mật khẩu / Bảo mật</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <button type="button" class="btn-menu-logout" id="btnLogoutUser">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Đăng xuất tài khoản</span>
+          </button>
+        </div>
+      </div>
     </div>
   </header>
   
@@ -464,7 +525,7 @@
           <i class="fa-solid fa-chalkboard-user"></i>
         </div>
         <div>
-          <div class="sidebar-brand-title">Giảng Viên Pro</div>
+          <div class="sidebar-brand-title">Giảng Viên</div>
           <div class="sidebar-brand-sub">LHD Learning Studio</div>
         </div>
       </div>
@@ -832,6 +893,16 @@
       document.querySelectorAll('.user-capsule-avatar, .menu-banner-avatar, #headerUserAvatar, #menuBannerAvatar').forEach(img => {
         img.src = savedAvatar;
       });
+
+      const isAdmin = u.role === 'ROLE_ADMIN';
+      const roleBadge = document.getElementById('menuBannerRole');
+      if (roleBadge) {
+        roleBadge.textContent = isAdmin ? 'Quản trị viên Hệ thống' : 'Giảng viên / Đã xác thực';
+      }
+      const adminMenu = document.getElementById('adminMenuSection');
+      if (adminMenu) {
+        adminMenu.style.display = isAdmin ? 'block' : 'none';
+      }
     };
 
     const DEFAULT_NOTIFS = [

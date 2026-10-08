@@ -1,78 +1,96 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản Lý Người Dùng & Phân Quyền | LHD – Learning Admin Portal</title>
-  <!-- Google Fonts & Font Awesome đồng bộ toàn hệ thống -->
+  <title>Quản Lý Người Dùng & Phân Quyền | LHD – Learning</title>
+  <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
-      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      --primary-grad: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
+      --admin-grad: linear-gradient(135deg, #1e1b4b 0%, #4338ca 50%, #7c3aed 100%);
       --primary-color: #0b63e5;
-      --purple-color: #8b5cf6;
+      --admin-color: #4338ca;
+      --purple-color: #7c3aed;
       --pink-color: #ec4899;
       --bg-page: #f8fafc;
       --text-main: #0f172a;
-      --text-sub: #475569;
+      --text-sub: #64748b;
       --card-bg: rgba(255, 255, 255, 0.95);
       --border-subtle: rgba(226, 232, 240, 0.85);
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }
-
-    body, button, input, select, textarea {
+      box-sizing: border-box;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    .fa, .fa-solid, .fa-regular, .fa-brands, .fas, .far, .fab {
-      font-family: "Font Awesome 6 Free" !important;
-    }
-    .fa-brands, .fab {
-      font-family: "Font Awesome 6 Brands" !important;
+    html {
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
     }
 
-    html,
     body {
-      width: 100%;
-      max-width: 100%;
       background-color: var(--bg-page);
       color: var(--text-main);
       min-height: 100vh;
+      overflow-x: clip;
       position: relative;
-      overflow-x: hidden;
     }
 
-    /* Ambient background glows đồng bộ profile.html */
-    /* Sticky Navbar phong cách index.html */
+    .ambient-glow {
+      position: fixed;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.12;
+      filter: blur(90px);
+    }
+
+    .ambient-1 {
+      top: -100px;
+      right: -50px;
+      background: linear-gradient(135deg, #4338ca, #ec4899);
+    }
+
+    .ambient-2 {
+      bottom: 10%;
+      left: -100px;
+      background: linear-gradient(135deg, #0b63e5, #7c3aed);
+    }
+
+    /* Header */
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1.5px solid #eef2f6;
       padding: 0.85rem 4%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 3.5rem;
+      gap: 2.5rem;
     }
 
     .brand-logo {
@@ -85,21 +103,20 @@
     .brand-icon {
       width: 42px;
       height: 42px;
-      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
+      background: linear-gradient(135deg, #0b63e5 0%, #7c3aed 55%, #ec4899 100%);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
       font-size: 1.25rem;
-      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
       flex-shrink: 0;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .brand-logo:hover .brand-icon {
       transform: rotate(-6deg) scale(1.06);
-      box-shadow: 0 6px 22px rgba(236, 72, 153, 0.45);
     }
 
     .brand-title {
@@ -109,450 +126,211 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.3px;
-      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1rem;
       list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .nav-links li {
-      display: inline-flex;
-      align-items: center;
     }
 
     .nav-links a {
       text-decoration: none;
       color: #374151;
       font-weight: 600;
-      font-size: 0.95rem;
-      padding: 8px 20px;
+      font-size: 0.92rem;
+      padding: 8px 18px;
       border-radius: 9999px;
-      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.12s ease;
+      transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      border: 1px solid transparent;
-      position: relative;
-      overflow: hidden;
+      gap: 6px;
     }
 
     .nav-links a:hover {
-      color: #7c3aed;
-      background: linear-gradient(135deg, rgba(11, 99, 229, 0.05), rgba(236, 72, 153, 0.08));
+      color: #4338ca;
+      background: rgba(67, 56, 202, 0.08);
     }
 
-    .nav-links a:active {
-      transform: scale(0.95);
-    }
-
-    @keyframes navPillPop {
-      0% {
-        transform: scale(0.92);
-        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
-      }
-      50% {
-        transform: scale(1.05);
-        box-shadow: 0 4px 22px rgba(236, 72, 153, 0.55);
-      }
-      100% {
-        transform: scale(1);
-        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
-      }
-    }
-
-    /* Active pill state - Gradient Xanh - Hồng Tím chuẩn 100% index.html */
-    .nav-links a.nav-item-active,
-    .nav-links a.active {
-      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%) !important;
+    .nav-pill-channel {
+      background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%) !important;
       color: #ffffff !important;
+      font-weight: 800 !important;
+      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.35);
+    }
+
+    .nav-pill-sub {
+      background: rgba(124, 58, 237, 0.08);
+      color: #7c3aed !important;
       font-weight: 700;
-      padding: 8px 20px;
-      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.38);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      animation: navPillPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .nav-links a.nav-item-active:hover,
-    .nav-links a.active:hover {
-      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
-      transform: translateY(-1px);
-    }
-
-    .nav-links a.nav-item-active:active,
-    .nav-links a.active:active {
-      transform: scale(0.95);
-    }
-
-    /* Header Right Actions - 100% Đồng bộ index.html */
     .header-right {
       display: flex;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-    }
-
-    .nav-actions-user {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-    }
-
-    .nav-user-left-group {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .nav-user-divider {
-      width: 1px;
-      height: 24px;
-      background: #e2e8f0;
-      margin: 0 4px;
-    }
-
-    .nav-user-right-group {
-      display: inline-flex;
       align-items: center;
       gap: 12px;
     }
 
     .nav-circle-btn {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      border: 1.5px solid #dce4ec;
+      border: 1.5px solid #e2e8f0;
       background: #ffffff;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      color: #273746;
-      text-decoration: none;
-      cursor: pointer;
-      position: relative;
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-      flex-shrink: 0;
+      color: #334155;
       font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
     }
 
     .nav-circle-btn:hover {
-      border-color: #0b63e5;
-      color: #0b63e5;
+      border-color: #4338ca;
+      color: #4338ca;
       transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
     }
 
-    .nav-circle-btn.btn-bell {
-      font-size: 17px;
-      color: #273746;
-    }
-
-    .nav-circle-btn.btn-menu {
-      font-size: 16px;
-      color: #0b63e5;
-    }
-
-    .nav-circle-btn.btn-menu:hover {
-      background: rgba(11, 99, 229, 0.06);
+    .btn-menu {
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #4338ca;
     }
 
     .bell-badge {
       position: absolute;
       top: -3px;
       right: -3px;
-      background: #ea4335;
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 800;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.7rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 2px solid #ffffff;
-      box-shadow: 0 2px 5px rgba(234, 67, 53, 0.4);
     }
 
-    /* User Capsule - Match Image 2 & index.html */
     .user-capsule {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      border: 1.5px solid #dce4ec;
-      border-radius: 9999px;
-      padding: 4px 18px 4px 5px;
+      padding: 4px 16px 4px 5px;
       background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 9999px;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-      position: relative;
-      user-select: none;
-    }
-
-    .user-capsule:hover {
-      border-color: #cbd5e1;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     }
 
     .user-capsule-avatar {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      border: 2px solid #0b63e5;
       object-fit: cover;
-      display: block;
-      flex-shrink: 0;
+      border: 1.5px solid #4338ca;
+      background: #e2e8f0;
     }
 
     .user-capsule-name {
+      font-size: 0.92rem;
       font-weight: 700;
-      font-size: 0.95rem;
-      color: #24292f;
-      letter-spacing: -0.2px;
-      white-space: nowrap;
+      color: #0f172a;
     }
 
-    /* Nút Thoát Đăng Xuất Chuẩn Header Right */
-    .btn-header-logout {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 16px;
-      border-radius: 9999px;
-      background: rgba(239, 68, 68, 0.08);
-      color: #ef4444;
-      border: 1.5px solid rgba(239, 68, 68, 0.25);
-      font-size: 0.86rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .btn-header-logout:hover {
-      background: #ef4444;
-      color: #ffffff;
-      border-color: #ef4444;
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
-      transform: translateY(-1px);
-    }
-
-    .btn-header-logout:active {
-      transform: scale(0.96);
-    }
-
-    /* Dropdown Menus for User, Menu, Bell */
     .nav-dropdown {
       position: absolute;
       top: calc(100% + 12px);
       right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(20px);
+      background: #ffffff;
       border: 1.5px solid #e2e8f0;
       border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-      padding: 0.75rem;
-      min-width: 260px;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.22);
+      padding: 0.65rem 0.75rem;
+      width: 320px;
+      max-width: 94vw;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
       display: none;
       flex-direction: column;
-      gap: 4px;
-      z-index: 1500;
-      animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1100;
+      animation: dropdownFadeIn 0.2s ease;
+    }
+
+    .nav-dropdown::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .nav-dropdown::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
     }
 
     .nav-dropdown.show {
       display: flex;
     }
 
-    @keyframes dropdownFadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .menu-user-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, rgba(67, 56, 202, 0.1), rgba(124, 58, 237, 0.08));
+      border-radius: 14px;
+      cursor: pointer;
+      margin-bottom: 6px;
     }
 
-    .dropdown-header {
-      padding: 0.5rem 0.85rem 0.75rem;
-      border-bottom: 1px solid #f1f5f9;
-      margin-bottom: 4px;
+    .menu-banner-avatar-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid #4338ca;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .dropdown-header-title {
+    .menu-banner-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .menu-banner-name {
       font-weight: 800;
       font-size: 0.95rem;
       color: #0f172a;
     }
 
-    .dropdown-header-sub {
-      font-size: 0.8rem;
-      color: #64748b;
-    }
-
-    .dropdown-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0.65rem 0.85rem;
-      border-radius: 12px;
-      color: #334155;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.88rem;
-      transition: all 0.15s ease;
-      cursor: pointer;
-    }
-
-    .dropdown-link:hover {
-      background: #f1f5f9;
-      color: #0b63e5;
-    }
-
-    .dropdown-link i {
-      width: 18px;
-      text-align: center;
-      color: #64748b;
-    }
-
-    .dropdown-link:hover i {
-      color: #0b63e5;
-    }
-
-    .dropdown-divider {
-      height: 1px;
-      background: #f1f5f9;
-      margin: 4px 0;
-    }
-
-    .dropdown-link.logout-link {
-      color: #dc2626;
-      cursor: pointer;
-    }
-
-    .dropdown-link.logout-link:hover {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    .dropdown-link.logout-link i {
-      color: #dc2626;
-    }
-
-    /* Student / Admin Mega Dropdown Styles - Đồng bộ index.html */
-    .student-mega-dropdown {
-      min-width: 290px;
-      max-width: 320px;
-      max-height: calc(100vh - 100px);
-      overflow-y: auto;
-      padding: 0.85rem;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
-      border: 1.5px solid rgba(226, 232, 240, 0.95);
-      scrollbar-width: thin;
-      scrollbar-color: #cbd5e1 transparent;
-    }
-
-    .student-mega-dropdown::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .student-mega-dropdown::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
-
-    .menu-user-banner {
-      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
-      border-radius: 18px;
-      padding: 1.1rem;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 0.5rem;
-      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .menu-user-banner-glow {
-      position: absolute;
-      top: -30px;
-      right: -30px;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: #8b5cf6;
-      filter: blur(25px);
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .menu-banner-avatar {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      border: 2px solid #ffffff;
-      background: #ffffff;
-      flex-shrink: 0;
-      object-fit: cover;
-    }
-
-    .menu-banner-meta {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .menu-banner-name {
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .menu-banner-sub {
-      font-size: 0.78rem;
-      color: #cbd5e1;
-      margin: 2px 0 5px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.75rem;
+      color: #64748b;
     }
 
-    .menu-banner-verified {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: rgba(34, 197, 94, 0.2);
-      border: 1px solid rgba(34, 197, 94, 0.45);
-      color: #4ade80;
+    .menu-role-pill {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
       padding: 2px 8px;
+      background: #e0e7ff;
+      color: #4338ca;
       border-radius: 9999px;
-      font-size: 0.72rem;
-      font-weight: 700;
+      margin-top: 4px;
     }
 
     .menu-group-heading {
       font-size: 0.72rem;
       font-weight: 800;
-      color: #94a3b8;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       padding: 0.5rem 0.6rem 0.2rem;
@@ -562,889 +340,509 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 0.65rem 0.85rem;
-      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #334155;
       text-decoration: none;
-      color: var(--text-main);
+      border-radius: 12px;
       transition: all 0.18s ease;
     }
 
     .student-menu-item:hover {
-      background: #f1f5f9;
+      background: #f8fafc;
+      color: #4338ca;
       transform: translateX(4px);
     }
 
     .menu-item-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: rgba(11, 99, 229, 0.08);
-      color: #0b63e5;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(67, 56, 202, 0.08);
+      color: #4338ca;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       flex-shrink: 0;
-      transition: all 0.2s ease;
     }
 
-    .student-menu-item:hover .menu-item-icon {
-      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
-      color: #ffffff;
-    }
-
-    .student-menu-item .menu-item-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #1e293b;
-      transition: color 0.18s ease;
-    }
-
-    .student-menu-item:hover .menu-item-title {
-      color: #0b63e5;
+    .dropdown-divider {
+      height: 1px;
+      background: #eef2f6;
+      margin: 6px 0;
     }
 
     .btn-menu-logout {
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0.75rem 1rem;
-      border-radius: 14px;
-      background: rgba(239, 68, 68, 0.08);
-      border: 1.5px solid rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      margin-top: 0.35rem;
-    }
-
-    .btn-menu-logout:hover {
-      background: #ef4444;
-      color: #ffffff;
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
-    }
-    .btn-register-pill {
-      padding: 9px 22px;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #ffffff;
-      text-decoration: none;
-      background: linear-gradient(135deg, #0b63e5 0%, #8b5cf6 55%, #ec4899 100%);
-      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn-register-pill:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45);
-    }
-
-    /* Container with 2-Column Layout matching image & profile.html */
-    .container {
-      width: 100%;
-      max-width: 1380px;
-      margin: 2.2rem auto 4rem;
-      padding: 0 1.5rem;
-      position: relative;
-      z-index: 1;
-      box-sizing: border-box;
-    }
-
-    .admin-layout-grid {
-      display: flex;
-      gap: 1.8rem;
-      align-items: flex-start;
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-
-    .admin-sidebar {
-      flex: 0 0 280px;
-      width: 280px;
-      max-width: 280px;
-      flex-shrink: 0;
-      position: sticky;
-      top: 90px;
-      z-index: 10;
-    }
-
-    .admin-main-content {
-      flex: 1 1 0%;
-      min-width: 0;
-      max-width: 100%;
-      width: auto;
-      box-sizing: border-box;
-    }
-
-    /* Sidebar Cards - Chuẩn phong cách 100% theo ảnh đính kèm */
-    .sidebar-card {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 1.35rem 1.15rem;
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-      margin-bottom: 1.25rem;
-    }
-
-    .sidebar-group-title {
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #94a3b8;
-      padding: 0 12px;
-      margin-bottom: 12px;
-    }
-
-    .sidebar-item {
-      display: flex;
-      align-items: center;
       gap: 12px;
       padding: 10px 14px;
-      border-radius: 9999px;
-      text-decoration: none;
-      font-size: 0.92rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      color: #334155;
-      transition: all 0.2s ease;
-      margin-bottom: 5px;
-      position: relative;
+      color: #e11d48;
+      background: #fff1f2;
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
     }
 
-    .sidebar-item:hover {
-      background: #f8fafc;
-      color: var(--primary-color);
-      transform: translateX(3px);
-    }
-
-    .sidebar-item i {
-      font-size: 1.05rem;
-      width: 22px;
-      text-align: center;
-      color: #64748b;
-      transition: color 0.2s ease;
-    }
-
-    .sidebar-item:hover i {
-      color: var(--primary-color);
-    }
-
-    /* Active Item - Như ảnh: gradient hồng tím, chữ trắng, shadow nổi bật */
-    .sidebar-item.active {
-      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-      color: #ffffff !important;
-      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.35);
-    }
-
-    .sidebar-item.active i {
-      color: #ffffff !important;
-    }
-
-    .sidebar-item .item-text {
-      flex: 1;
-    }
-
-    /* Badges trong Sidebar như ảnh */
-    .badge-count-active {
-      width: 22px;
-      height: 22px;
-      background: rgba(255, 255, 255, 0.25);
-      border: 1.5px solid rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #ffffff;
+    /* Layout structure */
+    .dashboard-layout {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: auto;
-    }
-
-    .badge-count-gray {
-      background: #f1f5f9;
-      color: #64748b;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 9999px;
-      margin-left: auto;
-    }
-
-    .badge-count-amber {
-      background: #fef3c7;
-      color: #d97706;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 2px 9px;
-      border-radius: 9999px;
-      margin-left: auto;
-    }
-
-
-
-    /* Hero Banner Card phong cách profile.html */
-    .profile-hero {
-      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 50%, #31104b 100%);
-      border-radius: 28px;
-      padding: 2.4rem 2.8rem;
-      color: #ffffff;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    .hero-glow-blob {
-      position: absolute;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      filter: blur(75px);
-      pointer-events: none;
-      opacity: 0.55;
-    }
-
-    .hero-glow-1 {
-      top: -100px;
-      right: -80px;
-      background: #8b5cf6;
-    }
-
-    .hero-glow-2 {
-      bottom: -100px;
-      left: 25%;
-      background: #ec4899;
-    }
-
-    .profile-hero-content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 2rem;
-      width: 100%;
+      max-width: 1440px;
+      margin: 1.75rem auto 3rem;
+      padding: 0 4%;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-title-area {
-      flex: 1 1 0%;
-      min-width: 0;
-    }
-
-    .hero-title-area h1 {
-      font-size: 1.95rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
-      color: #ffffff;
-    }
-
-    .hero-title-area p {
-      font-size: 0.95rem;
-      color: #cbd5e1;
-      max-width: 580px;
-      line-height: 1.55;
-    }
-
-    /* Hero Stats 2x2 Grid BÊN PHẢI */
-    .hero-stats-2x2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(160px, 1fr));
-      gap: 0.85rem;
+    .sidebar {
+      width: 280px;
       flex-shrink: 0;
     }
 
-    .hero-mini-stat {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 18px;
-      padding: 0.85rem 1.15rem;
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1.5px solid #eef2f6;
+      border-radius: 24px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      position: sticky;
+      top: 90px;
+      max-height: calc(100vh - 110px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .sidebar-card::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar-card::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    .sidebar-brand-mini {
       display: flex;
       align-items: center;
       gap: 12px;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1.5px solid #f1f5f9;
     }
 
-    .hero-mini-stat:hover {
-      background: rgba(255, 255, 255, 0.14);
-      transform: translateY(-2px);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .hero-stat-icon-badge {
+    .sidebar-brand-icon {
       width: 40px;
       height: 40px;
       border-radius: 12px;
+      background: linear-gradient(135deg, #1e1b4b, #4338ca);
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 12px rgba(67, 56, 202, 0.3);
+    }
+
+    .sidebar-brand-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+
+    .sidebar-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+    }
+
+    .sidebar-link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-link-left i {
       font-size: 1.05rem;
+      width: 20px;
+      color: #94a3b8;
+      transition: color 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(67, 56, 202, 0.06);
+      color: #4338ca;
+      transform: translateX(3px);
+    }
+
+    .sidebar-link:hover .sidebar-link-left i {
+      color: #4338ca;
+    }
+
+    .sidebar-link.active {
+      background: linear-gradient(135deg, #1e1b4b, #4338ca);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(67, 56, 202, 0.3);
+    }
+
+    .sidebar-link.active .sidebar-link-left i {
+      color: #ffffff;
+    }
+
+    .sidebar-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: #f1f5f9;
+      margin: 1.25rem 0;
+    }
+
+    .content-area {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1.5px solid #eef2f6;
+      border-radius: 22px;
+      padding: 1.4rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: #4338ca;
+    }
+
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .kpi-title {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+    }
+
+    .kpi-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
       flex-shrink: 0;
     }
 
-    .badge-users {
-      background: rgba(11, 99, 229, 0.25);
-      color: #60a5fa;
-      border: 1px solid rgba(96, 165, 250, 0.35);
+    .kpi-val {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
     }
 
-    .badge-instructor {
-      background: rgba(245, 158, 11, 0.25);
-      color: #fbbf24;
-      border: 1px solid rgba(251, 191, 36, 0.35);
-    }
-
-    .badge-student {
-      background: rgba(16, 185, 129, 0.25);
-      color: #34d399;
-      border: 1px solid rgba(52, 211, 153, 0.35);
-    }
-
-    .badge-admin {
-      background: rgba(236, 72, 153, 0.25);
-      color: #f472b6;
-      border: 1px solid rgba(244, 114, 182, 0.35);
-    }
-
-    .hero-stat-info {
+    .kpi-footer {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #64748b;
     }
 
-    .hero-mini-stat-num {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.15;
-      letter-spacing: -0.3px;
-    }
-
-    .hero-mini-stat-lbl {
-      font-size: 0.75rem;
-      color: #cbd5e1;
-      font-weight: 600;
-      margin-top: 2px;
-      white-space: nowrap;
-    }
-
-    /* Content Box Container phong cách profile.html */
+    /* Table & Content Box */
     .content-box {
-      background: #ffffff;
+      background: var(--card-bg);
+      border: 1.5px solid #eef2f6;
       border-radius: 24px;
-      padding: 1.6rem 1.8rem;
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
-      margin-bottom: 2rem;
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      box-sizing: border-box;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     .box-header {
-      margin-bottom: 1.4rem;
-      border-bottom: 1px solid #f1f5f9;
-      padding-bottom: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 1.25rem;
       flex-wrap: wrap;
       gap: 1rem;
     }
 
     .box-title {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 800;
-      color: var(--text-main);
+      color: #0f172a;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .box-title i {
-      color: var(--purple-color);
-    }
-
-    .box-subtitle {
-      font-size: 0.84rem;
-      color: var(--text-sub);
-      margin-top: 3px;
-    }
-
-    /* Search & Filters Toolbar */
-    .filter-toolbar {
+    .table-toolbar {
       display: flex;
-      gap: 0.85rem;
-      margin-bottom: 1.4rem;
-      flex-wrap: wrap;
+      justify-content: space-between;
       align-items: center;
-      width: 100%;
-      min-width: 0;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
     }
 
     .search-input-wrap {
-      flex: 1 1 240px;
-      min-width: 220px;
       position: relative;
+      flex: 1;
+      min-width: 260px;
     }
 
-    .search-icon {
+    .search-input-wrap i {
       position: absolute;
+      left: 14px;
       top: 50%;
-      left: 1.1rem;
       transform: translateY(-50%);
       color: #94a3b8;
-      font-size: 0.9rem;
     }
 
-    .search-input-wrap input {
+    .search-input {
       width: 100%;
-      padding: 0.7rem 1.1rem 0.7rem 2.6rem;
-      border-radius: 9999px;
-      border: 1.5px solid #cbd5e1;
-      background: #f8fafc;
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--text-main);
+      padding: 10px 14px 10px 40px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.88rem;
       outline: none;
       transition: all 0.2s ease;
     }
 
-    .search-input-wrap input:focus {
-      border-color: #8b5cf6;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    .search-input:focus {
+      border-color: #4338ca;
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.12);
     }
 
-    .pill-select {
-      padding: 0.68rem 1.2rem;
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 7px 14px;
       border-radius: 9999px;
-      border: 1.5px solid #cbd5e1;
+      border: 1px solid #e2e8f0;
       background: #ffffff;
-      color: var(--text-sub);
+      color: #475569;
+      font-size: 0.8rem;
       font-weight: 700;
-      font-size: 0.84rem;
-      outline: none;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .pill-select:focus {
-      border-color: #8b5cf6;
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    .filter-pill:hover {
+      border-color: #4338ca;
+      color: #4338ca;
     }
 
-    /* Admin Table Thu Gọn Hiển Thị Trọn Vẹn 100% Không Cần Cuộn Ngang */
-    .table-responsive {
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+    .filter-pill.active {
+      background: #4338ca;
+      color: #ffffff;
+      border-color: #4338ca;
     }
 
-    .admin-table {
+    .custom-table {
       width: 100%;
       border-collapse: collapse;
+    }
+
+    .custom-table th {
       text-align: left;
-      table-layout: auto;
-    }
-
-    .admin-table th {
-      padding: 0.62rem 0.65rem;
-      font-size: 0.72rem;
+      padding: 12px 14px;
+      font-size: 0.75rem;
       font-weight: 800;
-      color: #64748b;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      border-bottom: 2px solid #f1f5f9;
-      white-space: nowrap;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      border-bottom: 1.5px solid #eef2f6;
     }
 
-    .admin-table td {
-      padding: 0.62rem 0.65rem;
-      font-size: 0.82rem;
+    .custom-table td {
+      padding: 14px;
       border-bottom: 1px solid #f1f5f9;
-      color: var(--text-main);
+      font-size: 0.88rem;
       vertical-align: middle;
     }
 
-    .admin-table tbody tr {
-      transition: all 0.2s ease;
-    }
-
-    .admin-table tbody tr:hover {
+    .custom-table tr:hover td {
       background: #f8fafc;
     }
 
-    /* Badges */
-    .badge-role {
+    .user-avatar-cell {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid #e2e8f0;
+    }
+
+    .role-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      padding: 3px 8px;
+      gap: 4px;
+      padding: 4px 10px;
       border-radius: 9999px;
-      font-weight: 700;
-      font-size: 0.72rem;
-      white-space: nowrap;
-    }
-
-    .role-student {
-      background: rgba(11, 99, 229, 0.1);
-      border: 1px solid rgba(11, 99, 229, 0.25);
-      color: #0b63e5;
-    }
-
-    .role-instructor {
-      background: rgba(139, 92, 246, 0.1);
-      border: 1px solid rgba(139, 92, 246, 0.25);
-      color: #8b5cf6;
+      font-size: 0.74rem;
+      font-weight: 800;
     }
 
     .role-admin {
-      background: rgba(236, 72, 153, 0.1);
-      border: 1px solid rgba(236, 72, 153, 0.25);
-      color: #ec4899;
+      background: #e0e7ff;
+      color: #4338ca;
     }
 
-    .badge-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 8px;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 0.72rem;
-      white-space: nowrap;
+    .role-instructor {
+      background: #f3e8ff;
+      color: #7c3aed;
+    }
+
+    .role-student {
+      background: #e0f2fe;
+      color: #0284c7;
     }
 
     .status-active {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
       color: #16a34a;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .status-locked {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.35);
       color: #dc2626;
-    }
-
-    /* Actions */
-    .action-cell {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .btn-action-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 1.5px solid #e2e8f0;
-      background: #ffffff;
-      color: #475569;
+      font-weight: 700;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.78rem;
+      gap: 4px;
     }
 
-    .btn-action-icon:hover {
-      border-color: #8b5cf6;
-      color: #8b5cf6;
-      background: #f5f3ff;
-      transform: translateY(-1px);
-    }
-
-    .btn-lock-user:hover {
-      border-color: #ef4444;
-      color: #ef4444;
-      background: #fef2f2;
-    }
-
-    /* Pagination */
-    .pagination-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.8rem;
-      padding-top: 1.2rem;
-      border-top: 1px solid #f1f5f9;
-      color: var(--text-sub);
-      font-size: 0.88rem;
-      font-weight: 600;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .page-buttons {
-      display: flex;
-      gap: 6px;
-    }
-
-    .page-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1.5px solid #e2e8f0;
-      background: #ffffff;
-      color: var(--text-sub);
+    .btn-action-sm {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
       font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-
-    .page-btn:hover {
-      border-color: var(--primary-color);
-      color: var(--primary-color);
-    }
-
-    .page-btn.active {
-      background: var(--primary-grad);
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
-    }
-
-    /* Modal System phong cách profile.html */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-
-    .modal-backdrop.show {
-      display: flex;
-      animation: modalFadeIn 0.25s ease forwards;
-    }
-
-    @keyframes modalFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-window {
-      background: #ffffff;
-      border-radius: 24px;
-      width: 100%;
-      max-width: 580px;
-      max-height: 90vh;
-      overflow-y: auto;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
-      position: relative;
-    }
-
-    .modal-header-profile {
-      background: linear-gradient(135deg, #091e42 0%, #1e1b4b 60%, #31104b 100%);
-      color: #ffffff;
-      padding: 1.3rem 1.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top-left-radius: 24px;
-      border-top-right-radius: 24px;
-    }
-
-    .modal-header-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .modal-header-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--primary-grad);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-size: 1.15rem;
-      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-    }
-
-    .modal-header-title {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .modal-header-sub {
-      font-size: 0.78rem;
-      color: #cbd5e1;
-    }
-
-    .modal-close-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
       border: none;
-      color: #ffffff;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
       transition: all 0.2s ease;
     }
 
-    .modal-close-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: rotate(90deg);
-    }
-
-    .modal-body {
-      padding: 1.8rem;
-    }
-
-    .btn-primary-grad {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0.75rem 1.6rem;
-      border-radius: 9999px;
-      background: var(--primary-grad);
-      color: #ffffff;
-      border: none;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3);
-      transition: all 0.2s ease;
-    }
-
-    .btn-primary-grad:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(139, 92, 246, 0.45);
-    }
-
-    .btn-cancel-pill {
-      padding: 0.75rem 1.4rem;
-      border-radius: 9999px;
-      border: 1.5px solid #cbd5e1;
-      background: #ffffff;
-      color: #475569;
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-cancel-pill:hover {
+    .btn-edit {
       background: #f1f5f9;
-      border-color: #94a3b8;
+      color: #334155;
     }
 
-    /* Toast Alert */
-    #toast-box {
+    .btn-edit:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-lock {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .btn-lock:hover {
+      background: #fecaca;
+    }
+
+    .toast-container {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: 24px;
+      right: 24px;
       z-index: 3000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      pointer-events: none;
     }
 
     .toast-msg {
-      pointer-events: auto;
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 1rem 1.4rem;
+      padding: 12px 20px;
+      background: #1e1b4b;
+      color: white;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-      border: 1.5px solid var(--border-subtle);
-      min-width: 320px;
-      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes slideInRight {
-      from { transform: translateX(50px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    @media (max-width: 1200px) {
-      .header-left { gap: 1.8rem; }
-      .container { padding: 0 1rem; }
-    }
-
-    @media (max-width: 1024px) {
-      .admin-layout-grid {
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-      .admin-sidebar {
-        flex: none;
-        width: 100%;
-        max-width: 100%;
-        position: relative;
-        top: 0;
-      }
-      .admin-main-content {
-        width: 100%;
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .profile-hero { padding: 2rem 1.6rem; }
-      .profile-hero-content { flex-direction: column; align-items: stretch; gap: 1.5rem; }
-      .hero-stats-2x2 { grid-template-columns: repeat(2, 1fr); width: 100%; }
-      .content-box { padding: 1.6rem 1.4rem; }
-    }
-
-    @media (max-width: 640px) {
-      header { padding: 0.75rem 1rem; }
-      .brand-title { font-size: 1.15rem; }
-      .profile-hero { padding: 1.6rem 1.2rem; border-radius: 20px; }
-      .hero-title-area h1 { font-size: 1.45rem; }
-      .hero-stats-2x2 { grid-template-columns: 1fr; width: 100%; }
-      .content-box { padding: 1.2rem 1rem; border-radius: 20px; }
-      .box-header { flex-direction: column; align-items: flex-start; }
-      .search-input-wrap { min-width: 100%; }
-      .pill-select { width: 100%; }
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-left: 4px solid #4ade80;
     }
   </style>
 </head>
 
 <body>
+  <div class="ambient-glow ambient-1"></div>
+  <div class="ambient-glow ambient-2"></div>
 
-  <!-- Header đồng bộ hoàn toàn style index.html -->
+  <!-- Header -->
   <header>
     <div class="header-left">
-      <a href="../index.html" class="brand-logo">
+      <a href="../instructor/home.html" class="brand-logo">
         <div class="brand-icon">
           <i class="fa-solid fa-graduation-cap"></i>
         </div>
@@ -1452,740 +850,582 @@
       </a>
 
       <ul class="nav-links">
-        <li><a href="dashboard.html">Tổng quan</a></li>
-        <li><a href="courses-approval.html">Duyệt khóa học</a></li>
-        <li><a href="users.html" class="nav-item-active">Người dùng</a></li>
-        <li><a href="marketing.html">Marketing</a></li>
+        <li><a href="../instructor/home.html"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+        <li><a href="../courses.html"><i class="fa-solid fa-book-open"></i> Khóa học</a></li>
+        <li><a href="dashboard.html" class="nav-pill-channel"><i class="fa-solid fa-shield-halved"></i> Kênh quản
+            trị</a></li>
+        <li><a href="../instructor/dashboard.html" class="nav-pill-sub"><i class="fa-solid fa-chalkboard-user"></i>
+            Kênh giảng viên</a></li>
+        <li><a href="../certificates.html"><i class="fa-solid fa-award"></i> Chứng chỉ</a></li>
       </ul>
     </div>
 
     <div class="header-right">
-      <div class="nav-actions-user" id="navActionsUser">
-        <!-- Nhóm 1: Thông báo & Về trang chủ -->
-        <div class="nav-user-left-group">
-          <!-- Bell Button -->
-          <div style="position: relative;">
-            <button type="button" class="nav-circle-btn btn-bell" id="adminBellBtn" title="Thông báo hệ thống" onclick="toggleAdminNotif(event)">
-              <i class="fa-regular fa-bell"></i>
-              <span class="bell-badge" id="adminBellBadge">3</span>
-            </button>
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn" id="headerBellBtn" onclick="toggleBellDropdown(event)">
+          <i class="fa-regular fa-bell"></i>
+          <span class="bell-badge">3</span>
+        </button>
+        <div class="nav-dropdown" id="bellDropdown" style="width: 300px;">
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a; margin-bottom: 8px;">Thông báo quản trị
+          </div>
+          <div style="padding: 8px; background: #e0e7ff; border-radius: 10px; font-size: 0.8rem; color: #1e1b4b;">
+            <i class="fa-solid fa-user-plus"></i> Có 185 thành viên mới đăng ký tài khoản hôm nay.
+          </div>
+        </div>
+      </div>
 
-            <!-- Bell Dropdown -->
-            <div class="nav-dropdown" id="adminNotifDropdown" style="min-width: 320px; left: 0; right: auto;">
-              <div class="dropdown-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <div class="dropdown-header-title">Thông báo hệ thống</div>
-                <button type="button" onclick="document.getElementById('adminBellBadge').style.display='none'" style="background: none; border: none; color: #0b63e5; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Đã xem hết</button>
-              </div>
-              <div style="padding: 0.65rem 0.85rem; border-radius: 12px; background: #f8fafc; margin-bottom: 6px;">
-                <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px;">
-                  <i class="fa-solid fa-clipboard-check" style="color: #f59e0b;"></i>
-                  <span>3 khóa học mới chờ duyệt</span>
-                </div>
-                <div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">Cần phê duyệt từ các giảng viên đối tác trước 18:00 hôm nay.</div>
-                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">15 phút trước</div>
-              </div>
-              <div style="padding: 0.65rem 0.85rem; border-radius: 12px; background: #f8fafc;">
-                <div style="font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 3px; display: flex; align-items: center; gap: 6px;">
-                  <i class="fa-solid fa-user-plus" style="color: #10b981;"></i>
-                  <span>+24 học viên đăng ký mới</span>
-                </div>
-                <div style="font-size: 0.8rem; color: #475569; line-height: 1.4;">Số lượng người dùng kích hoạt tài khoản tăng trưởng 18.4%.</div>
-                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 4px;">2 giờ trước</div>
-              </div>
+      <a href="../instructor/profile.html" class="user-capsule" id="userCapsuleBtn">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+          class="user-capsule-avatar" id="headerUserAvatar" alt="Avatar">
+        <span class="user-capsule-name" id="headerUserName">Admin LHD</span>
+      </a>
+
+      <!-- Hamburger Menu (☰) -->
+      <div style="position: relative;">
+        <button type="button" class="nav-circle-btn btn-menu" id="headerMenuBtn" onclick="toggleMegaMenu(event)">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="nav-dropdown" id="menuDropdown">
+          <div class="menu-user-banner" onclick="window.location.href='../instructor/profile.html'">
+            <div class="menu-banner-avatar-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                class="menu-banner-avatar" id="menuBannerAvatar" alt="Avatar">
+            </div>
+            <div>
+              <div class="menu-banner-name" id="menuBannerName">Quản trị viên Hệ thống</div>
+              <div class="menu-banner-sub" id="menuBannerEmail">admin@lhd.edu.vn</div>
+              <span class="menu-role-pill"><i class="fa-solid fa-shield-halved"></i> Super Admin</span>
             </div>
           </div>
 
-          <!-- Home Button -->
-          <a href="../index.html" class="nav-circle-btn" title="Về trang chủ sàn học tập">
-            <i class="fa-solid fa-house"></i>
+          <div class="menu-group-heading" style="color: #4338ca;"><i class="fa-solid fa-shield-halved"></i> Dành Cho
+            Quản Trị Viên</div>
+          <a href="dashboard.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-gauge-high"></i></div>
+            <span>Kênh Quản Trị (Dashboard)</span>
           </a>
-        </div>
-
-        <!-- Vạch phân cách -->
-        <div class="nav-user-divider"></div>
-
-        <!-- Nhóm 2: Quản trị viên Capsule & Menu ☰ -->
-        <div class="nav-user-right-group">
-          <!-- User Capsule -->
-          <a href="../student/profile.html" class="user-capsule" title="Xem thông tin quản trị viên">
-            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64' shape-rendering='crispEdges'><rect width='64' height='64' fill='%23a4c68d'/><rect x='0' y='0' width='64' height='28' fill='%237ba36a'/><rect x='6' y='8' width='12' height='14' fill='%23507c43'/><rect x='46' y='10' width='14' height='12' fill='%23507c43'/><rect x='22' y='4' width='20' height='8' fill='%23669152'/><rect x='0' y='32' width='64' height='32' fill='%23c4936d'/><rect x='0' y='42' width='64' height='22' fill='%23b17c54'/><rect x='20' y='12' width='24' height='16' fill='%231e1e24'/><rect x='22' y='16' width='20' height='20' fill='%23fddbc3'/><rect x='24' y='34' width='16' height='4' fill='%23fbc5a3'/><rect x='18' y='10' width='28' height='8' fill='%2322242a'/><rect x='18' y='18' width='6' height='8' fill='%2322242a'/><rect x='40' y='18' width='6' height='8' fill='%2322242a'/><rect x='24' y='14' width='8' height='6' fill='%2330323a'/><rect x='34' y='14' width='8' height='5' fill='%2322242a'/><rect x='18' y='24' width='4' height='6' fill='%23fbc5a3'/><rect x='42' y='24' width='4' height='6' fill='%23fbc5a3'/><rect x='25' y='25' width='4' height='4' fill='%231e1e24'/><rect x='35' y='25' width='4' height='4' fill='%231e1e24'/><rect x='23' y='28' width='4' height='2' fill='%23f7a799'/><rect x='37' y='28' width='4' height='2' fill='%23f7a799'/><rect x='29' y='31' width='6' height='2' fill='%23d97d64'/><rect x='22' y='21' width='10' height='9' fill='none' stroke='%23111' stroke-width='2'/><rect x='32' y='21' width='10' height='9' fill='none' stroke='%23111' stroke-width='2'/><rect x='31' y='24' width='2' height='2' fill='%23111'/><rect x='24' y='22' width='2' height='2' fill='%23ffffff'/><rect x='34' y='22' width='2' height='2' fill='%23ffffff'/><rect x='16' y='38' width='32' height='26' fill='%232b2d35'/><rect x='28' y='38' width='8' height='8' fill='%23b91c1c'/><rect x='22' y='38' width='6' height='26' fill='%233a3d47'/><rect x='36' y='38' width='6' height='26' fill='%233a3d47'/><rect x='29' y='44' width='6' height='20' fill='%23dc2626'/><rect x='31' y='42' width='2' height='22' fill='%23991b1b'/></svg>" class="user-capsule-avatar" alt="Avatar">
-            <span class="user-capsule-name">Admin LHD</span>
+          <a href="courses-approval.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-spell-check"></i></div>
+            <span>Phê duyệt khóa học</span>
+          </a>
+          <a href="certificates-approval.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-certificate"></i></div>
+            <span>Duyệt chứng chỉ GV</span>
+          </a>
+          <a href="users.html" class="student-menu-item"
+            style="color: #4338ca; font-weight: 800; background: rgba(67, 56, 202, 0.08);">
+            <div class="menu-item-icon" style="background: #4338ca; color: white;"><i
+                class="fa-solid fa-users-gear"></i></div>
+            <span>Quản lý người dùng</span>
+          </a>
+          <a href="marketing.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
+            <span>Khuyến mãi & Voucher</span>
           </a>
 
-          <!-- Nút Thoát Đăng Xuất -->
-          <button type="button" class="btn-header-logout" onclick="logoutAdmin()" title="Đăng xuất khỏi hệ thống">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-            <span>Thoát</span>
+          <div class="dropdown-divider"></div>
+
+          <div class="menu-group-heading" style="color: #7c3aed;"><i class="fa-solid fa-chalkboard-user"></i> Dành Cho
+            Giảng Viên</div>
+          <a href="../instructor/dashboard.html" class="student-menu-item">
+            <div class="menu-item-icon" style="background: rgba(124, 58, 237, 0.1); color: #7c3aed;"><i
+                class="fa-solid fa-chalkboard-user"></i></div>
+            <span>Kênh Giảng Viên (Dashboard)</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <div class="menu-group-heading">Quản Lý & Học Tập</div>
+          <a href="../instructor/home.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-house"></i></div>
+            <span>Trang chủ giảng viên</span>
+          </a>
+          <a href="../my-courses.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-book-bookmark"></i></div>
+            <span>Khóa học đã đăng ký</span>
+          </a>
+          <a href="../instructor/profile.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-user-gear"></i></div>
+            <span>Thông tin cá nhân & Hồ sơ</span>
+          </a>
+          <a href="../instructor/profile.html#security" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <span>Đổi mật khẩu / Bảo mật</span>
+          </a>
+          <a href="../instructor/profile.html#orders" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-receipt"></i></div>
+            <span>Lịch sử giao dịch</span>
+          </a>
+
+          <div class="dropdown-divider"></div>
+
+          <button type="button" class="btn-menu-logout" onclick="handleLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Đăng xuất khỏi hệ thống</span>
           </button>
         </div>
       </div>
     </div>
   </header>
 
-  <div class="container">
-    <!-- Hero Banner Card phong cách profile.html -->
-    <div class="profile-hero">
-      <div class="hero-glow-blob hero-glow-1"></div>
-      <div class="hero-glow-blob hero-glow-2"></div>
-      <div class="profile-hero-content">
-        <!-- Bên TRÁI: Tiêu đề & Mô tả -->
-        <div class="hero-title-area">
-          <h1>Quản Lý Người Dùng & Phân Quyền</h1>
-          <p>Kiểm soát danh sách học viên, giảng viên và thiết lập vai trò bảo mật trong toàn hệ thống sàn học tập LHD</p>
+  <!-- Main Layout -->
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-brand-mini">
+          <div class="sidebar-brand-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <div class="sidebar-brand-title">LHD Admin</div>
+            <div class="sidebar-brand-sub">Quản Lý Người Dùng</div>
+          </div>
         </div>
 
-        <!-- Bên PHẢI: Lưới 2x2 4 chỉ số thống kê kèm icon tương ứng -->
-        <div class="hero-stats-2x2">
-          <!-- 1. Tổng tài khoản -->
-          <div class="hero-mini-stat">
-            <div class="hero-stat-icon-badge badge-users">
+        <div class="nav-group-title">Menu Điều Hành</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Tổng Quan Điều Hành</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="courses-approval.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-spell-check"></i>
+                <span>Phê Duyệt Khóa Học</span>
+              </span>
+              <span class="sidebar-badge badge-pending">3</span>
+            </a>
+          </li>
+          <li>
+            <a href="certificates-approval.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-certificate"></i>
+                <span>Duyệt Chứng Chỉ GV</span>
+              </span>
+              <span class="sidebar-badge badge-pending">2</span>
+            </a>
+          </li>
+          <li>
+            <a href="users.html" class="sidebar-link active">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-users-gear"></i>
+                <span>Quản Lý Người Dùng</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="marketing.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-tags"></i>
+                <span>Marketing & Voucher</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="../instructor/profile.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Hồ Sơ & Bảo Mật</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-divider"></div>
+
+        <div class="nav-group-title">Lối Tắt Nhanh</div>
+        <ul class="sidebar-menu">
+          <li>
+            <a href="../instructor/home.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-house"></i>
+                <span>Về Trang Chủ</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="../instructor/dashboard.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                <span>Kênh Giảng Viên</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="../courses.html" class="sidebar-link">
+              <span class="sidebar-link-left">
+                <i class="fa-solid fa-compass"></i>
+                <span>Xem Khóa Học Sàn</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <!-- 1. KPI Counters -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Tổng Tài Khoản</span>
+            <div class="kpi-icon" style="background:#e0e7ff; color:#4338ca;">
               <i class="fa-solid fa-users"></i>
             </div>
-            <div class="hero-stat-info">
-              <div class="hero-mini-stat-num">15,420</div>
-              <div class="hero-mini-stat-lbl">Tổng tài khoản</div>
-            </div>
           </div>
+          <div class="kpi-val">14.850</div>
+          <div class="kpi-footer">
+            <span style="color: #15803d; font-weight: 700;">+185 hôm nay</span>
+          </div>
+        </div>
 
-          <!-- 2. Giảng viên -->
-          <div class="hero-mini-stat">
-            <div class="hero-stat-icon-badge badge-instructor">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Giảng Viên Đối Tác</span>
+            <div class="kpi-icon" style="background:#f3e8ff; color:#7c3aed;">
               <i class="fa-solid fa-chalkboard-user"></i>
             </div>
-            <div class="hero-stat-info">
-              <div class="hero-mini-stat-num">84</div>
-              <div class="hero-mini-stat-lbl">Giảng viên</div>
-            </div>
           </div>
+          <div class="kpi-val">240 Thầy Cô</div>
+          <div class="kpi-footer">
+            <span style="color: #7c3aed; font-weight: 700;">64 Đã xác thực</span>
+          </div>
+        </div>
 
-          <!-- 3. Học viên -->
-          <div class="hero-mini-stat">
-            <div class="hero-stat-icon-badge badge-student">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Học Viên Hoạt Động</span>
+            <div class="kpi-icon" style="background:#e0f2fe; color:#0284c7;">
               <i class="fa-solid fa-graduation-cap"></i>
             </div>
-            <div class="hero-stat-info">
-              <div class="hero-mini-stat-num">15,312</div>
-              <div class="hero-mini-stat-lbl">Học viên</div>
-            </div>
           </div>
+          <div class="kpi-val">14.605</div>
+          <div class="kpi-footer">
+            <span>Tỷ lệ quay lại 88%</span>
+          </div>
+        </div>
 
-          <!-- 4. Quản trị viên -->
-          <div class="hero-mini-stat">
-            <div class="hero-stat-icon-badge badge-admin">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Quản Trị Viên (Admin)</span>
+            <div class="kpi-icon" style="background:#fef3c7; color:#b45309;">
               <i class="fa-solid fa-shield-halved"></i>
             </div>
-            <div class="hero-stat-info">
-              <div class="hero-mini-stat-num">24</div>
-              <div class="hero-mini-stat-lbl">Quản trị viên</div>
-            </div>
+          </div>
+          <div class="kpi-val">5 Super Admin</div>
+          <div class="kpi-footer">
+            <span>Bảo mật 2FA 100%</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 2-Column Grid: Left Sidebar (như ảnh người dùng) + Right Main Content -->
-    <div class="admin-layout-grid">
-      <!-- Left Sidebar: Đồng bộ chuẩn Quản trị viên hệ thống -->
-      <aside class="admin-sidebar">
-        <!-- Card 1: QUẢN TRỊ HỆ THỐNG -->
-        <div class="sidebar-card">
-          <div class="sidebar-group-title">QUẢN TRỊ HỆ THỐNG</div>
-          <a href="dashboard.html" class="sidebar-item">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span class="item-text">Tổng quan & Doanh thu</span>
-          </a>
-          <a href="courses-approval.html" class="sidebar-item">
-            <i class="fa-solid fa-clipboard-check"></i>
-            <span class="item-text">Phê duyệt khóa học</span>
-            <span class="badge-count-amber">3</span>
-          </a>
-          <a href="users.html" class="sidebar-item active">
-            <i class="fa-solid fa-users-gear"></i>
-            <span class="item-text">Quản lý người dùng</span>
-            <span class="badge-count-active">15.4k</span>
-          </a>
-          <a href="marketing.html" class="sidebar-item">
-            <i class="fa-solid fa-bullhorn"></i>
-            <span class="item-text">Marketing & Banner</span>
-          </a>
-        </div>
-
-        <!-- Card 2: ĐIỀU HÀNH SÀN -->
-        <div class="sidebar-card">
-          <div class="sidebar-group-title">ĐIỀU HÀNH SÀN</div>
-          <a href="../index.html" class="sidebar-item" target="_blank">
-            <i class="fa-solid fa-globe"></i>
-            <span class="item-text">Xem sàn học tập</span>
-            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem; margin-left: auto; color: #94a3b8;"></i>
-          </a>
-          <a href="../courses.html" class="sidebar-item" target="_blank">
-            <i class="fa-solid fa-compass"></i>
-            <span class="item-text">Khám phá khóa học</span>
-            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem; margin-left: auto; color: #94a3b8;"></i>
-          </a>
-          <a href="javascript:void(0)" class="sidebar-item" onclick="openCertificateModal()">
-            <i class="fa-solid fa-award"></i>
-            <span class="item-text">Mẫu phôi chứng chỉ</span>
-          </a>
-        </div>
-
-        <!-- Card 3: TÀI KHOẢN QUẢN TRỊ -->
-        <div class="sidebar-card">
-          <div class="sidebar-group-title">TÀI KHOẢN QUẢN TRỊ</div>
-          <a href="../student/profile.html" class="sidebar-item">
-            <i class="fa-regular fa-user"></i>
-            <span class="item-text">Hồ sơ cá nhân</span>
-          </a>
-          <a href="javascript:void(0)" class="sidebar-item" onclick="logoutAdmin()" style="color: #ef4444;">
-            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #ef4444;"></i>
-            <span class="item-text" style="color: #ef4444; font-weight: 700;">Đăng xuất</span>
-          </a>
-        </div>
-      </aside>
-
-      <!-- Right Main Content Area -->
-      <main class="admin-main-content">
-        <!-- Main Content Box -->
-        <div class="content-box">
-      <div class="box-header">
-        <div>
-          <div class="box-title">
-            <i class="fa-solid fa-users-gear"></i> Danh Sách Tài Khoản Hệ Thống
-          </div>
-          <div class="box-subtitle">Tra cứu, điều chỉnh phân quyền và quản lý trạng thái tài khoản</div>
-        </div>
-      </div>
-
-      <!-- Search & Filters Toolbar -->
-      <div class="filter-toolbar">
-        <div class="search-input-wrap">
-          <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" id="userSearchInput" placeholder="Tìm theo tên, email, ID hoặc vai trò..." onkeyup="filterUserTable()">
-        </div>
-
-        <select class="pill-select" id="roleFilter" onchange="filterUserTable()">
-          <option value="all">Tất cả Vai trò</option>
-          <option value="ROLE_USER">Học viên</option>
-          <option value="ROLE_INSTRUCTOR">Giảng viên</option>
-          <option value="ROLE_ADMIN">Quản trị viên</option>
-        </select>
-
-        <select class="pill-select" id="statusFilter" onchange="filterUserTable()">
-          <option value="all">Tất cả Trạng thái</option>
-          <option value="active">Đang hoạt động</option>
-          <option value="locked">Bị khóa</option>
-        </select>
-      </div>
-
-      <!-- User Table -->
-      <div class="table-responsive">
-        <table class="admin-table" id="usersTable">
-          <thead>
-            <tr>
-              <th style="width: 50px; text-align: center;">ID</th>
-              <th>Người Dùng</th>
-              <th style="width: 175px;">Email</th>
-              <th style="width: 105px;">Vai Trò</th>
-              <th style="width: 95px;">Ngày Tham Gia</th>
-              <th style="width: 105px;">Trạng Thái</th>
-              <th style="width: 105px; text-align: right;">Hành Động</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-role="ROLE_USER" data-status="active">
-              <td style="font-weight: 800; color: var(--primary-color); text-align: center; font-size: 0.8rem;">#101</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; background: #e0f2fe; color: #0369a1; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0;">A</div>
-                  <div>
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.84rem; line-height: 1.3;">Nguyen Van A</div>
-                    <div style="font-size: 0.72rem; color: #64748b; margin-top: 1px;">3 khóa học đã mua</div>
-                  </div>
-                </div>
-              </td>
-              <td style="font-size: 0.80rem; color: #475569;">nguyenvana@gmail.com</td>
-              <td><span class="badge-role role-student"><i class="fa-solid fa-user"></i> Học viên</span></td>
-              <td style="font-size: 0.80rem; color: #64748b; white-space: nowrap;">15/04/2026</td>
-              <td><span class="badge-status status-active"><i class="fa-solid fa-circle-check"></i> Hoạt động</span></td>
-              <td>
-                <div class="action-cell" style="justify-content: flex-end;">
-                  <button class="btn-action-icon" title="Xem chi tiết" onclick="openDetailModal('Nguyen Van A', 'nguyenvana@gmail.com', 'Học viên', '15/04/2026', 'Hoạt động', '3 khóa học (JLPT N3, Business English, N4)')"><i class="fa-regular fa-eye"></i></button>
-                  <button class="btn-action-icon" title="Đổi vai trò" onclick="openRoleModal(101, 'Nguyen Van A', 'ROLE_USER')"><i class="fa-solid fa-user-shield"></i></button>
-                  <button class="btn-action-icon btn-lock-user" title="Khóa tài khoản" onclick="toggleLockUser(this, 'Nguyen Van A')"><i class="fa-solid fa-lock"></i></button>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-role="ROLE_INSTRUCTOR" data-status="active">
-              <td style="font-weight: 800; color: var(--primary-color); text-align: center; font-size: 0.8rem;">#102</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; background: #f3e8ff; color: #7e22ce; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0;">E</div>
-                  <div>
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.84rem; line-height: 1.3;">Cô Emily Watson</div>
-                    <div style="font-size: 0.72rem; color: #64748b; margin-top: 1px;">2 khóa học đã đăng</div>
-                  </div>
-                </div>
-              </td>
-              <td style="font-size: 0.80rem; color: #475569;">emily@language.edu.vn</td>
-              <td><span class="badge-role role-instructor"><i class="fa-solid fa-chalkboard-user"></i> Giảng viên</span></td>
-              <td style="font-size: 0.80rem; color: #64748b; white-space: nowrap;">10/03/2026</td>
-              <td><span class="badge-status status-active"><i class="fa-solid fa-circle-check"></i> Hoạt động</span></td>
-              <td>
-                <div class="action-cell" style="justify-content: flex-end;">
-                  <button class="btn-action-icon" title="Xem chi tiết" onclick="openDetailModal('Cô Emily Watson', 'emily@language.edu.vn', 'Giảng viên', '10/03/2026', 'Hoạt động', '2 khóa học (Business English C1, IELTS Speaking 7.5)')"><i class="fa-regular fa-eye"></i></button>
-                  <button class="btn-action-icon" title="Đổi vai trò" onclick="openRoleModal(102, 'Cô Emily Watson', 'ROLE_INSTRUCTOR')"><i class="fa-solid fa-user-shield"></i></button>
-                  <button class="btn-action-icon btn-lock-user" title="Khóa tài khoản" onclick="toggleLockUser(this, 'Cô Emily Watson')"><i class="fa-solid fa-lock"></i></button>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-role="ROLE_ADMIN" data-status="active">
-              <td style="font-weight: 800; color: var(--primary-color); text-align: center; font-size: 0.8rem;">#103</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; background: #ffe4e6; color: #be123c; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0;">S</div>
-                  <div>
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.84rem; line-height: 1.3;">System Administrator</div>
-                    <div style="font-size: 0.72rem; color: #64748b; margin-top: 1px;">Quản trị viên cấp cao</div>
-                  </div>
-                </div>
-              </td>
-              <td style="font-size: 0.80rem; color: #475569;">admin@lhdlearning.edu.vn</td>
-              <td><span class="badge-role role-admin"><i class="fa-solid fa-shield-halved"></i> Quản trị</span></td>
-              <td style="font-size: 0.80rem; color: #64748b; white-space: nowrap;">01/01/2026</td>
-              <td><span class="badge-status status-active"><i class="fa-solid fa-circle-check"></i> Hoạt động</span></td>
-              <td>
-                <div class="action-cell" style="justify-content: flex-end;">
-                  <button class="btn-action-icon" title="Xem chi tiết" onclick="openDetailModal('System Administrator', 'admin@lhdlearning.edu.vn', 'Quản trị viên', '01/01/2026', 'Hoạt động', 'Toàn quyền kiểm soát hệ thống')"><i class="fa-regular fa-eye"></i></button>
-                  <span style="font-size: 0.74rem; color: #94a3b8; font-weight: 700; padding-right: 6px;">Gốc</span>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-role="ROLE_INSTRUCTOR" data-status="active">
-              <td style="font-weight: 800; color: var(--primary-color); text-align: center; font-size: 0.8rem;">#104</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; background: #f3e8ff; color: #7e22ce; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0;">K</div>
-                  <div>
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.84rem; line-height: 1.3;">Thầy Kenji Tanaka</div>
-                    <div style="font-size: 0.72rem; color: #64748b; margin-top: 1px;">4 khóa học tiếng Nhật</div>
-                  </div>
-                </div>
-              </td>
-              <td style="font-size: 0.80rem; color: #475569;">kenji@tanaka-nihongo.jp</td>
-              <td><span class="badge-role role-instructor"><i class="fa-solid fa-chalkboard-user"></i> Giảng viên</span></td>
-              <td style="font-size: 0.80rem; color: #64748b; white-space: nowrap;">12/02/2026</td>
-              <td><span class="badge-status status-active"><i class="fa-solid fa-circle-check"></i> Hoạt động</span></td>
-              <td>
-                <div class="action-cell" style="justify-content: flex-end;">
-                  <button class="btn-action-icon" title="Xem chi tiết" onclick="openDetailModal('Thầy Kenji Tanaka', 'kenji@tanaka-nihongo.jp', 'Giảng viên', '12/02/2026', 'Hoạt động', '4 khóa học JLPT')"><i class="fa-regular fa-eye"></i></button>
-                  <button class="btn-action-icon" title="Đổi vai trò" onclick="openRoleModal(104, 'Thầy Kenji Tanaka', 'ROLE_INSTRUCTOR')"><i class="fa-solid fa-user-shield"></i></button>
-                  <button class="btn-action-icon btn-lock-user" title="Khóa tài khoản" onclick="toggleLockUser(this, 'Thầy Kenji Tanaka')"><i class="fa-solid fa-lock"></i></button>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-role="ROLE_USER" data-status="active">
-              <td style="font-weight: 800; color: var(--primary-color); text-align: center; font-size: 0.8rem;">#105</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; background: #e0f2fe; color: #0369a1; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0;">B</div>
-                  <div>
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.84rem; line-height: 1.3;">Tran Thi Bich</div>
-                    <div style="font-size: 0.72rem; color: #64748b; margin-top: 1px;">1 khóa học đã mua</div>
-                  </div>
-                </div>
-              </td>
-              <td style="font-size: 0.80rem; color: #475569;">bich.tran@hotmail.com</td>
-              <td><span class="badge-role role-student"><i class="fa-solid fa-user"></i> Học viên</span></td>
-              <td style="font-size: 0.80rem; color: #64748b; white-space: nowrap;">05/05/2026</td>
-              <td><span class="badge-status status-active"><i class="fa-solid fa-circle-check"></i> Hoạt động</span></td>
-              <td>
-                <div class="action-cell" style="justify-content: flex-end;">
-                  <button class="btn-action-icon" title="Xem chi tiết" onclick="openDetailModal('Tran Thi Bich', 'bich.tran@hotmail.com', 'Học viên', '05/05/2026', 'Hoạt động', '1 khóa học (Kanji N4)')"><i class="fa-regular fa-eye"></i></button>
-                  <button class="btn-action-icon" title="Đổi vai trò" onclick="openRoleModal(105, 'Tran Thi Bich', 'ROLE_USER')"><i class="fa-solid fa-user-shield"></i></button>
-                  <button class="btn-action-icon btn-lock-user" title="Khóa tài khoản" onclick="toggleLockUser(this, 'Tran Thi Bich')"><i class="fa-solid fa-lock"></i></button>
-                </div>
-              </td>
-            </tr>
-
-            <tr data-role="ROLE_USER" data-status="locked">
-              <td style="font-weight: 800; color: var(--primary-color); text-align: center; font-size: 0.8rem;">#106</td>
-              <td>
-                <div style="display: flex; align-items: center; gap: 8px;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; background: #fee2e2; color: #dc2626; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; flex-shrink: 0;">S</div>
-                  <div>
-                    <div style="font-weight: 700; color: var(--text-main); font-size: 0.84rem; line-height: 1.3;">Spam Bot Account</div>
-                    <div style="font-size: 0.72rem; color: #ef4444; margin-top: 1px;">Vi phạm điều khoản</div>
-                  </div>
-                </div>
-              </td>
-              <td style="font-size: 0.80rem; color: #475569;">spam99@tempmail.com</td>
-              <td><span class="badge-role role-student"><i class="fa-solid fa-user"></i> Học viên</span></td>
-              <td style="font-size: 0.80rem; color: #64748b; white-space: nowrap;">20/05/2026</td>
-              <td><span class="badge-status status-locked"><i class="fa-solid fa-lock"></i> Đã bị khóa</span></td>
-              <td>
-                <div class="action-cell" style="justify-content: flex-end;">
-                  <button class="btn-action-icon" title="Xem chi tiết" onclick="openDetailModal('Spam Bot Account', 'spam99@tempmail.com', 'Học viên', '20/05/2026', 'Đã bị khóa', 'Tài khoản gửi tin nhắn rác')"><i class="fa-regular fa-eye"></i></button>
-                  <button class="btn-action-icon" title="Đổi vai trò" onclick="openRoleModal(106, 'Spam Bot Account', 'ROLE_USER')"><i class="fa-solid fa-user-shield"></i></button>
-                  <button class="btn-action-icon btn-lock-user" title="Mở khóa tài khoản" onclick="toggleLockUser(this, 'Spam Bot Account')"><i class="fa-solid fa-lock-open" style="color: #16a34a;"></i></button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination-bar">
-        <span>Đang hiển thị 1-6 trong tổng số <strong>15,420</strong> tài khoản</span>
-        <div class="page-buttons">
-          <button class="page-btn active">1</button>
-          <button class="page-btn">2</button>
-          <button class="page-btn">3</button>
-          <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
-        </div>
-      </div>
-      </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- MODAL XEM CHI TIẾT NGƯỜI DÙNG (Style profile.html) -->
-  <div class="modal-backdrop" id="userDetailModal">
-    <div class="modal-window">
-      <div class="modal-header-profile">
-        <div class="modal-header-info">
-          <div class="modal-header-icon">
-            <i class="fa-solid fa-id-card"></i>
-          </div>
+      <!-- 2. User Table -->
+      <section class="content-box">
+        <div class="box-header">
           <div>
-            <div class="modal-header-title">Thông Tin Chi Tiết Tài Khoản</div>
-            <div class="modal-header-sub">Hồ sơ người dùng và lịch sử hoạt động</div>
+            <h2 class="box-title"><i class="fa-solid fa-users-gear" style="color: #4338ca;"></i> Danh Sách Thành Viên &
+              Phân Quyền</h2>
+            <div class="box-subtitle">Thay đổi quyền hạn, kiểm tra thông tin liên hệ và khóa/mở tài khoản</div>
           </div>
         </div>
-        <button class="modal-close-btn" onclick="closeModal('userDetailModal')"><i class="fa-solid fa-xmark"></i></button>
-      </div>
 
-      <div class="modal-body">
-        <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 20px; padding: 1.4rem; margin-bottom: 1.5rem;">
-          <h3 id="detailName" style="font-weight: 800; font-size: 1.25rem; color: var(--text-main); margin-bottom: 0.6rem;"></h3>
-          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;"><strong>Email:</strong> <span id="detailEmail"></span></p>
-          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;"><strong>Vai trò hiện tại:</strong> <span id="detailRole" style="font-weight: 700; color: var(--purple-color);"></span></p>
-          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;"><strong>Ngày đăng ký:</strong> <span id="detailJoinDate"></span></p>
-          <p style="font-size: 0.9rem; color: #475569; margin-bottom: 4px;"><strong>Tình trạng:</strong> <span id="detailStatus" style="font-weight: 700;"></span></p>
-          <p style="font-size: 0.9rem; color: #475569;"><strong>Khóa học & Hoạt động:</strong> <span id="detailCourses"></span></p>
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search-input" id="userSearchInput"
+              placeholder="Tìm theo họ tên, email, vai trò..." oninput="handleSearchUser(this.value)">
+          </div>
+
+          <div class="filter-pills">
+            <button type="button" class="filter-pill active" onclick="filterUsers('all', this)">Tất cả (5)</button>
+            <button type="button" class="filter-pill" onclick="filterUsers('instructor', this)">Giảng viên (2)</button>
+            <button type="button" class="filter-pill" onclick="filterUsers('student', this)">Học viên (2)</button>
+            <button type="button" class="filter-pill" onclick="filterUsers('admin', this)">Quản trị viên (1)</button>
+          </div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end;">
-          <button class="btn-primary-grad" onclick="closeModal('userDetailModal')">Đóng Cửa Sổ</button>
+        <div style="overflow-x: auto;">
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Thành Viên</th>
+                <th>Email Liên Hệ</th>
+                <th>Vai Trò (Role)</th>
+                <th>Ngày Gia Nhập</th>
+                <th>Trạng Thái</th>
+                <th style="text-align: right;">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="userTableBody">
+              <!-- User 1 -->
+              <tr data-role="admin">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img
+                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"
+                      class="user-avatar-cell" alt="Avatar">
+                    <div>
+                      <strong>Quản trị viên Hệ thống</strong><br>
+                      <span style="font-size: 0.75rem; color: #64748b;">ID: <code>ADM-001</code></span>
+                    </div>
+                  </div>
+                </td>
+                <td>admin@lhd.edu.vn</td>
+                <td><span class="role-badge role-admin"><i class="fa-solid fa-shield-halved"></i> Super Admin</span>
+                </td>
+                <td>01/01/2026</td>
+                <td><span class="status-active"><i class="fa-solid fa-circle"></i> Hoạt động</span></td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-action-sm btn-edit" onclick="showToast('Tài khoản Super Admin gốc')">Cố
+                    định</button>
+                </td>
+              </tr>
+
+              <!-- User 2 -->
+              <tr data-role="instructor">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
+                      class="user-avatar-cell" alt="Avatar">
+                    <div>
+                      <strong>Alex Miller</strong><br>
+                      <span style="font-size: 0.75rem; color: #64748b;">ID: <code>INS-088</code></span>
+                    </div>
+                  </div>
+                </td>
+                <td>alex.miller@lhd.edu.vn</td>
+                <td><span class="role-badge role-instructor"><i class="fa-solid fa-chalkboard-user"></i> Giảng
+                    viên</span></td>
+                <td>12/02/2026</td>
+                <td><span class="status-active"><i class="fa-solid fa-circle"></i> Hoạt động</span></td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-action-sm btn-edit"
+                    onclick="changeUserRole('Alex Miller')">Quyền</button>
+                  <button type="button" class="btn-action-sm btn-lock"
+                    onclick="toggleLockUser('Alex Miller', this)">Khóa</button>
+                </td>
+              </tr>
+
+              <!-- User 3 -->
+              <tr data-role="instructor">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img
+                      src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&auto=format&fit=crop&q=80"
+                      class="user-avatar-cell" alt="Avatar">
+                    <div>
+                      <strong>Cô Tanaka Yuka</strong><br>
+                      <span style="font-size: 0.75rem; color: #64748b;">ID: <code>INS-104</code></span>
+                    </div>
+                  </div>
+                </td>
+                <td>yuka.tanaka@lhd.edu.vn</td>
+                <td><span class="role-badge role-instructor"><i class="fa-solid fa-chalkboard-user"></i> Giảng
+                    viên</span></td>
+                <td>04/03/2026</td>
+                <td><span class="status-active"><i class="fa-solid fa-circle"></i> Hoạt động</span></td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-action-sm btn-edit"
+                    onclick="changeUserRole('Tanaka Yuka')">Quyền</button>
+                  <button type="button" class="btn-action-sm btn-lock"
+                    onclick="toggleLockUser('Tanaka Yuka', this)">Khóa</button>
+                </td>
+              </tr>
+
+              <!-- User 4 -->
+              <tr data-role="student">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img
+                      src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80"
+                      class="user-avatar-cell" alt="Avatar">
+                    <div>
+                      <strong>Nguyễn Hoàng Long</strong><br>
+                      <span style="font-size: 0.75rem; color: #64748b;">ID: <code>STU-4820</code></span>
+                    </div>
+                  </div>
+                </td>
+                <td>long.nh@gmail.com</td>
+                <td><span class="role-badge role-student"><i class="fa-solid fa-user-graduate"></i> Học viên</span></td>
+                <td>15/05/2026</td>
+                <td><span class="status-active"><i class="fa-solid fa-circle"></i> Hoạt động</span></td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-action-sm btn-edit"
+                    onclick="changeUserRole('Nguyễn Hoàng Long')">Quyền</button>
+                  <button type="button" class="btn-action-sm btn-lock"
+                    onclick="toggleLockUser('Nguyễn Hoàng Long', this)">Khóa</button>
+                </td>
+              </tr>
+
+              <!-- User 5 -->
+              <tr data-role="student">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <img
+                      src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop&q=80"
+                      class="user-avatar-cell" alt="Avatar">
+                    <div>
+                      <strong>Trần Mai Anh</strong><br>
+                      <span style="font-size: 0.75rem; color: #64748b;">ID: <code>STU-5109</code></span>
+                    </div>
+                  </div>
+                </td>
+                <td>maianh.tran@outlook.com</td>
+                <td><span class="role-badge role-student"><i class="fa-solid fa-user-graduate"></i> Học viên</span></td>
+                <td>20/06/2026</td>
+                <td><span class="status-active"><i class="fa-solid fa-circle"></i> Hoạt động</span></td>
+                <td style="text-align: right;">
+                  <button type="button" class="btn-action-sm btn-edit"
+                    onclick="changeUserRole('Trần Mai Anh')">Quyền</button>
+                  <button type="button" class="btn-action-sm btn-lock"
+                    onclick="toggleLockUser('Trần Mai Anh', this)">Khóa</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
 
-  <!-- MODAL ĐỔI VAI TRÒ (CHANGE ROLE - Style profile.html) -->
-  <div class="modal-backdrop" id="changeRoleModal">
-    <div class="modal-window">
-      <div class="modal-header-profile">
-        <div class="modal-header-info">
-          <div class="modal-header-icon">
-            <i class="fa-solid fa-user-shield"></i>
-          </div>
-          <div>
-            <div class="modal-header-title">Phân Quyền Vai Trò</div>
-            <div class="modal-header-sub">Cập nhật quyền hạn truy cập hệ thống</div>
-          </div>
-        </div>
-        <button class="modal-close-btn" onclick="closeModal('changeRoleModal')"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <div class="modal-body">
-        <p style="font-size: 0.92rem; color: var(--text-sub); margin-bottom: 1.2rem;">
-          Cập nhật quyền hạn cho tài khoản: <strong id="roleUserName" style="color: var(--text-main);"></strong>
-        </p>
-
-        <div style="margin-bottom: 1.6rem;">
-          <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-main);">Chọn vai trò mới:</label>
-          <select id="newRoleSelect" class="pill-select" style="width: 100%;">
-            <option value="ROLE_USER">Học viên (Học & mua khóa học)</option>
-            <option value="ROLE_INSTRUCTOR">Giảng viên (Tạo & xuất bản khóa học)</option>
-            <option value="ROLE_ADMIN">Quản trị viên (Toàn quyền quản trị)</option>
-          </select>
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
-          <button class="btn-cancel-pill" onclick="closeModal('changeRoleModal')">Hủy</button>
-          <button class="btn-primary-grad" onclick="saveRoleChange()">
-            <i class="fa-solid fa-check"></i> Lưu Quyền Mới
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification Box -->
-  <div id="toast-box"></div>
-
-  <!-- MODAL CHẤM BÀI TẬP (Khớp chức năng 'Chấm bài tập' như ảnh) -->
-  <div class="modal-backdrop" id="assignmentModal">
-    <div class="modal-window" style="max-width: 720px;">
-      <div class="modal-header-profile">
-        <div class="modal-header-info">
-          <div class="modal-header-icon" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">
-            <i class="fa-solid fa-clipboard-check"></i>
-          </div>
-          <div>
-            <div class="modal-header-title">Hàng Đợi Chấm Bài Tập Học Viên</div>
-            <div class="modal-header-sub">5 bài tập tự luận đang chờ giảng viên và ban đào tạo đánh giá</div>
-          </div>
-        </div>
-        <button class="btn-close-circle" onclick="closeModal('assignmentModal')">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="modal-body-profile">
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
-            <div>
-              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bài luận B2: The Impact of AI on Modern Education</div>
-              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Nguyễn Hoàng Nam</b> • Nộp lúc 14:15 hôm nay</div>
-            </div>
-            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Nguyễn Hoàng Nam...', 'success')">Chấm điểm</button>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
-            <div>
-              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Bản dịch JLPT N3: Đoạn văn về Văn hóa Trà Đạo Nhật Bản</div>
-              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Lê Thị Mai</b> • Nộp lúc 10:30 hôm nay</div>
-            </div>
-            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Lê Thị Mai...', 'success')">Chấm điểm</button>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
-            <div>
-              <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-main);">Audio phát âm: Bài tập Shadowing Hội thoại Du lịch</div>
-              <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 3px;">Học viên: <b style="color: #0b63e5;">Trần Tuấn Anh</b> • Nộp hôm qua</div>
-            </div>
-            <button class="btn-primary-grad" style="padding: 6px 14px; font-size: 0.82rem;" onclick="showToast('Chấm bài', 'Đang mở bài làm của học viên Trần Tuấn Anh...', 'success')">Chấm điểm</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL QUẢN LÝ CHỨNG CHỈ (Khớp chức năng 'Quản lý chứng chỉ' như ảnh) -->
-  <div class="modal-backdrop" id="certificateModal">
-    <div class="modal-window" style="max-width: 680px;">
-      <div class="modal-header-profile">
-        <div class="modal-header-info">
-          <div class="modal-header-icon" style="background: rgba(139, 92, 246, 0.2); color: #8b5cf6;">
-            <i class="fa-solid fa-award"></i>
-          </div>
-          <div>
-            <div class="modal-header-title">Quản Lý Chứng Chỉ Hoàn Thành Khóa Học</div>
-            <div class="modal-header-sub">Danh sách mẫu phôi chứng chỉ điện tử cấp tự động cho học viên</div>
-          </div>
-        </div>
-        <button class="btn-close-circle" onclick="closeModal('certificateModal')">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="modal-body-profile">
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <span style="font-size: 2rem;">🇯🇵</span>
-              <div>
-                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ JLPT N3 Chuyên Sâu</div>
-                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>428</b> học viên • Tiêu chuẩn: Hoàn thành 100% bài học</div>
-              </div>
-            </div>
-            <span class="badge-role role-admin" style="background: #ecfdf5; color: #059669;">Đang cấp phát</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1.5px solid var(--border-subtle); border-radius: 16px; background: #ffffff;">
-            <div style="display: flex; align-items: center; gap: 14px;">
-              <span style="font-size: 2rem;">🇬🇧</span>
-              <div>
-                <div style="font-weight: 800; color: var(--text-main);">Chứng chỉ Business English & IELTS 6.5+</div>
-                <div style="font-size: 0.8rem; color: var(--text-sub);">Đã cấp: <b>315</b> học viên • Tiêu chuẩn: Điểm test cuối khóa >= 80%</div>
-              </div>
-            </div>
-            <span class="badge-role role-admin" style="background: #ecfdf5; color: #059669;">Đang cấp phát</span>
-          </div>
-        </div>
-        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 10px;">
-          <button class="btn-cancel-pill" onclick="closeModal('certificateModal')">Đóng</button>
-          <button class="btn-primary-grad" onclick="showToast('Thêm mẫu', 'Tính năng tải lên template phôi chứng chỉ SVG/PDF mới', 'info')"><i class="fa-solid fa-plus"></i> Thêm Mẫu Mới</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    function openAssignmentModal() {
-      document.getElementById('assignmentModal').classList.add('show');
+    function getAdminUser() {
+      try {
+        let u = JSON.parse(localStorage.getItem('currentUser') || localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
+        if (u && (u.email || u.name)) {
+          const regUsers = JSON.parse(localStorage.getItem('lhd_registered_users') || '[]');
+          const foundReg = regUsers.find(r => (u.email && r.email && r.email.toLowerCase() === u.email.toLowerCase()) || 
+                                             (u.name && r.name && r.name.toLowerCase() === u.name.toLowerCase()));
+          if (foundReg) {
+            if (foundReg.name) u.name = foundReg.name;
+            if (foundReg.fullName) u.fullName = foundReg.fullName;
+            if (foundReg.email && !u.email) u.email = foundReg.email;
+          }
+          return u;
+        }
+      } catch (e) { }
+      return {
+        name: 'Quản trị viên Hệ thống',
+        email: 'admin@lhd.edu.vn',
+        role: 'ROLE_ADMIN'
+      };
     }
 
-    function openCertificateModal() {
-      document.getElementById('certificateModal').classList.add('show');
+    function initHeader() {
+      const u = getAdminUser();
+      const name = u.name || u.fullName || u.username || 'Admin LHD';
+      const email = u.email || 'admin@lhd.edu.vn';
+      const avatar = localStorage.getItem('lhd_user_avatar') || u.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80';
+
+      document.getElementById('headerUserName').textContent = name;
+      document.getElementById('headerUserAvatar').src = avatar;
+      document.getElementById('menuBannerAvatar').src = avatar;
+      document.getElementById('menuBannerName').textContent = name;
+      document.getElementById('menuBannerEmail').textContent = email;
     }
-    function toggleAdminNotif(e) {
+
+    function showToast(msg, isSuccess = true) {
+      const c = document.getElementById('toastContainer');
+      if (!c) return;
+      const t = document.createElement('div');
+      t.className = 'toast-msg';
+      t.style.borderLeftColor = isSuccess ? '#4ade80' : '#ef4444';
+      t.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-circle-exclamation'}" style="color: ${isSuccess ? '#4ade80' : '#ef4444'}; font-size: 1.1rem;"></i> <span>${msg}</span>`;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 3000);
+    }
+
+    function toggleMegaMenu(e) {
       if (e) e.stopPropagation();
-      const menuDd = document.getElementById('adminMenuDropdown');
-      if (menuDd) menuDd.classList.remove('show');
-      const dropdown = document.getElementById('adminNotifDropdown');
-      if (dropdown) dropdown.classList.toggle('show');
+      const menu = document.getElementById('menuDropdown');
+      const bell = document.getElementById('bellDropdown');
+      if (bell) bell.classList.remove('show');
+      if (menu) menu.classList.toggle('show');
     }
 
-    function toggleAdminMenu(e) {
+    function toggleBellDropdown(e) {
       if (e) e.stopPropagation();
-      const notifDd = document.getElementById('adminNotifDropdown');
-      if (notifDd) notifDd.classList.remove('show');
-      const dropdown = document.getElementById('adminMenuDropdown');
-      if (dropdown) dropdown.classList.toggle('show');
+      const bell = document.getElementById('bellDropdown');
+      const menu = document.getElementById('menuDropdown');
+      if (menu) menu.classList.remove('show');
+      if (bell) bell.classList.toggle('show');
     }
 
-    // Đóng dropdown khi click ngoài
-    document.addEventListener('click', (e) => {
-      const notifDd = document.getElementById('adminNotifDropdown');
-      if (notifDd && !e.target.closest('#adminBellBtn') && !e.target.closest('#adminNotifDropdown')) {
-        notifDd.classList.remove('show');
+    window.addEventListener('click', function (e) {
+      const menu = document.getElementById('menuDropdown');
+      const bell = document.getElementById('bellDropdown');
+      if (menu && !menu.contains(e.target) && !e.target.closest('#headerMenuBtn')) {
+        menu.classList.remove('show');
       }
-      const menuDd = document.getElementById('adminMenuDropdown');
-      if (menuDd && !e.target.closest('#adminMenuBtn') && !e.target.closest('#adminMenuDropdown')) {
-        menuDd.classList.remove('show');
+      if (bell && !bell.contains(e.target) && !e.target.closest('#headerBellBtn')) {
+        bell.classList.remove('show');
       }
     });
 
-    function showToast(title, desc, type = 'success') {
-      const box = document.getElementById('toast-box');
-      const toast = document.createElement('div');
-      toast.className = 'toast-msg';
-
-      const icon = type === 'success'
-        ? '<i class="fa-solid fa-circle-check" style="color: #16a34a; font-size: 1.25rem;"></i>'
-        : '<i class="fa-solid fa-circle-exclamation" style="color: #ef4444; font-size: 1.25rem;"></i>';
-
-      toast.innerHTML = `
-        ${icon}
-        <div>
-          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a;">${title}</div>
-          <div style="font-size: 0.82rem; color: #64748b; margin-top: 2px;">${desc}</div>
-        </div>
-      `;
-
-      box.appendChild(toast);
-
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(50px)';
-        toast.style.transition = 'all 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-      }, 3500);
+    function changeUserRole(userName) {
+      showToast(`Đã mở giao diện phân quyền nâng cao cho: ${userName}`);
     }
 
-    function openModal(id) {
-      document.getElementById(id).classList.add('show');
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('show');
-    }
-
-    function openDetailModal(name, email, role, joinDate, status, courses) {
-      document.getElementById('detailName').textContent = name;
-      document.getElementById('detailEmail').textContent = email;
-      document.getElementById('detailRole').textContent = role;
-      document.getElementById('detailJoinDate').textContent = joinDate;
-      document.getElementById('detailStatus').textContent = status;
-      document.getElementById('detailCourses').textContent = courses;
-      openModal('userDetailModal');
-    }
-
-    let activeRoleId = null;
-    function openRoleModal(id, name, currentRole) {
-      activeRoleId = id;
-      document.getElementById('roleUserName').textContent = name;
-      document.getElementById('newRoleSelect').value = currentRole;
-      openModal('changeRoleModal');
-    }
-
-    function saveRoleChange() {
-      const newRole = document.getElementById('newRoleSelect').value;
-      closeModal('changeRoleModal');
-      showToast('Cập nhật vai trò thành công', `Tài khoản đã được cập nhật sang quyền ${newRole}.`, 'success');
-    }
-
-    function toggleLockUser(btn, name) {
-      const row = btn.closest('tr');
-      const isLocked = row.getAttribute('data-status') === 'locked';
-
-      if (isLocked) {
-        row.setAttribute('data-status', 'active');
-        row.querySelector('.badge-status').className = 'badge-status status-active';
-        row.querySelector('.badge-status').innerHTML = '<i class="fa-solid fa-circle-check"></i> Hoạt động';
-        btn.innerHTML = '<i class="fa-solid fa-lock"></i>';
-        btn.title = 'Khóa tài khoản';
-        showToast('Đã mở khóa tài khoản', `Tài khoản "${name}" đã hoạt động bình thường trở lại.`, 'success');
+    function toggleLockUser(userName, btn) {
+      if (btn.textContent === 'Khóa') {
+        btn.textContent = 'Mở';
+        btn.style.background = '#dcfce7';
+        btn.style.color = '#15803d';
+        showToast(`Đã khóa quyền truy cập của người dùng: ${userName}`, false);
       } else {
-        row.setAttribute('data-status', 'locked');
-        row.querySelector('.badge-status').className = 'badge-status status-locked';
-        row.querySelector('.badge-status').innerHTML = '<i class="fa-solid fa-lock"></i> Đã bị khóa';
-        btn.innerHTML = '<i class="fa-solid fa-lock-open" style="color: #16a34a;"></i>';
-        btn.title = 'Mở khóa tài khoản';
-        showToast('Đã khóa tài khoản', `Tài khoản "${name}" đã bị tạm khóa do vi phạm.`, 'danger');
+        btn.textContent = 'Khóa';
+        btn.style.background = '#fee2e2';
+        btn.style.color = '#b91c1c';
+        showToast(`Đã mở khóa hoạt động cho người dùng: ${userName}`);
       }
     }
 
-    function filterUserTable() {
-      const query = document.getElementById('userSearchInput').value.toLowerCase();
-      const roleFilter = document.getElementById('roleFilter').value;
-      const statusFilter = document.getElementById('statusFilter').value;
+    function filterUsers(role, btn) {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
 
-      const rows = document.querySelectorAll('#usersTable tbody tr');
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        const role = row.getAttribute('data-role');
-        const status = row.getAttribute('data-status');
-
-        const matchesQuery = text.includes(query);
-        const matchesRole = (roleFilter === 'all' || role === roleFilter);
-        const matchesStatus = (statusFilter === 'all' || status === statusFilter);
-
-        if (matchesQuery && matchesRole && matchesStatus) {
-          row.style.display = '';
+      const rows = document.querySelectorAll('#userTableBody tr');
+      rows.forEach(r => {
+        if (role === 'all' || r.getAttribute('data-role') === role) {
+          r.style.display = '';
         } else {
-          row.style.display = 'none';
+          r.style.display = 'none';
         }
       });
     }
 
-    // Đóng modal khi click ra ngoài
-    document.querySelectorAll('.modal-backdrop').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('show');
+    function handleSearchUser(q) {
+      const term = q.toLowerCase();
+      const rows = document.querySelectorAll('#userTableBody tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(term) ? '' : 'none';
       });
-    });
-
-    // Quản lý phiên Quản trị viên
-    let adminUser = null;
-    try {
-      adminUser = JSON.parse(localStorage.getItem('user_info') || sessionStorage.getItem('current_user') || 'null');
-    } catch (e) { adminUser = null; }
-
-    if (adminUser) {
-      document.querySelectorAll('.user-capsule-name').forEach(el => el.textContent = adminUser.name || 'Admin LHD');
     }
 
-    function logoutAdmin() {
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user_info');
-      localStorage.removeItem('lhd_user_session');
-      localStorage.removeItem('lhd_learning_logged_in');
-      sessionStorage.clear();
-      window.location.href = '../auth/login.html';
+    function handleLogout() {
+      if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi cổng Quản trị viên?')) {
+        localStorage.removeItem('currentUser');
+        sessionStorage.clear();
+        window.location.href = '../index.html';
+      }
     }
+
+    document.addEventListener('DOMContentLoaded', initHeader);
   </script>
 </body>
+
 </html>

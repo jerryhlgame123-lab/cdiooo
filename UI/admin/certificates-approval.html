@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chiến Dịch Marketing & Khuyến Mãi | LHD – Learning</title>
+  <title>Thẩm Định & Duyệt Chứng Chỉ Giảng Viên | LHD – Learning</title>
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +71,7 @@
       background: linear-gradient(135deg, #0b63e5, #7c3aed);
     }
 
-    /* Header */
+    /* Header Navbar */
     header {
       position: sticky;
       top: 0;
@@ -525,6 +525,25 @@
       color: #ffffff;
     }
 
+    .sidebar-badge {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .sidebar-badge.badge-pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .sidebar-link.active .sidebar-badge {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
     .sidebar-divider {
       height: 1px;
       background: #f1f5f9;
@@ -604,7 +623,7 @@
       color: #64748b;
     }
 
-    /* Table & Content Box */
+    /* Content Box & Table */
     .content-box {
       background: var(--card-bg);
       border: 1.5px solid #eef2f6;
@@ -631,25 +650,78 @@
       gap: 10px;
     }
 
-    .btn-create-voucher {
-      padding: 10px 20px;
-      background: linear-gradient(135deg, #4338ca, #7c3aed);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      display: inline-flex;
+    .box-subtitle {
+      font-size: 0.82rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 14px rgba(67, 56, 202, 0.3);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 14px 10px 40px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      outline: none;
       transition: all 0.2s ease;
     }
 
-    .btn-create-voucher:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(67, 56, 202, 0.45);
+    .search-input:focus {
+      border-color: #4338ca;
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.12);
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 7px 14px;
+      border-radius: 9999px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #475569;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill:hover {
+      border-color: #4338ca;
+      color: #4338ca;
+    }
+
+    .filter-pill.active {
+      background: #4338ca;
+      color: #ffffff;
+      border-color: #4338ca;
     }
 
     .custom-table {
@@ -679,17 +751,19 @@
       background: #f8fafc;
     }
 
-    .code-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
+    .cert-thumb-preview {
+      width: 60px;
+      height: 42px;
       border-radius: 8px;
-      background: #e0e7ff;
-      color: #4338ca;
-      font-weight: 800;
-      font-family: monospace;
-      font-size: 0.95rem;
+      object-fit: cover;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .cert-thumb-preview:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .status-badge {
@@ -702,9 +776,19 @@
       font-weight: 800;
     }
 
+    .badge-pending-status {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
     .badge-approved-status {
       background: #dcfce7;
       color: #15803d;
+    }
+
+    .badge-rejected-status {
+      background: #fee2e2;
+      color: #b91c1c;
     }
 
     .btn-table-action {
@@ -715,17 +799,124 @@
       cursor: pointer;
       border: none;
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .btn-copy {
+    .btn-approve {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .btn-approve:hover {
+      background: #bbf7d0;
+    }
+
+    .btn-reject {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .btn-reject:hover {
+      background: #fecaca;
+    }
+
+    .btn-view {
       background: #f1f5f9;
       color: #334155;
     }
 
-    .btn-copy:hover {
+    .btn-view:hover {
       background: #e2e8f0;
     }
 
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+      border: 1.5px solid #e2e8f0;
+      animation: modalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1.5px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: none;
+      cursor: pointer;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1.5px solid #f1f5f9;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f8fafc;
+      border-radius: 0 0 24px 24px;
+    }
+
+    /* Toast */
     .toast-container {
       position: fixed;
       bottom: 24px;
@@ -753,7 +944,7 @@
   <div class="ambient-glow ambient-1"></div>
   <div class="ambient-glow ambient-2"></div>
 
-  <!-- Header -->
+  <!-- Header Navbar -->
   <header>
     <div class="header-left">
       <a href="../instructor/home.html" class="brand-logo">
@@ -778,13 +969,13 @@
       <div style="position: relative;">
         <button type="button" class="nav-circle-btn" id="headerBellBtn" onclick="toggleBellDropdown(event)">
           <i class="fa-regular fa-bell"></i>
-          <span class="bell-badge">3</span>
+          <span class="bell-badge">2</span>
         </button>
         <div class="nav-dropdown" id="bellDropdown" style="width: 300px;">
-          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a; margin-bottom: 8px;">Thông báo khuyến mãi
+          <div style="font-weight: 800; font-size: 0.92rem; color: #0f172a; margin-bottom: 8px;">Hồ sơ thẩm định mới
           </div>
-          <div style="padding: 8px; background: #e0e7ff; border-radius: 10px; font-size: 0.8rem; color: #1e1b4b;">
-            <i class="fa-solid fa-tag"></i> Chiến dịch Flash Sale T10 đã đạt 85% hạn mức voucher.
+          <div style="padding: 8px; background: #fef3c7; border-radius: 10px; font-size: 0.8rem; color: #78350f;">
+            <i class="fa-solid fa-certificate"></i> Có 2 chứng chỉ giảng viên gửi đến cần thẩm định.
           </div>
         </div>
       </div>
@@ -825,18 +1016,18 @@
             <div class="menu-item-icon"><i class="fa-solid fa-spell-check"></i></div>
             <span>Phê duyệt khóa học</span>
           </a>
-          <a href="certificates-approval.html" class="student-menu-item">
-            <div class="menu-item-icon"><i class="fa-solid fa-certificate"></i></div>
+          <a href="certificates-approval.html" class="student-menu-item"
+            style="color: #4338ca; font-weight: 800; background: rgba(67, 56, 202, 0.08);">
+            <div class="menu-item-icon" style="background: #4338ca; color: white;"><i
+                class="fa-solid fa-certificate"></i></div>
             <span>Duyệt chứng chỉ GV</span>
           </a>
           <a href="users.html" class="student-menu-item">
             <div class="menu-item-icon"><i class="fa-solid fa-users-gear"></i></div>
             <span>Quản lý người dùng</span>
           </a>
-          <a href="marketing.html" class="student-menu-item"
-            style="color: #4338ca; font-weight: 800; background: rgba(67, 56, 202, 0.08);">
-            <div class="menu-item-icon" style="background: #4338ca; color: white;"><i
-                class="fa-solid fa-bullhorn"></i></div>
+          <a href="marketing.html" class="student-menu-item">
+            <div class="menu-item-icon"><i class="fa-solid fa-bullhorn"></i></div>
             <span>Khuyến mãi & Voucher</span>
           </a>
 
@@ -896,7 +1087,7 @@
           </div>
           <div>
             <div class="sidebar-brand-title">LHD Admin</div>
-            <div class="sidebar-brand-sub">Marketing & Voucher</div>
+            <div class="sidebar-brand-sub">Thẩm Định Chứng Chỉ</div>
           </div>
         </div>
 
@@ -920,7 +1111,7 @@
             </a>
           </li>
           <li>
-            <a href="certificates-approval.html" class="sidebar-link">
+            <a href="certificates-approval.html" class="sidebar-link active">
               <span class="sidebar-link-left">
                 <i class="fa-solid fa-certificate"></i>
                 <span>Duyệt Chứng Chỉ GV</span>
@@ -937,7 +1128,7 @@
             </a>
           </li>
           <li>
-            <a href="marketing.html" class="sidebar-link active">
+            <a href="marketing.html" class="sidebar-link">
               <span class="sidebar-link-left">
                 <i class="fa-solid fa-tags"></i>
                 <span>Marketing & Voucher</span>
@@ -975,10 +1166,10 @@
             </a>
           </li>
           <li>
-            <a href="../courses.html" class="sidebar-link">
+            <a href="../certificates.html" class="sidebar-link">
               <span class="sidebar-link-left">
-                <i class="fa-solid fa-compass"></i>
-                <span>Xem Khóa Học Sàn</span>
+                <i class="fa-solid fa-award"></i>
+                <span>Tra Cứu Chứng Chỉ Sàn</span>
               </span>
             </a>
           </li>
@@ -986,127 +1177,245 @@
       </div>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <main class="content-area">
       <!-- 1. KPI Counters -->
       <section class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-header">
-            <span class="kpi-title">Voucher Đang Kích Hoạt</span>
-            <div class="kpi-icon" style="background:#e0e7ff; color:#4338ca;">
-              <i class="fa-solid fa-tags"></i>
-            </div>
-          </div>
-          <div class="kpi-val">8 Chiến dịch</div>
-          <div class="kpi-footer">
-            <span style="color: #15803d; font-weight: 700;">Áp dụng toàn sàn</span>
-          </div>
-        </div>
-
-        <div class="kpi-card">
-          <div class="kpi-header">
-            <span class="kpi-title">Lượt Đăng Ký Dùng Mã</span>
-            <div class="kpi-icon" style="background:#dcfce7; color:#15803d;">
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-          <div class="kpi-val">1.420 Lượt</div>
-          <div class="kpi-footer">
-            <span style="color: #16a34a; font-weight: 700;">+320 tuần này</span>
-          </div>
-        </div>
-
-        <div class="kpi-card">
-          <div class="kpi-header">
-            <span class="kpi-title">Doanh Thu Kích Cầu</span>
-            <div class="kpi-icon" style="background:#fce7f3; color:#db2777;">
-              <i class="fa-solid fa-fire"></i>
-            </div>
-          </div>
-          <div class="kpi-val">680.000.000 ₫</div>
-          <div class="kpi-footer">
-            <span>Chiếm 28% tổng doanh số</span>
-          </div>
-        </div>
-
-        <div class="kpi-card">
-          <div class="kpi-header">
-            <span class="kpi-title">Ngân Sách Trợ Giá</span>
+            <span class="kpi-title">Hồ Sơ Chờ Thẩm Định</span>
             <div class="kpi-icon" style="background:#fef3c7; color:#b45309;">
-              <i class="fa-solid fa-gift"></i>
+              <i class="fa-solid fa-clock"></i>
             </div>
           </div>
-          <div class="kpi-val">45.000.000 ₫</div>
+          <div class="kpi-val" id="countPending">2 Hồ sơ</div>
           <div class="kpi-footer">
-            <span>Còn lại 65% hạn mức</span>
+            <span style="color: #d97706; font-weight: 700;">Cần xử lý trong 24h</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Đã Cấp Huy Hiệu Verified</span>
+            <div class="kpi-icon" style="background:#dcfce7; color:#15803d;">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+          </div>
+          <div class="kpi-val">64 Giảng viên</div>
+          <div class="kpi-footer">
+            <span style="color: #16a34a; font-weight: 700;">Uy tín 100% Quốc tế</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Bị Từ Chối / Bổ Sung</span>
+            <div class="kpi-icon" style="background:#fee2e2; color:#b91c1c;">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+          </div>
+          <div class="kpi-val">3 Hồ sơ</div>
+          <div class="kpi-footer">
+            <span>Ảnh mờ hoặc thiếu mã tra cứu</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">Tốc Độ Thẩm Định TB</span>
+            <div class="kpi-icon" style="background:#e0e7ff; color:#4338ca;">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+          </div>
+          <div class="kpi-val">1.5 Giờ</div>
+          <div class="kpi-footer">
+            <span>Đạt chuẩn cam kết SLA</span>
           </div>
         </div>
       </section>
 
-      <!-- 2. Campaign Table -->
+      <!-- 2. Main Certificates Table -->
       <section class="content-box">
         <div class="box-header">
           <div>
-            <h2 class="box-title"><i class="fa-solid fa-bullhorn" style="color: #4338ca;"></i> Danh Sách Mã Giảm Giá &
-              Voucher Toàn Sàn</h2>
-            <div class="box-subtitle">Quản lý mã ưu đãi, mức giảm giá, hạn sử dụng và số lượng còn lại</div>
+            <h2 class="box-title"><i class="fa-solid fa-certificate" style="color: #4338ca;"></i> Danh Sách Bằng Cấp &
+              Chứng Chỉ Giảng Viên</h2>
+            <div class="box-subtitle">Kiểm tra thông tin cấp bằng, mã số định danh và hình ảnh scan tài liệu</div>
           </div>
-          <button type="button" class="btn-create-voucher" onclick="createNewVoucher()">
-            <i class="fa-solid fa-plus"></i> Tạo Mã Voucher Mới
-          </button>
+        </div>
+
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search-input" id="certSearchInput"
+              placeholder="Tìm theo tên giảng viên, mã chứng chỉ, ngoại ngữ..." oninput="handleSearchCert(this.value)">
+          </div>
+
+          <div class="filter-pills">
+            <button type="button" class="filter-pill active" onclick="filterCerts('all', this)">Tất cả (5)</button>
+            <button type="button" class="filter-pill" onclick="filterCerts('pending', this)">Chờ duyệt (2)</button>
+            <button type="button" class="filter-pill" onclick="filterCerts('approved', this)">Đã xác minh (2)</button>
+            <button type="button" class="filter-pill" onclick="filterCerts('rejected', this)">Từ chối (1)</button>
+          </div>
         </div>
 
         <div style="overflow-x: auto;">
           <table class="custom-table">
             <thead>
               <tr>
-                <th>Mã Khuyến Mãi</th>
-                <th>Tên Chương Trình</th>
-                <th>Mức Giảm</th>
-                <th>Đã Dùng / Tổng Số</th>
-                <th>Thời Gian Áp Dụng</th>
+                <th>Ảnh Scan</th>
+                <th>Giảng Viên Đăng Ký</th>
+                <th>Tên Chứng Chỉ & Mã Số</th>
+                <th>Tổ Chức Cấp Bằng</th>
+                <th>Ngày Cấp / Hạn</th>
                 <th>Trạng Thái</th>
-                <th style="text-align: right;">Thao Tác</th>
+                <th style="text-align: right;">Thao Tác Thẩm Định</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><span class="code-pill"><i class="fa-solid fa-ticket"></i> LHDCHAOHE2026</span></td>
-                <td><strong>Ưu đãi tựu trường hè 2026</strong></td>
-                <td><strong style="color: #4338ca;">Giảm 20% (Tối đa 400k)</strong></td>
-                <td><strong>342</strong> / 500</td>
-                <td>01/10/2026 – 31/10/2026</td>
-                <td><span class="status-badge badge-approved-status"><i class="fa-solid fa-circle"></i> Đang chạy</span>
+            <tbody id="certTableBody">
+              <!-- Item 1 -->
+              <tr data-status="pending" data-lang="ja">
+                <td>
+                  <img
+                    src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=200&auto=format&fit=crop&q=80"
+                    class="cert-thumb-preview"
+                    onclick="viewCertDetail('Tanaka Yuka', 'Chứng chỉ JLPT N1 Cao Cấp', 'JEES-99824', 'Japan Foundation & JEES', '05/01/2025', 'Vĩnh viễn', 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop&q=80')"
+                    title="Bấm để phóng to chứng chỉ" alt="Chứng chỉ">
+                </td>
+                <td>
+                  <strong>Cô Tanaka Yuka</strong><br>
+                  <span style="font-size: 0.76rem; color: #64748b;">yuka.tanaka@lhd.edu.vn</span>
+                </td>
+                <td>
+                  <strong style="color: #4338ca;">JLPT N1 Tiếng Nhật</strong><br>
+                  <span style="font-size: 0.75rem; color: #64748b;">Mã: <code>JEES-99824</code></span>
+                </td>
+                <td>Japan Foundation & JEES Tokyo</td>
+                <td>05/01/2025<br><span style="font-size: 0.72rem; color: #16a34a;">(Hiệu lực vĩnh viễn)</span></td>
+                <td><span class="status-badge badge-pending-status"><i class="fa-solid fa-clock"></i> Chờ duyệt</span>
                 </td>
                 <td style="text-align: right;">
-                  <button type="button" class="btn-table-action btn-copy"
-                    onclick="copyCode('LHDCHAOHE2026')">Copy</button>
+                  <button type="button" class="btn-table-action btn-approve"
+                    onclick="approveCert('Tanaka Yuka - JLPT N1')"><i class="fa-solid fa-check"></i> Duyệt & Cấp
+                    Badge</button>
+                  <button type="button" class="btn-table-action btn-reject"
+                    onclick="rejectCert('Tanaka Yuka - JLPT N1')"><i class="fa-solid fa-xmark"></i> Từ chối</button>
+                  <button type="button" class="btn-table-action btn-view"
+                    onclick="viewCertDetail('Tanaka Yuka', 'Chứng chỉ JLPT N1 Cao Cấp', 'JEES-99824', 'Japan Foundation & JEES', '05/01/2025', 'Vĩnh viễn', 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop&q=80')"><i
+                      class="fa-solid fa-eye"></i> Xem</button>
                 </td>
               </tr>
-              <tr>
-                <td><span class="code-pill"><i class="fa-solid fa-ticket"></i> IELTSMASTER</span></td>
-                <td><strong>Chuyên sâu chứng chỉ IELTS 7.0+</strong></td>
-                <td><strong style="color: #4338ca;">Giảm 300.000 ₫</strong></td>
-                <td><strong>188</strong> / 200</td>
-                <td>15/09/2026 – 15/11/2026</td>
-                <td><span class="status-badge badge-approved-status"><i class="fa-solid fa-circle"></i> Đang chạy</span>
+
+              <!-- Item 2 -->
+              <tr data-status="pending" data-lang="en">
+                <td>
+                  <img
+                    src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=200&auto=format&fit=crop&q=80"
+                    class="cert-thumb-preview"
+                    onclick="viewCertDetail('Alex Miller', 'IELTS Academic 8.5 Overall', 'BC-884920', 'British Council Vietnam', '12/03/2025', '12/03/2027', 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=800&auto=format&fit=crop&q=80')"
+                    title="Bấm để phóng to chứng chỉ" alt="Chứng chỉ">
+                </td>
+                <td>
+                  <strong>Alex Miller</strong><br>
+                  <span style="font-size: 0.76rem; color: #64748b;">alex.miller@lhd.edu.vn</span>
+                </td>
+                <td>
+                  <strong style="color: #4338ca;">IELTS Academic 8.5</strong><br>
+                  <span style="font-size: 0.75rem; color: #64748b;">Mã: <code>BC-884920</code></span>
+                </td>
+                <td>British Council Vietnam</td>
+                <td>12/03/2025<br><span style="font-size: 0.72rem; color: #d97706;">(Hạn: 12/03/2027)</span></td>
+                <td><span class="status-badge badge-pending-status"><i class="fa-solid fa-clock"></i> Chờ duyệt</span>
                 </td>
                 <td style="text-align: right;">
-                  <button type="button" class="btn-table-action btn-copy"
-                    onclick="copyCode('IELTSMASTER')">Copy</button>
+                  <button type="button" class="btn-table-action btn-approve"
+                    onclick="approveCert('Alex Miller - IELTS 8.5')"><i class="fa-solid fa-check"></i> Duyệt & Cấp
+                    Badge</button>
+                  <button type="button" class="btn-table-action btn-reject"
+                    onclick="rejectCert('Alex Miller - IELTS 8.5')"><i class="fa-solid fa-xmark"></i> Từ chối</button>
+                  <button type="button" class="btn-table-action btn-view"
+                    onclick="viewCertDetail('Alex Miller', 'IELTS Academic 8.5 Overall', 'BC-884920', 'British Council Vietnam', '12/03/2025', '12/03/2027', 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=800&auto=format&fit=crop&q=80')"><i
+                      class="fa-solid fa-eye"></i> Xem</button>
                 </td>
               </tr>
-              <tr>
-                <td><span class="code-pill"><i class="fa-solid fa-ticket"></i> JLPTCAPNGAY</span></td>
-                <td><strong>Luyện đề tiếng Nhật cấp tốc N3-N2</strong></td>
-                <td><strong style="color: #4338ca;">Giảm 15%</strong></td>
-                <td><strong>95</strong> / 150</td>
-                <td>01/10/2026 – 20/10/2026</td>
-                <td><span class="status-badge badge-approved-status"><i class="fa-solid fa-circle"></i> Đang chạy</span>
+
+              <!-- Item 3 -->
+              <tr data-status="approved" data-lang="en">
+                <td>
+                  <img
+                    src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=200&auto=format&fit=crop&q=80"
+                    class="cert-thumb-preview"
+                    onclick="viewCertDetail('Emily Watson', 'TESOL International 120H', 'TESOL-US-4820', 'American TESOL Institute', '10/08/2024', 'Vĩnh viễn', 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop&q=80')"
+                    alt="Chứng chỉ">
                 </td>
+                <td>
+                  <strong>Cô Emily Watson</strong><br>
+                  <span style="font-size: 0.76rem; color: #64748b;">emily.watson@lhd.edu.vn</span>
+                </td>
+                <td>
+                  <strong style="color: #4338ca;">TESOL 120H Quốc Tế</strong><br>
+                  <span style="font-size: 0.75rem; color: #64748b;">Mã: <code>TESOL-US-4820</code></span>
+                </td>
+                <td>American TESOL Institute</td>
+                <td>10/08/2024</td>
+                <td><span class="status-badge badge-approved-status"><i class="fa-solid fa-circle-check"></i> Đã xác
+                    minh</span></td>
                 <td style="text-align: right;">
-                  <button type="button" class="btn-table-action btn-copy"
-                    onclick="copyCode('JLPTCAPNGAY')">Copy</button>
+                  <span style="color: #16a34a; font-weight: 700; font-size: 0.8rem;"><i class="fa-solid fa-crown"></i>
+                    Đã cấp Verified Badge</span>
+                </td>
+              </tr>
+
+              <!-- Item 4 -->
+              <tr data-status="approved" data-lang="zh">
+                <td>
+                  <img
+                    src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=200&auto=format&fit=crop&q=80"
+                    class="cert-thumb-preview"
+                    onclick="viewCertDetail('Trần Bội Sam', 'HSK 6 Tiếng Trung Cao Cấp', 'HANBAN-8831', 'Hanban Confucius Institute', '15/09/2024', '15/09/2026', 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=800&auto=format&fit=crop&q=80')"
+                    alt="Chứng chỉ">
+                </td>
+                <td>
+                  <strong>Trần Bội Sam</strong><br>
+                  <span style="font-size: 0.76rem; color: #64748b;">sam.tran@lhd.edu.vn</span>
+                </td>
+                <td>
+                  <strong style="color: #4338ca;">HSK 6 Cao Cấp (285/300)</strong><br>
+                  <span style="font-size: 0.75rem; color: #64748b;">Mã: <code>HANBAN-8831</code></span>
+                </td>
+                <td>Hanban Confucius Institute</td>
+                <td>15/09/2024</td>
+                <td><span class="status-badge badge-approved-status"><i class="fa-solid fa-circle-check"></i> Đã xác
+                    minh</span></td>
+                <td style="text-align: right;">
+                  <span style="color: #16a34a; font-weight: 700; font-size: 0.8rem;"><i class="fa-solid fa-crown"></i>
+                    Đã cấp Verified Badge</span>
+                </td>
+              </tr>
+
+              <!-- Item 5 -->
+              <tr data-status="rejected" data-lang="ko">
+                <td>
+                  <img
+                    src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=200&auto=format&fit=crop&q=80"
+                    class="cert-thumb-preview"
+                    onclick="viewCertDetail('Lê Minh Tuấn', 'TOPIK II Cấp 5', 'TOPIK-KR-1102', 'NIIED Korea', '01/02/2024', '01/02/2026', 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&auto=format&fit=crop&q=80')"
+                    alt="Chứng chỉ">
+                </td>
+                <td>
+                  <strong>Lê Minh Tuấn</strong><br>
+                  <span style="font-size: 0.76rem; color: #64748b;">tuan.le@lhd.edu.vn</span>
+                </td>
+                <td>
+                  <strong style="color: #4338ca;">TOPIK II Cấp 5</strong><br>
+                  <span style="font-size: 0.75rem; color: #64748b;">Mã: <code>TOPIK-KR-1102</code></span>
+                </td>
+                <td>NIIED Korea</td>
+                <td>01/02/2024</td>
+                <td><span class="status-badge badge-rejected-status"><i class="fa-solid fa-circle-xmark"></i> Bị từ
+                    chối</span></td>
+                <td style="text-align: right;">
+                  <span style="font-size: 0.75rem; color: #ef4444;">Lý do: Ảnh scan bị mất góc mã QR</span>
                 </td>
               </tr>
             </tbody>
@@ -1114,6 +1423,37 @@
         </div>
       </section>
     </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="certModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="modalCertTitle">Thẩm Định Chứng Chỉ Giảng Viên</div>
+        <button type="button" class="modal-close-btn" onclick="closeCertModal()"><i
+            class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 1rem; text-align: center;">
+          <img id="modalCertImg" src=""
+            style="max-width: 100%; height: 280px; object-fit: contain; border-radius: 14px; border: 1.5px solid #e2e8f0; background: #0f172a; padding: 4px;"
+            alt="Scan chứng chỉ">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.88rem;">
+          <div><strong>Giảng viên:</strong> <span id="modalInstName">--</span></div>
+          <div><strong>Mã định danh:</strong> <code id="modalCertCode">--</code></div>
+          <div><strong>Tổ chức cấp:</strong> <span id="modalCertOrg">--</span></div>
+          <div><strong>Hiệu lực:</strong> <span id="modalCertExpiry">--</span></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-table-action btn-view" onclick="closeCertModal()">Đóng</button>
+        <button type="button" class="btn-table-action btn-reject" onclick="handleModalReject()"><i
+            class="fa-solid fa-xmark"></i> Yêu Cầu Bổ Sung</button>
+        <button type="button" class="btn-table-action btn-approve" onclick="handleModalApprove()"><i
+            class="fa-solid fa-check"></i> Phê Duyệt & Cấp Badge</button>
+      </div>
+    </div>
   </div>
 
   <div class="toast-container" id="toastContainer"></div>
@@ -1154,14 +1494,15 @@
       document.getElementById('menuBannerEmail').textContent = email;
     }
 
-    function showToast(msg) {
+    function showToast(msg, isSuccess = true) {
       const c = document.getElementById('toastContainer');
       if (!c) return;
       const t = document.createElement('div');
       t.className = 'toast-msg';
-      t.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #4ade80; font-size: 1.1rem;"></i> <span>${msg}</span>`;
+      t.style.borderLeftColor = isSuccess ? '#4ade80' : '#ef4444';
+      t.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-circle-exclamation'}" style="color: ${isSuccess ? '#4ade80' : '#ef4444'}; font-size: 1.1rem;"></i> <span>${msg}</span>`;
       c.appendChild(t);
-      setTimeout(() => t.remove(), 3000);
+      setTimeout(() => t.remove(), 3200);
     }
 
     function toggleMegaMenu(e) {
@@ -1191,16 +1532,62 @@
       }
     });
 
-    function copyCode(code) {
-      navigator.clipboard.writeText(code);
-      showToast(`Đã sao chép mã voucher: ${code}`);
+    let activeCertName = '';
+    function viewCertDetail(instName, title, code, org, issueDate, expiry, imgUrl) {
+      activeCertName = `${instName} - ${title}`;
+      document.getElementById('modalCertTitle').textContent = `Thẩm định: ${title}`;
+      document.getElementById('modalInstName').textContent = instName;
+      document.getElementById('modalCertCode').textContent = code;
+      document.getElementById('modalCertOrg').textContent = org;
+      document.getElementById('modalCertExpiry').textContent = `${issueDate} (Hạn: ${expiry})`;
+      document.getElementById('modalCertImg').src = imgUrl;
+
+      document.getElementById('certModal').classList.add('show');
     }
 
-    function createNewVoucher() {
-      const code = prompt('Nhập mã voucher mới muốn tạo (Ví dụ: FLASHSALE50):');
-      if (code) {
-        showToast(`Đã tạo thành công chiến dịch voucher: "${code.toUpperCase()}"`);
-      }
+    function closeCertModal() {
+      document.getElementById('certModal').classList.remove('show');
+    }
+
+    function handleModalApprove() {
+      closeCertModal();
+      showToast(`Đã phê duyệt và cấp Verified Badge thành công cho: ${activeCertName}`);
+    }
+
+    function handleModalReject() {
+      closeCertModal();
+      showToast(`Đã gửi yêu cầu bổ sung hồ sơ cho: ${activeCertName}`, false);
+    }
+
+    function approveCert(name) {
+      showToast(`Đã duyệt chứng chỉ & cấp huy hiệu Verified cho: ${name}`);
+    }
+
+    function rejectCert(name) {
+      showToast(`Đã từ chối và thông báo chỉnh sửa cho: ${name}`, false);
+    }
+
+    function filterCerts(status, btn) {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const rows = document.querySelectorAll('#certTableBody tr');
+      rows.forEach(r => {
+        if (status === 'all' || r.getAttribute('data-status') === status) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    }
+
+    function handleSearchCert(q) {
+      const term = q.toLowerCase();
+      const rows = document.querySelectorAll('#certTableBody tr');
+      rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(term) ? '' : 'none';
+      });
     }
 
     function handleLogout() {
